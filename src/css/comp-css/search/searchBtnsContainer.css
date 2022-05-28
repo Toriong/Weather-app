@@ -6,7 +6,9 @@ height: 37.7917px;
 display: flex;
 }
 
-.searchBtnsContainer button{
+
+.searchBtnsContainer > button,
+.searchTypeContainer > button{
     width: 100px;
     height: 30px;
     border: var(--borderColor);
@@ -14,10 +16,6 @@ display: flex;
     font-weight: 350;
 }
 
-.searchBtnsContainer button:first-child{
+.searchTypeContainer > button:first-child{
     margin-right: 6px;
-}
-
-.searchTypeContainer > div{
-    border:solid pink;
 }
