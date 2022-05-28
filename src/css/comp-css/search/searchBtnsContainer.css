@@ -1,0 +1,23 @@
+.searchBtnsContainer{
+position: absolute;
+bottom: 0;
+right: 0;
+height: 37.7917px;
+display: flex;
+}
+
+.searchBtnsContainer button{
+    width: 100px;
+    height: 30px;
+    border: var(--borderColor);
+    border-radius: 4px;
+    font-weight: 350;
+}
+
+.searchBtnsContainer button:first-child{
+    margin-right: 6px;
+}
+
+.searchTypeContainer > div{
+    border:solid pink;
+}
