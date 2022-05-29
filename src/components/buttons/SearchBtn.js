@@ -1,15 +1,21 @@
-import React from 'react'
+import React, { useEffect } from 'react'
+// import { getAddressLongAndLat } from '../../apiFns/getAddressLongAndLat';
+import { getUserCityName } from '../../apiFns/getUserCityName';
 import { getWeather } from '../../apiFns/getWeather'
 
 const SearchBtn = ({ placeHolderTxt, userLocation }) => {
 
-
-
     const getUserLocationWeather = () => {
-        const { longitude, latitude } = userLocation;
-        const weather = getWeather({ longitude, latitude });
+        const weather = getWeather(userLocation);
         console.log('weather: ', weather)
-    }
+    };
+
+    useEffect(() => {
+        const address = '20520 61st place west, Lynnwood, WA 98036';
+        // getAddressLongAndLat(address)
+    }, []);
+
+
 
     // GOAL: if placeholderTxt is x, then use y fn that will handle the onClick of the search Btn
 
@@ -20,6 +26,15 @@ const SearchBtn = ({ placeHolderTxt, userLocation }) => {
     if (placeHolderTxt === "Using your location. Press the 'search' icon to get results") {
         var handleSearchBtnClick = () => {
             navigator?.geolocation ? getUserLocationWeather() : alert("Geolocation is not supported by this browser.")
+            getUserCityName(userLocation).then(response => {
+                const { isError, data } = response;
+                if (isError) {
+                    alert('An error has occurred, cannot display location of user.')
+                    return;
+                };
+
+                console.log('data: ', data);
+            })
         }
     }
     return (
