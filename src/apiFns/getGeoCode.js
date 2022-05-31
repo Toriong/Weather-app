@@ -11,7 +11,7 @@ export const getGeoCode = async address => {
         if (response.ok) {
             const addresses = await response.json();
             console.log('addresses: ', addresses);
-            return { addresses };
+            return { addresses: addresses.data };
         }
     } catch (error) {
         if (error) {

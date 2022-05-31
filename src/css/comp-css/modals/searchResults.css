@@ -1,0 +1,36 @@
+.searchResultsModal{
+    height: 200px;
+    max-height: 600px;
+    position: absolute;
+    border: var(--borderColor);
+    width: 100%;;
+    z-index: 100000;
+    background-color: white;
+    overflow-y: auto;
+    padding-bottom: 8px;
+}
+
+.searchResultsModal > span{
+    width: 100%;
+    text-align: center;
+    display: block;
+    padding-top: 8px;
+}
+
+.searchResultsContainer{
+    width: 100%;
+    position: relative;
+}
+
+.searchResult{
+    display: flex;
+    width: 97%;
+    justify-content: space-between;
+    padding: 0px 8px 0px 8px;;
+    margin-top: 8px;
+    cursor: pointer;
+}
+
+.searchResult:hover{
+    background: #898F9C;
+}

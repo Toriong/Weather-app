@@ -4,10 +4,10 @@ import SearchTypes from '../modals/SearchTypes';
 import '../../css/comp-css/search/searchBtnsContainer.css'
 import SearchBtn from '../buttons/SearchBtn';
 
-const SearchBtnsContainer = ({ _placeHolderTxt, _isSearchTypesModalOn }) => {
+const SearchBtnsContainer = ({ _placeHolderTxt, _isSearchTypesModalOn, _longAndLatOfUser }) => {
     const [placeholderTxt, setPlaceHolderTxt] = _placeHolderTxt;
     const [isSearchTypesModalOn, setIsSearchTypesModalOn] = _isSearchTypesModalOn;
-    const [longAndLatOfUser, setLongAndLatOfUser] = useState(null);
+    const [longAndLatOfUser, setLongAndLatOfUser] = _longAndLatOfUser;
 
     // GOAL: when the modal appears son the screen for the search type, when the user chooses a search type, then change the placeholder text
 
