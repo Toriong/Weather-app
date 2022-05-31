@@ -4,10 +4,17 @@ bottom: 0;
 right: 0;
 height: 37.7917px;
 display: flex;
+/* border: solid pink; */
+width: 100%;
+justify-content: space-between;
 }
 
 
-.searchBtnsContainer > button,
+.searchBtnsSubContainer{
+    display: flex;
+}
+
+.searchBtnsSubContainer > button,
 .searchTypeContainer > button{
     width: 100px;
     height: 30px;
@@ -18,4 +25,16 @@ display: flex;
 
 .searchTypeContainer > button:first-child{
     margin-right: 6px;
+}
+
+
+.searchBtnsContainer > div:first-child{
+    position: relative;
+}
+
+.searchBtnsContainer > div:first-child span{
+    font-size: 8px;
+    position: absolute;
+    top: 0;
+    white-space: nowrap;
 }

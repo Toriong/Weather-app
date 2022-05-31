@@ -28,8 +28,8 @@ const SearchTypes = ({ setPlaceHolderTxt, setIsSearchTypesModalOn, setLongAndLat
     // GOAL: when the user presses the 'by address' button, do the following:
     // change the placeholder text to: 'Search by address'
 
-    const handleByAddressBtnClick = () => {
-        setPlaceHolderTxt('Search by address')
+    const handleGeneralSearchBtnClick = () => {
+        setPlaceHolderTxt('Search by address, city name, or zip code');
         setIsSearchTypesModalOn(false);
     };
 
@@ -38,8 +38,8 @@ const SearchTypes = ({ setPlaceHolderTxt, setIsSearchTypesModalOn, setLongAndLat
 
     return (
         <div className='searchTypesModal'>
+            <button onClick={handleGeneralSearchBtnClick}>General search</button>
             <button>By city</button>
-            <button onClick={handleByAddressBtnClick}>By address</button>
             <button>By zip code</button>
             <button onClick={handleMyLocationClick}>My location</button>
         </div>

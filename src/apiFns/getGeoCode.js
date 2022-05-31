@@ -16,7 +16,7 @@ export const getGeoCode = async address => {
     } catch (error) {
         if (error) {
             console.error('An error has occurred: ', error)
-            return { didError: true }
+            return { didError: true, errorMsg: error }
         }
     }
 

@@ -25,24 +25,26 @@ const SearchBtnsContainer = ({ _placeHolderTxt, _isSearchTypesModalOn }) => {
         searchTypeTxt = 'By zip code';
     } else if (placeholderTxt === "Using your location. Press the 'search' icon to get results") {
         searchTypeTxt = 'My location';
-    } else if (placeholderTxt === 'Search by address') {
-        searchTypeTxt = 'By address';
+    } else if (placeholderTxt === 'Search by address, city name, or zip code') {
+        searchTypeTxt = 'General search';
     }
 
     return (
         <div className='searchBtnsContainer'>
-            <div className='searchTypeContainer'>
-                <div>
-                    <span>*Please enter 3 or more characters.</span>
-                </div>
-                <button onClick={handleSearchTypeBtnClick}>
-                    <span>{searchTypeTxt}</span>
-                </button>
-                <div>
-                    {isSearchTypesModalOn && <SearchTypes setPlaceHolderTxt={setPlaceHolderTxt} setIsSearchTypesModalOn={setIsSearchTypesModalOn} setLongAndLatOfUser={setLongAndLatOfUser} />}
-                </div>
+            <div>
+                <span>*Search must contain three or more characters.</span>
             </div>
-            <SearchBtn placeHolderTxt={placeholderTxt} userLocation={longAndLatOfUser} />
+            <div className='searchBtnsSubContainer'>
+                <div className='searchTypeContainer'>
+                    <button onClick={handleSearchTypeBtnClick}>
+                        <span>{searchTypeTxt}</span>
+                    </button>
+                    <div>
+                        {isSearchTypesModalOn && <SearchTypes setPlaceHolderTxt={setPlaceHolderTxt} setIsSearchTypesModalOn={setIsSearchTypesModalOn} setLongAndLatOfUser={setLongAndLatOfUser} />}
+                    </div>
+                </div>
+                <SearchBtn placeHolderTxt={placeholderTxt} userLocation={longAndLatOfUser} />
+            </div>
         </div>
     )
 }

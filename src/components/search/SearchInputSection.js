@@ -6,27 +6,30 @@ import SearchBtnsContainer from './SearchBtnsContainer';
 
 
 const SearchInput = () => {
-    const [placeholderTxt, setPlaceholderTxt] = useState("Search by city");
+    const [placeholderTxt, setPlaceholderTxt] = useState('Search by address, city name, or zip code');
     const [isSearchTypesModalOn, setIsSearchTypesModalOn] = useState(false);
     const _isSearchTypesModalOn = [isSearchTypesModalOn, setIsSearchTypesModalOn];
     const _placeholderTxt = [placeholderTxt, setPlaceholderTxt];
 
-    if (placeholderTxt === 'Search by address') {
+    if (placeholderTxt === 'Search by address, city name, or zip code') {
         var handleOnChange = event => {
-            const data = getGeoCode(event.target.value);
-            const { addresses, didError } = data;
-            if (didError) {
-                alert('Something went wrong, please try again later.')
-                return;
-            }
-            console.log('addresses: ', addresses)
+            getGeoCode(event.target.value).then(data => {
+                const { addresses, didError, errorMsg } = data;
+                if (didError) {
+                    console.error('An error has occurred: ', errorMsg);
+                    alert('An error has occurred, will refresh page.')
+                    window.location.reload();
+                    return;
+                };
+                console.log('addresses: ', addresses)
+            })
         }
     }
 
     return (
         <section className='searchInputContainer'>
             <div>
-                <input type="text" placeholder={placeholderTxt} onChange={event => { handleOnChange(event) }} />
+                <input type="text" placeholder={placeholderTxt} onChange={event => { (event.target.value.length >= 3) && handleOnChange(event) }} />
                 <SearchBtnsContainer _placeHolderTxt={_placeholderTxt} _isSearchTypesModalOn={_isSearchTypesModalOn} />
             </div>
         </section>
