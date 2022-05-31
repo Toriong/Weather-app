@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import '../../css/comp-css/search/searchBar.css'
-import SearchInputContainer from './SearchInputSection'
+import SearchInputSection from './SearchInputSection'
 
 const SearchBar = () => {
 
@@ -11,7 +11,7 @@ const SearchBar = () => {
                     <section>
                         <h1>Gabe's 7 day forecast</h1>
                     </section>
-                    <SearchInputContainer />
+                    <SearchInputSection />
                 </div>
             </div>
         </div>

@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-// import { getAddressLongAndLat } from '../../apiFns/getAddressLongAndLat';
+import { getGeoCode } from '../../apiFns/getGeoCode';
 import { getUserCityName } from '../../apiFns/getUserCityName';
 import { getWeather } from '../../apiFns/getWeather'
 
@@ -10,10 +10,7 @@ const SearchBtn = ({ placeHolderTxt, userLocation }) => {
         console.log('weather: ', weather)
     };
 
-    useEffect(() => {
-        const address = '20520 61st place west, Lynnwood, WA 98036';
-        // getAddressLongAndLat(address)
-    }, []);
+
 
 
 
