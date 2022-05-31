@@ -18,9 +18,10 @@ const SearchBtn = ({ placeHolderTxt, userLocation }) => {
 
     // CASE: the placeholder is 'Using your location. Press 'search' icon to see results.'
 
+    const isOnUserLocationSearch = placeHolderTxt === "Using your location. Press the 'search' icon to get results"
 
 
-    if (placeHolderTxt === "Using your location. Press the 'search' icon to get results") {
+    if (isOnUserLocationSearch) {
         var handleSearchBtnClick = () => {
             navigator?.geolocation ? getUserLocationWeather() : alert("Geolocation is not supported by this browser.")
             getUserCityName(userLocation).then(response => {
@@ -35,7 +36,12 @@ const SearchBtn = ({ placeHolderTxt, userLocation }) => {
         }
     }
     return (
-        <button onClick={handleSearchBtnClick}>Search</button>
+        <button
+            disabled={isOnUserLocationSearch && !navigator?.geolocation}
+            onClick={handleSearchBtnClick}
+        >
+            Search
+        </button>
     )
 }
 

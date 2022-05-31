@@ -32,6 +32,9 @@ const SearchBtnsContainer = ({ _placeHolderTxt, _isSearchTypesModalOn }) => {
     return (
         <div className='searchBtnsContainer'>
             <div className='searchTypeContainer'>
+                <div>
+                    <span>*Please enter 3 or more characters.</span>
+                </div>
                 <button onClick={handleSearchTypeBtnClick}>
                     <span>{searchTypeTxt}</span>
                 </button>
