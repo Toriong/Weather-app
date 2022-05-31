@@ -2,7 +2,9 @@ import React, { useEffect } from 'react';
 import SearchResult from './SearchResult';
 import '../../../css/comp-css/modals/searchResults.css'
 
-const SearchResults = ({ searchResults, isLoadingResults }) => {
+const SearchResults = ({ searchResults, isLoadingResults, setSearchInput, _longAndLatOfUser, setIsSearchResultsOn }) => {
+    const [longAndLatOfUser, setLongAndLatOfUser] = _longAndLatOfUser
+    const fns = { setSearchInput, setLongAndLatOfUser, setIsSearchResultsOn };
     useEffect(() => {
         console.log('searchResults: ', searchResults)
     });
@@ -21,6 +23,7 @@ const SearchResults = ({ searchResults, isLoadingResults }) => {
                             latitude={latitude}
                             longitude={longitude}
                             label={label}
+                            fns={fns}
                         />
                     })
                     :

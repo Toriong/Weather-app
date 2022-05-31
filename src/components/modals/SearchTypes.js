@@ -7,7 +7,7 @@ import '../../css/comp-css/modals/searchTypeModal.css'
 
 
 
-const SearchTypes = ({ setPlaceHolderTxt, setIsSearchTypesModalOn, setLongAndLatOfUser }) => {
+const SearchTypes = ({ setPlaceHolderTxt, setIsSearchTypesModalOn, setLongAndLatOfUser, setSearchInput }) => {
 
 
 
@@ -23,6 +23,7 @@ const SearchTypes = ({ setPlaceHolderTxt, setIsSearchTypesModalOn, setLongAndLat
         }
         setPlaceHolderTxt("Using your location. Press the 'search' icon to get results")
         setIsSearchTypesModalOn(false);
+        setSearchInput("");
     };
 
     // GOAL: when the user presses the 'by address' button, do the following:
@@ -31,6 +32,7 @@ const SearchTypes = ({ setPlaceHolderTxt, setIsSearchTypesModalOn, setLongAndLat
     const handleGeneralSearchBtnClick = () => {
         setPlaceHolderTxt('Search by address, city name, or zip code');
         setIsSearchTypesModalOn(false);
+        setSearchInput("");
     };
 
 
@@ -39,8 +41,6 @@ const SearchTypes = ({ setPlaceHolderTxt, setIsSearchTypesModalOn, setLongAndLat
     return (
         <div className='searchTypesModal'>
             <button onClick={handleGeneralSearchBtnClick}>General search</button>
-            <button>By city</button>
-            <button>By zip code</button>
             <button onClick={handleMyLocationClick}>My location</button>
         </div>
     )

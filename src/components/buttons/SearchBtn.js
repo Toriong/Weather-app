@@ -5,9 +5,9 @@ import { getWeather } from '../../apiFns/getWeather'
 
 const SearchBtn = ({ placeHolderTxt, userLocation }) => {
 
-    const getUserLocationWeather = () => {
+    const _getWeather = () => {
         const weather = getWeather(userLocation);
-        console.log('weather: ', weather)
+        console.log('weather: ', weather);
     };
 
 
@@ -23,7 +23,7 @@ const SearchBtn = ({ placeHolderTxt, userLocation }) => {
 
     if (isOnUserLocationSearch) {
         var handleSearchBtnClick = () => {
-            navigator?.geolocation ? getUserLocationWeather() : alert("Geolocation is not supported by this browser.")
+            navigator?.geolocation ? _getWeather() : alert("Geolocation is not supported by this browser.")
             getUserCityName(userLocation).then(response => {
                 const { isError, data } = response;
                 if (isError) {
@@ -34,6 +34,9 @@ const SearchBtn = ({ placeHolderTxt, userLocation }) => {
                 console.log('data: ', data);
             })
         }
+    } else if (placeHolderTxt === 'Search by address, city name, or zip code') {
+        // GOAL: get the weather results based on the geocodes of the user's input that the user entered 
+        handleSearchBtnClick = () => { _getWeather() };
     }
     return (
         <button

@@ -12,13 +12,20 @@ const SearchInput = () => {
     const [isSearchResultsOn, setIsSearchResultsOn] = useState(false);
     const [isLoadingResults, setIsLoadingResults] = useState(false);
     const [longAndLatOfUser, setLongAndLatOfUser] = useState(null);
-    const _longAndLatOfUser = [longAndLatOfUser, setLongAndLatOfUser];
+    const [searchInput, setSearchInput] = useState("");
     const [searchResults, setSearchResults] = useState([])
+    const _longAndLatOfUser = [longAndLatOfUser, setLongAndLatOfUser];
     const _isSearchTypesModalOn = [isSearchTypesModalOn, setIsSearchTypesModalOn];
     const _placeholderTxt = [placeholderTxt, setPlaceholderTxt];
 
+    useEffect(() => {
+        console.log('longAndLatOfUser: ', longAndLatOfUser)
+        console.log('searchInput: ', searchInput)
+    })
+
     if (placeholderTxt === 'Search by address, city name, or zip code') {
         var handleOnChange = event => {
+            setSearchInput(event.target.value);
             if (event.target.value.length >= 3) {
                 setIsSearchResultsOn(true);
                 getGeoCode(event.target.value).then(data => {
@@ -44,12 +51,20 @@ const SearchInput = () => {
     return (
         <section className='searchInputContainer'>
             <div>
-                <input type="text" placeholder={placeholderTxt} onChange={event => { handleOnChange(event) }} />
+                <input
+                    type="text"
+                    placeholder={placeholderTxt}
+                    onChange={event => { handleOnChange(event) }}
+                    value={searchInput}
+                />
                 <div className='searchResultsContainer'>
                     {isSearchResultsOn &&
                         <SearchResults
                             isLoadingResults={isLoadingResults}
                             searchResults={searchResults}
+                            setSearchInput={setSearchInput}
+                            setIsSearchResultsOn={setIsSearchResultsOn}
+                            _longAndLatOfUser={_longAndLatOfUser}
                         />
                     }
                 </div>
@@ -57,6 +72,7 @@ const SearchInput = () => {
                     _placeHolderTxt={_placeholderTxt}
                     _isSearchTypesModalOn={_isSearchTypesModalOn}
                     _longAndLatOfUser={_longAndLatOfUser}
+                    setSearchInput={setSearchInput}
                 />
             </div>
         </section>

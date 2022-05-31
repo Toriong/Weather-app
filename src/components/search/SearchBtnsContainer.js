@@ -4,7 +4,7 @@ import SearchTypes from '../modals/SearchTypes';
 import '../../css/comp-css/search/searchBtnsContainer.css'
 import SearchBtn from '../buttons/SearchBtn';
 
-const SearchBtnsContainer = ({ _placeHolderTxt, _isSearchTypesModalOn, _longAndLatOfUser }) => {
+const SearchBtnsContainer = ({ _placeHolderTxt, _isSearchTypesModalOn, _longAndLatOfUser, setSearchInput }) => {
     const [placeholderTxt, setPlaceHolderTxt] = _placeHolderTxt;
     const [isSearchTypesModalOn, setIsSearchTypesModalOn] = _isSearchTypesModalOn;
     const [longAndLatOfUser, setLongAndLatOfUser] = _longAndLatOfUser;
@@ -40,7 +40,7 @@ const SearchBtnsContainer = ({ _placeHolderTxt, _isSearchTypesModalOn, _longAndL
                         <span>{searchTypeTxt}</span>
                     </button>
                     <div>
-                        {isSearchTypesModalOn && <SearchTypes setPlaceHolderTxt={setPlaceHolderTxt} setIsSearchTypesModalOn={setIsSearchTypesModalOn} setLongAndLatOfUser={setLongAndLatOfUser} />}
+                        {isSearchTypesModalOn && <SearchTypes setPlaceHolderTxt={setPlaceHolderTxt} setIsSearchTypesModalOn={setIsSearchTypesModalOn} setLongAndLatOfUser={setLongAndLatOfUser} setSearchInput={setSearchInput} />}
                     </div>
                 </div>
                 <SearchBtn placeHolderTxt={placeholderTxt} userLocation={longAndLatOfUser} />
