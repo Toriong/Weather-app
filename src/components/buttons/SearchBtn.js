@@ -23,27 +23,22 @@ const SearchBtn = ({ placeHolderTxt, userLocation, setTimeOfLocation, setWeather
     const isOnUserLocationSearch = placeHolderTxt === "Using your location. Press the 'search' icon to get results"
 
 
+    // GOAL:
+
     if (isOnUserLocationSearch) {
         var handleSearchBtnClick = () => {
             navigator?.geolocation ? _getWeather() : alert("Geolocation is not supported by this browser.")
-            getUserCityName(userLocation).then(response => {
-                const { isError, data } = response;
-                if (isError) {
-                    alert('An error has occurred, cannot display location of user.')
-                    return;
-                };
 
-                console.log('data: ', data);
-            });
-            getLocationTime(userLocation)
-                .then(data => {
-                    const { didError, time } = data;
-                    if (didError) {
-                        console.error('An error has occurrerd in getting the time of target location.')
-                        return;
-                    }
-                    setTimeOfLocation(time);
-                })
+            getGeoCode(null, userLocation).then(data => console.log('data: ', data))
+            // getLocationTime(userLocation)
+            //     .then(data => {
+            //         const { didError, time } = data;
+            //         if (didError) {
+            //             console.error('An error has occurrerd in getting the time of target location.')
+            //             return;
+            //         }
+            //         setTimeOfLocation(time);
+            //     })
         }
     } else if (placeHolderTxt === 'Search by address, city name, or zip code') {
         // GOAL: get the weather results based on the geocodes of the user's input that the user entered 

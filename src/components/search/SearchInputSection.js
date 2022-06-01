@@ -31,20 +31,19 @@ const SearchInput = ({ setWeatherOfDays, setTimeOfLocation }) => {
         var handleOnChange = event => {
             setSearchInput(event.target.value);
             if (event.target.value.length >= 3) {
+                setIsLoadingResults(true);
                 setIsSearchResultsOn(true);
                 getGeoCode(event.target.value).then(data => {
-                    const { addresses, didError, errorMsg } = data;
+                    const { addresses, didError, errorMsg } = data ?? {}
                     if (didError) {
                         console.error('An error has occurred: ', errorMsg);
-                        alert('An error has occurred, will refresh page.')
-                        window.location.reload();
+                        alert('An error has occurred. Refresh the page and try again.')
                         return;
                     };
                     console.log('addresses: ', addresses);
                     setSearchResults(addresses);
                     setIsLoadingResults(false);
                 });
-                setIsLoadingResults(true);
             } else {
                 setIsSearchResultsOn(false)
             }

@@ -16,7 +16,7 @@ const SearchResults = ({ searchResults, isLoadingResults, setSearchInput, _longA
             {isLoadingResults ?
                 <span>Loading results...</span>
                 :
-                searchResults.length ?
+                searchResults?.length ?
                     searchResults.map(searchResult => {
                         const { latitude, longitude, label } = searchResult;
                         return <SearchResult
