@@ -3,8 +3,10 @@ import { BsSearch } from "react-icons/bs";
 import SearchTypes from '../modals/SearchTypes';
 import '../../css/comp-css/search/searchBtnsContainer.css'
 import SearchBtn from '../buttons/SearchBtn';
+import SearchInput from './SearchInputSection';
 
-const SearchBtnsContainer = ({ _placeHolderTxt, _isSearchTypesModalOn, _longAndLatOfUser, setSearchInput, setTimeOfLocation, setWeatherOfDays }) => {
+const SearchBtnsContainer = ({ _placeHolderTxt, _isSearchTypesModalOn, _longAndLatOfUser, _searchInput, setTargetLocation, setWeatherOfDays }) => {
+    const [searchInput, setSearchInput] = _searchInput;
     const [placeholderTxt, setPlaceHolderTxt] = _placeHolderTxt;
     const [isSearchTypesModalOn, setIsSearchTypesModalOn] = _isSearchTypesModalOn;
     const [longAndLatOfUser, setLongAndLatOfUser] = _longAndLatOfUser;
@@ -43,7 +45,13 @@ const SearchBtnsContainer = ({ _placeHolderTxt, _isSearchTypesModalOn, _longAndL
                         {isSearchTypesModalOn && <SearchTypes setPlaceHolderTxt={setPlaceHolderTxt} setIsSearchTypesModalOn={setIsSearchTypesModalOn} setLongAndLatOfUser={setLongAndLatOfUser} setSearchInput={setSearchInput} />}
                     </div>
                 </div>
-                <SearchBtn placeHolderTxt={placeholderTxt} userLocation={longAndLatOfUser} setTimeOfLocation={setTimeOfLocation} setWeatherOfDays={setWeatherOfDays} />
+                <SearchBtn
+                    placeHolderTxt={placeholderTxt}
+                    userLocation={longAndLatOfUser}
+                    setTargetLocation={setTargetLocation}
+                    setWeatherOfDays={setWeatherOfDays}
+                    searchInput={searchInput}
+                />
             </div>
         </div>
     )

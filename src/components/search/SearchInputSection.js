@@ -8,7 +8,7 @@ import SearchBtnsContainer from './SearchBtnsContainer';
 // GOAL: store the 7 day forecast into the state of weatherOfDays
 
 
-const SearchInput = ({ setWeatherOfDays, setTimeOfLocation }) => {
+const SearchInput = ({ setWeatherOfDays, setTargetLocation }) => {
     const [placeholderTxt, setPlaceholderTxt] = useState('Search by address, city name, or zip code');
     const [isSearchTypesModalOn, setIsSearchTypesModalOn] = useState(false);
     const [isSearchResultsOn, setIsSearchResultsOn] = useState(false);
@@ -16,6 +16,7 @@ const SearchInput = ({ setWeatherOfDays, setTimeOfLocation }) => {
     const [longAndLatOfUser, setLongAndLatOfUser] = useState(null);
     const [searchInput, setSearchInput] = useState("");
     const [searchResults, setSearchResults] = useState([]);
+    const _searchInput = [searchInput, setSearchInput];
     const _longAndLatOfUser = [longAndLatOfUser, setLongAndLatOfUser];
     const _isSearchTypesModalOn = [isSearchTypesModalOn, setIsSearchTypesModalOn];
     const _placeholderTxt = [placeholderTxt, setPlaceholderTxt];
@@ -77,9 +78,9 @@ const SearchInput = ({ setWeatherOfDays, setTimeOfLocation }) => {
                     _placeHolderTxt={_placeholderTxt}
                     _isSearchTypesModalOn={_isSearchTypesModalOn}
                     _longAndLatOfUser={_longAndLatOfUser}
-                    setSearchInput={setSearchInput}
-                    setTimeOfLocation={setTimeOfLocation}
+                    setTargetLocation={setTargetLocation}
                     setWeatherOfDays={setWeatherOfDays}
+                    _searchInput={_searchInput}
                 />
             </div>
         </section>

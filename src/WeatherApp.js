@@ -3,19 +3,19 @@ import SearchBar from './components/search/SearchBar';
 import WeatherSection from './components/weatherUI/WeatherSection';
 
 const WeatherApp = () => {
-  const [timeOfLocation, setTimeOfLocation] = useState(null)
+  const [targetLocation, setTargetLocation] = useState({});
   const [weatherOfDays, setWeatherOfDays] = useState([]);
+
   // const _weatherOfDays = [weatherOfDays, setWeatherOfDays];
 
-  useEffect(() => {
-    console.log('weatherDays: ', weatherOfDays)
-  })
+
+  // GOAL: when the user presses the search button, get the location of the target location
 
 
   return (
     <div className="weather-app-main">
-      <SearchBar setWeatherOfDays={setWeatherOfDays} setTimeOfLocation={setTimeOfLocation} />
-      <WeatherSection timeOfLocation={timeOfLocation} weatherOfDays={weatherOfDays} />
+      <SearchBar setWeatherOfDays={setWeatherOfDays} setTargetLocation={setTargetLocation} />
+      <WeatherSection targetLocation={targetLocation} weatherOfDays={weatherOfDays} />
     </div>
   );
 }

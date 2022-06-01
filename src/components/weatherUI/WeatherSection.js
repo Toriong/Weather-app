@@ -12,7 +12,7 @@ import React, { useEffect } from 'react'
 
 // the date for each card is on
 
-const WeatherSection = ({ timeOfLocation, weatherOfDays }) => {
+const WeatherSection = ({ targetLocation, weatherOfDays }) => {
 
 
 
@@ -28,12 +28,9 @@ const WeatherSection = ({ timeOfLocation, weatherOfDays }) => {
     // store the current date into currentDate  
 
 
-
-
-
-
-    const currentDate = new Date();
-    const dateOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+    useEffect(() => {
+        console.log('targetLocation: ', targetLocation)
+    })
 
     const getMonthName = monthNumber => {
         const date = new Date();
