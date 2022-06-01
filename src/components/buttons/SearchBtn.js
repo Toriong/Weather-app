@@ -8,24 +8,22 @@ import { getWeather } from '../../apiFns/getWeather'
 
 const SearchBtn = ({ placeHolderTxt, userLocation, setTargetLocation, setWeatherOfDays, searchInput }) => {
 
-    const getTimeOfLocation = offset => {
-        // create Date object for current location
-        const currentDate = new Date();
+    const getTimeOfLocation = timeZone => {
+        const options = {
+            timeZone: timeZone,
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric',
+            hour: 'numeric',
+            minute: 'numeric',
+            second: 'numeric',
+        }
+        let formatter = new Intl.DateTimeFormat([], options);
 
-        // convert to msec
-        // subtract local time zone offset
-        // get UTC time in msec
-        const utc = currentDate.getTime() + (currentDate.getTimezoneOffset() * 60000);
-
-        // create new Date object for different city
-        // using supplied offset
-        const timeOfTargetLocation = new Date(utc + (3600000 * offset));
-
-        // return time as a string
-        return timeOfTargetLocation;
+        return formatter.format(new Date())
     }
 
-    const _getWeather = () => {
+    const _getWeather = locationName => {
         getWeather(userLocation)
             .then(response => {
                 const { weather, didError } = response;
@@ -34,14 +32,14 @@ const SearchBtn = ({ placeHolderTxt, userLocation, setTargetLocation, setWeather
                     alert('An error has occurred in getting weather of target location.')
                     return;
                 };
-                const { daily, timezone_offset } = weather;
+                const { daily, timezone } = weather;
                 daily?.length ? setWeatherOfDays(weather.daily.slice(0, weather.daily.length - 1)) : setWeatherOfDays(weather.daily);
                 // GOAL: get the time of the target location and display it onto the DOM
                 setTargetLocation(targetLocation => {
                     return {
                         ...targetLocation,
-                        name: searchInput,
-                        time: getTimeOfLocation(timezone_offset)
+                        name: locationName ?? searchInput,
+                        time: getTimeOfLocation(timezone)
                     }
                 })
             })
@@ -75,8 +73,21 @@ const SearchBtn = ({ placeHolderTxt, userLocation, setTargetLocation, setWeather
 
     if (isOnUserLocationSearch) {
         var handleSearchBtnClick = () => {
-            navigator?.geolocation ? _getWeather() : alert("Geolocation is not supported by this browser.");
-            getReverseGeoCode(userLocation).then(data => console.log('current user location: ', data));
+            getUserCityName(userLocation).then(location => {
+                const { country, state, name } = location;
+                if (state) {
+                    var _location = `${name}, ${state}, ${country}`
+                } else if (state && country) {
+                    _location = `${state}, ${country}`;
+                } else if (country) {
+                    _location = country
+                } else {
+                    _location = "Unable to get your location. "
+                }
+                _getWeather(_location);
+            })
+            // navigator?.geolocation ? _getWeather() : alert("Geolocation is not supported by this browser.");
+
             // getLocationTime(userLocation)
             //     .then(data => {
             //         const { didError, time } = data;

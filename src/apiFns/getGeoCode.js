@@ -29,6 +29,7 @@ export const getGeoCode = async (address) => {
 export const getReverseGeoCode = async coordinates => {
     const { longitude, latitude } = coordinates;
     const _query = `${latitude}, ${longitude}`;
+    console.log('_query: ', _query)
     const positionStackUrl = `http://api.positionstack.com/v1/reverse?access_key=${postionStackApiKey}&query=${_query}`
     const proxyServerUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(positionStackUrl)}`
 
