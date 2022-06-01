@@ -15,7 +15,6 @@ const SearchBtn = ({ placeHolderTxt, userLocation, setTimeOfLocation, setWeather
                     alert('An error has occurred in getting weather of target location.')
                     return;
                 };
-                console.log("hey there: ", weather.daily)
                 weather?.daily?.length ? setWeatherOfDays(weather.daily.slice(0, weather.daily.length - 1)) : setWeatherOfDays(weather.daily);
             })
 

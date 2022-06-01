@@ -13,9 +13,7 @@ import React, { useEffect } from 'react'
 // the date for each card is on
 
 const WeatherSection = ({ timeOfLocation, weatherOfDays }) => {
-    useEffect(() => {
-        console.log('weatherOfDays, steaksssss: ', weatherOfDays)
-    });
+
 
 
     // GOAL: the following will be displayed onto the DOM:
@@ -23,33 +21,42 @@ const WeatherSection = ({ timeOfLocation, weatherOfDays }) => {
     // the temperature
     // the animation depending on the weather type (EXAMPLE: if the cloudy, then show a cloudy animation)  
 
+    // GOAL: get the date for each day in the weather forecast 
+    // the date is displayed for each weather day
+    // the date is converted into letters instead of numbers (June 1, 2022)
+    // for each weather card, get the target date in miliseconds 
+    // store the current date into currentDate  
 
-    // GOAL: if x is the current date and y is the index of the weatherOfDays array, then get the date of the following day: x + y
-    // x + y date is displayed onto the DOM 
-    // use the following to make the date shorter: .toLocaleDateString('en-US',  { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })
-    // change the miliSeconds to a date 
-    // you will get the date of x + y date in miliSeconds 
-    // end of storing in dateInMiliSeconds
-    // pass the following for the setDate method that is being applied to currentDate: today's date (currentDate.getDate()) + 1)
-    // apply the setDate method to the current date var
-    // store the following above into dateInMiliSeconds
-    // declare dateInMiliSeconds var 
-    // get the currentDate
+
+
+
+
+
     const currentDate = new Date();
     const dateOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+
+    const getMonthName = monthNumber => {
+        const date = new Date();
+        date.setMonth(monthNumber - 1);
+
+        return date.toLocaleString('en-US', {
+            month: 'long',
+        });
+    }
 
 
     return (
         <section>
             {!!weatherOfDays?.length &&
                 weatherOfDays.map((day, index) => {
-                    console.log('weather day: ', day)
-                    const _day = currentDate.getDate() + index
-                    console.log('_day: ', _day);
-                    let dateInMiliSeconds = currentDate.setDate(_day);
-                    const letterDate = new Date(dateInMiliSeconds);
-                    const letterDateShorten = letterDate.toLocaleDateString('en-US', dateOptions);
-                    console.log('letterDateShorten: ', letterDateShorten)
+                    let targetDate = new Date();
+                    targetDate.setDate(targetDate.getDate() + index);
+                    let _day = targetDate.getDate();
+                    let year = targetDate.getFullYear();
+                    const monthName = getMonthName(targetDate.getMonth() + 1)
+                    const date = `${monthName} ${_day}, ${year}`;
+                    console.log('bacon: ', date);
+
                     return <div className='weatherDayCard'>
 
                     </div>
