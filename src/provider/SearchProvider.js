@@ -10,7 +10,7 @@ export const SearchProvider = props => {
     const [isLoadingWeatherDataDone, setIsLoadingWeaetherDateDone] = useState(false)
     const [isWeatherDataReceived, setIsWeatherDataReceived] = useState(false);
     const [isLoadingScreenOn, setIsLoadingScreenOn] = useState(false);
-    const [currentDate, setCurrentDate] = useState("")
+    const [currentDate, setCurrentDate] = useState("");
 
 
 

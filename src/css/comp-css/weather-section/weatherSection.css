@@ -1,3 +1,5 @@
+
+
 .weatherSection > header{
     display: flex;
     justify-content: center;
@@ -22,3 +24,12 @@
     width: 100%;
     text-align: center;
 }
+
+#currentDaySection{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+margin-top: 8px;
+}
+
+

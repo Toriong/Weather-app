@@ -1,8 +1,8 @@
 import React, { useContext, useEffect } from 'react'
 import { SearchContext } from '../../provider/SearchProvider';
+import WeatherDayCard from './WeatherDayCard';
 import { getDate } from '../../timeFns/getDate';
 import '../../css/comp-css/weather-section/weatherSection.css'
-import WeatherDayCard from './WeatherDayCard';
 
 // GOAL:
 // create the weather section for the UI:
@@ -62,7 +62,6 @@ const WeatherSection = ({ targetLocation, weather }) => {
             {isWeatherDataRecevied &&
                 <>
                     <header>
-
                         <span>{targetLocationTime}</span>
                         <span>{targetLocationName}</span>
 
@@ -70,9 +69,9 @@ const WeatherSection = ({ targetLocation, weather }) => {
                         {/* the location that the user searched for targetlocation.name*/}
                         {/* the time of the search: 'The weather as of targetLocation.time' */}
                     </header>
-                    <section>
+                    <section id='currentDaySection'>
                         {/* put the current date here */}
-                        <WeatherDayCard />
+                        <WeatherDayCard isPresentDay />
                     </section>
                     <section>
                         {/* {!!dailyForecast?.length &&
