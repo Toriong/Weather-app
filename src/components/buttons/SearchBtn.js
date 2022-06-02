@@ -1,12 +1,16 @@
-import React, { useEffect } from 'react'
-import { getGeoCode, getReverseGeoCode } from '../../apiFns/getGeoCode';
-import { getLocationTime } from '../../apiFns/getLocationTime';
+import React, { useContext, useEffect } from 'react'
 import { getUserCityName } from '../../apiFns/getUserCityName';
 import { getWeather } from '../../apiFns/getWeather'
+import { SearchContext } from '../../provider/SearchProvider';
+import { getDate } from '../../timeFns/getDate';
 
 
 
-const SearchBtn = ({ placeHolderTxt, userLocation, setTargetLocation, setWeatherOfDays, searchInput }) => {
+const SearchBtn = ({ placeHolderTxt, userLocation, setTargetLocation, setWeather, searchInput, setIsWeatherResultsOn }) => {
+    const { _isLoadingScreenOn, _isWeatherDataReceived, _currentDate } = useContext(SearchContext)
+    const [currentDate, setCurrentDate] = _currentDate;
+    const [isLoadingScreenOn, setIsLoadingScreenOn] = _isLoadingScreenOn;
+    const [isWeatherDataReceived, setIsWeatherDataReceived] = _isWeatherDataReceived;
 
     const getTimeOfLocation = timeZone => {
         const options = {
@@ -15,8 +19,7 @@ const SearchBtn = ({ placeHolderTxt, userLocation, setTargetLocation, setWeather
             month: 'long',
             day: 'numeric',
             hour: 'numeric',
-            minute: 'numeric',
-            second: 'numeric',
+            minute: 'numeric'
         }
         let formatter = new Intl.DateTimeFormat([], options);
 
@@ -32,16 +35,24 @@ const SearchBtn = ({ placeHolderTxt, userLocation, setTargetLocation, setWeather
                     alert('An error has occurred in getting weather of target location.')
                     return;
                 };
-                const { daily, timezone } = weather;
-                daily?.length ? setWeatherOfDays(weather.daily.slice(0, weather.daily.length - 1)) : setWeatherOfDays(weather.daily);
-                // GOAL: get the time of the target location and display it onto the DOM
+                if (!weather) {
+                    alert('Something went wrong, please refresh the page and try again.')
+                    return;
+                }
+                const { daily, timezone, current } = weather;
+                const currentDate = daily[0];
+                daily.shift();
+                setWeather({ daily, current: { ...current, moreInfo: currentDate } })
+                setCurrentDate(getDate())
                 setTargetLocation(targetLocation => {
                     return {
                         ...targetLocation,
                         name: locationName ?? searchInput,
-                        time: getTimeOfLocation(timezone)
+                        time: getTimeOfLocation(timezone),
                     }
-                })
+                });
+                setIsLoadingScreenOn(false);
+                setIsWeatherDataReceived(true);
             })
 
     };
@@ -73,6 +84,8 @@ const SearchBtn = ({ placeHolderTxt, userLocation, setTargetLocation, setWeather
 
     if (isOnUserLocationSearch) {
         var handleSearchBtnClick = () => {
+            setIsWeatherDataReceived(false);
+            setIsLoadingScreenOn(true)
             getUserCityName(userLocation).then(location => {
                 const { country, state, name } = location;
                 if (state) {
@@ -86,26 +99,12 @@ const SearchBtn = ({ placeHolderTxt, userLocation, setTargetLocation, setWeather
                 }
                 _getWeather(_location);
             })
-            // navigator?.geolocation ? _getWeather() : alert("Geolocation is not supported by this browser.");
-
-            // getLocationTime(userLocation)
-            //     .then(data => {
-            //         const { didError, time } = data;
-            //         if (didError) {
-            //             console.error('An error has occurrerd in getting the time of target location.')
-            //             return;
-            //         }
-            //         setTimeOfLocation(time);
-            //     })
         }
     } else if (placeHolderTxt === 'Search by address, city name, or zip code') {
         handleSearchBtnClick = () => {
+            setIsWeatherDataReceived(false);
             _getWeather()
         };
-
-        // GOAL: when the clicks on the search button, get the following:
-        // the target location name that the user search for 
-        // the time of that location
     }
     return (
         <button

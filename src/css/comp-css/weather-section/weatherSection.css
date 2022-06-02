@@ -1,0 +1,24 @@
+.weatherSection > header{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* max-height: 50px; */
+    flex-direction: column;
+    padding-top: 8px;
+}
+
+.weatherSection > header > span:not(:first-child){
+    margin-top: 3px;
+    font-weight: 700;
+}
+
+
+.weatherSection h3{
+    padding: 0;
+}
+
+#loadingWeatherTxt{
+    display: block;
+    width: 100%;
+    text-align: center;
+}

@@ -4,9 +4,14 @@ import WeatherSection from './components/weatherUI/WeatherSection';
 
 const WeatherApp = () => {
   const [targetLocation, setTargetLocation] = useState({});
-  const [weatherOfDays, setWeatherOfDays] = useState([]);
+  const [weather, setWeather] = useState([]);
+  const [currentDate, setCurrentDate] = useState(null);
 
-  // const _weatherOfDays = [weatherOfDays, setWeatherOfDays];
+
+
+
+
+  // const _weatherOfDays = [weather, setWeather];
 
 
   // GOAL: when the user presses the search button, get the location of the target location
@@ -14,8 +19,8 @@ const WeatherApp = () => {
 
   return (
     <div className="weather-app-main">
-      <SearchBar setWeatherOfDays={setWeatherOfDays} setTargetLocation={setTargetLocation} />
-      <WeatherSection targetLocation={targetLocation} weatherOfDays={weatherOfDays} />
+      <SearchBar setWeather={setWeather} setTargetLocation={setTargetLocation} setCurrentDate={setCurrentDate} />
+      <WeatherSection targetLocation={targetLocation} weather={weather} currentDate={currentDate} />
     </div>
   );
 }

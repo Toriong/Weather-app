@@ -5,7 +5,7 @@ import '../../css/comp-css/search/searchBtnsContainer.css'
 import SearchBtn from '../buttons/SearchBtn';
 import SearchInput from './SearchInputSection';
 
-const SearchBtnsContainer = ({ _placeHolderTxt, _isSearchTypesModalOn, _longAndLatOfUser, _searchInput, setTargetLocation, setWeatherOfDays }) => {
+const SearchBtnsContainer = ({ _placeHolderTxt, _isSearchTypesModalOn, _longAndLatOfUser, _searchInput, setTargetLocation, setWeather, setCurrentDate }) => {
     const [searchInput, setSearchInput] = _searchInput;
     const [placeholderTxt, setPlaceHolderTxt] = _placeHolderTxt;
     const [isSearchTypesModalOn, setIsSearchTypesModalOn] = _isSearchTypesModalOn;
@@ -49,8 +49,9 @@ const SearchBtnsContainer = ({ _placeHolderTxt, _isSearchTypesModalOn, _longAndL
                     placeHolderTxt={placeholderTxt}
                     userLocation={longAndLatOfUser}
                     setTargetLocation={setTargetLocation}
-                    setWeatherOfDays={setWeatherOfDays}
+                    setWeather={setWeather}
                     searchInput={searchInput}
+                    setCurrentDate={setCurrentDate}
                 />
             </div>
         </div>

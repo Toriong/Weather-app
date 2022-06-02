@@ -8,7 +8,7 @@ import SearchBtnsContainer from './SearchBtnsContainer';
 // GOAL: store the 7 day forecast into the state of weatherOfDays
 
 
-const SearchInput = ({ setWeatherOfDays, setTargetLocation }) => {
+const SearchInput = ({ setWeather, setTargetLocation, setCurrentDate }) => {
     const [placeholderTxt, setPlaceholderTxt] = useState('Search by address, city name, or zip code');
     const [isSearchTypesModalOn, setIsSearchTypesModalOn] = useState(false);
     const [isSearchResultsOn, setIsSearchResultsOn] = useState(false);
@@ -23,10 +23,7 @@ const SearchInput = ({ setWeatherOfDays, setTargetLocation }) => {
     let isUsingLocationOfUser = false
 
 
-    useEffect(() => {
-        console.log('longAndLatOfUser: ', longAndLatOfUser)
-        console.log('searchInput: ', searchInput)
-    })
+
 
     if (placeholderTxt === 'Search by address, city name, or zip code') {
         var handleOnChange = event => {
@@ -41,7 +38,6 @@ const SearchInput = ({ setWeatherOfDays, setTargetLocation }) => {
                         alert('An error has occurred. Refresh the page and try again.')
                         return;
                     };
-                    console.log('addresses: ', addresses);
                     setSearchResults(addresses);
                     setIsLoadingResults(false);
                 });
@@ -79,8 +75,9 @@ const SearchInput = ({ setWeatherOfDays, setTargetLocation }) => {
                     _isSearchTypesModalOn={_isSearchTypesModalOn}
                     _longAndLatOfUser={_longAndLatOfUser}
                     setTargetLocation={setTargetLocation}
-                    setWeatherOfDays={setWeatherOfDays}
+                    setWeather={setWeather}
                     _searchInput={_searchInput}
+                    setCurrentDate={setCurrentDate}
                 />
             </div>
         </section>

@@ -1,4 +1,8 @@
-import React, { useEffect } from 'react'
+import React, { useContext, useEffect } from 'react'
+import { SearchContext } from '../../provider/SearchProvider';
+import { getDate } from '../../timeFns/getDate';
+import '../../css/comp-css/weather-section/weatherSection.css'
+import WeatherDayCard from './WeatherDayCard';
 
 // GOAL:
 // create the weather section for the UI:
@@ -12,9 +16,19 @@ import React, { useEffect } from 'react'
 
 // the date for each card is on
 
-const WeatherSection = ({ targetLocation, weatherOfDays }) => {
+const WeatherSection = ({ targetLocation, weather }) => {
+    const { _isWeatherDataReceived, _isLoadingScreenOn } = useContext(SearchContext);
+    const [isWeatherDataRecevied, setIsWeatherDataReceived] = _isWeatherDataReceived;
+    const [isLoadingScreenOn, setIsLoadingScreenOn] = _isLoadingScreenOn;
+    const { daily: dailyForecast, current: currentDay } = weather ?? {}
+    const { name: targetLocationName, time: targetLocationTime } = targetLocation;
 
 
+
+    useEffect(() => {
+        console.log('weather: ', weather);
+        console.log('targetLocation: ', targetLocation)
+    })
 
     // GOAL: the following will be displayed onto the DOM:
     // the date 
@@ -22,42 +36,50 @@ const WeatherSection = ({ targetLocation, weatherOfDays }) => {
     // the animation depending on the weather type (EXAMPLE: if the cloudy, then show a cloudy animation)  
 
     // GOAL: get the date for each day in the weather forecast 
-    // the date is displayed for each weather day
+    // the date is displayed for each weather dayps
     // the date is converted into letters instead of numbers (June 1, 2022)
     // for each weather card, get the target date in miliseconds 
     // store the current date into currentDate  
 
 
-    useEffect(() => {
-        console.log('targetLocation: ', targetLocation)
-    })
-
-    const getMonthName = monthNumber => {
-        const date = new Date();
-        date.setMonth(monthNumber - 1);
-
-        return date.toLocaleString('en-US', {
-            month: 'long',
-        });
-    }
 
 
+
+
+    // GOAL: get the object that is stored in the current field
+
+    // GOAL: display the loading screen when the user presses the search button 
+
+    // GOAL: when the user receives the results, don't show the loading screen, present the weather data onto the UI 
+
+
+    // GOAL: when the user presses the searchBtn, show the loading screen, once date has been received from the api, set wasWeatherDateReceived to true
     return (
-        <section>
-            {!!weatherOfDays?.length &&
-                weatherOfDays.map((day, index) => {
-                    let targetDate = new Date();
-                    targetDate.setDate(targetDate.getDate() + index);
-                    let _day = targetDate.getDate();
-                    let year = targetDate.getFullYear();
-                    const monthName = getMonthName(targetDate.getMonth() + 1)
-                    const date = `${monthName} ${_day}, ${year}`;
-                    console.log('bacon: ', date);
+        <section className='weatherSection'>
+            {isLoadingScreenOn &&
+                <span id="loadingWeatherTxt">Loading, please wait...</span>
+            }
+            {isWeatherDataRecevied &&
+                <>
+                    <header>
 
-                    return <div className='weatherDayCard'>
+                        <span>{targetLocationTime}</span>
+                        <span>{targetLocationName}</span>
 
-                    </div>
-                })
+                        {/* put the following in this element: */}
+                        {/* the location that the user searched for targetlocation.name*/}
+                        {/* the time of the search: 'The weather as of targetLocation.time' */}
+                    </header>
+                    <section>
+                        {/* put the current date here */}
+                        <WeatherDayCard />
+                    </section>
+                    <section>
+                        {/* {!!dailyForecast?.length &&
+                            dailyForecast.map((day, index) => <WeatherDayCard day={day} index={index} />)
+                        } */}
+                    </section>
+                </>
             }
         </section>
     )
