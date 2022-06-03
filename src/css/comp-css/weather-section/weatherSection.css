@@ -1,10 +1,12 @@
+.weatherSection{
+    padding-bottom: 100px;
+}
 
 
 .weatherSection > header{
     display: flex;
     justify-content: center;
     align-items: center;
-    /* max-height: 50px; */
     flex-direction: column;
     padding-top: 8px;
 }
@@ -30,6 +32,10 @@
     justify-content: center;
     align-items: center;
 margin-top: 8px;
+}
+
+.dailyForecastContainer{
+    display: flex;
 }
 
 

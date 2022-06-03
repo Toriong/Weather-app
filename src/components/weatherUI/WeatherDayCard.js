@@ -10,14 +10,15 @@ const WeatherDayCard = ({ index, day, isPresentDay }) => {
     const date = isPresentDay ? currentDate : getDate(index + 1);
     const { weather, feels_like, wind_gust, moreInfo, dew_point, temp } = day;
     const tempUnits = isCelsius ? '°C' : '°F'
-    const { min, max } = moreInfo.temp;
+    const { min, max } = moreInfo?.temp ?? temp;
     console.log('day: ', day)
     const { icon: weatherIcon, description } = weather[0] ?? {};
-    const weatherIconUrl = `http://openweathermap.org/img/wn/${weatherIcon}@2x.png`
+    const weatherIconUrl = `http://openweathermap.org/img/wn/${weatherIcon}@2x.png`;
+    const weatherDayCard = isPresentDay ? 'weatherDayCard' : 'weatherDayCard daily'
 
 
     return (
-        <div className='weatherDayCard'>
+        <div className={weatherDayCard}>
             <section>
                 <h1>{date}</h1>
             </section>
@@ -54,4 +55,4 @@ const WeatherDayCard = ({ index, day, isPresentDay }) => {
         </div>
     )
 }
-export default WeatherDayCard
+export default WeatherDayCard;

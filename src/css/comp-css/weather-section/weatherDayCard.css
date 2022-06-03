@@ -9,6 +9,14 @@
   box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22);
 }
 
+.weatherDayCard.daily{
+  height: 310px;
+}
+
+.weatherDayCard.daily > section:first-child h1{
+  font-size: 17px;;
+}
+
 .weatherDayCard span{
   font-size: 20px;
 }

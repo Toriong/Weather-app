@@ -11,14 +11,14 @@ const WeatherSection = ({ targetLocation }) => {
     const [isWeatherDataRecevied, setIsWeatherDataReceived] = _isWeatherDataReceived;
     const [isLoadingScreenOn, setIsLoadingScreenOn] = _isLoadingScreenOn;
     const { daily: dailyForecast, current: currentDay } = weather ?? {}
-    console.log('dailyForecast: ', dailyForecast)
     const { name: targetLocationName, time: targetLocationTime } = targetLocation;
 
 
 
     useEffect(() => {
-        console.log('weather: ', weather);
-        console.log('targetLocation: ', targetLocation)
+        // console.log('weather: ', weather);
+        // console.log('targetLocation: ', targetLocation)
+        console.log('dailyForecast: ', dailyForecast)
     })
 
 
@@ -41,10 +41,10 @@ const WeatherSection = ({ targetLocation }) => {
                         {/* put the current date here */}
                         <WeatherDayCard isPresentDay day={currentDay} />
                     </section>
-                    <section>
-                        {/* {!!dailyForecast?.length &&
+                    <section className='dailyForecastContainer'>
+                        {!!dailyForecast?.length &&
                             dailyForecast.map((day, index) => <WeatherDayCard day={day} index={index} />)
-                        } */}
+                        }
                     </section>
                 </>
             }
@@ -52,4 +52,4 @@ const WeatherSection = ({ targetLocation }) => {
     )
 }
 
-export default WeatherSection
+export default WeatherSection;

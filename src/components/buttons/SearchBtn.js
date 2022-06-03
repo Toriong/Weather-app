@@ -51,6 +51,7 @@ const SearchBtn = ({ placeHolderTxt, userLocation, setTargetLocation, searchInpu
                 const { daily, timezone, current } = weather;
                 const { temp, feels_like } = daily[0];
                 daily.shift();
+                daily.pop();
                 setWeather({ daily, current: { ...current, moreInfo: { temp, feels_like } } })
                 setCurrentDate(getDate())
                 setTargetLocation(targetLocation => {
