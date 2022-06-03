@@ -1,0 +1,13 @@
+.searchTypesModal{
+    border: var(--borderColor);
+    position: fixed;
+    width: 100px;
+    transform: translateY(5px);
+    background-color: white;
+}
+
+.searchTypesModal > button{
+    height: 25px;
+    text-align: left;
+    width: 100%;
+}
