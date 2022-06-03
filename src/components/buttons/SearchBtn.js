@@ -6,8 +6,9 @@ import { getDate } from '../../timeFns/getDate';
 
 
 
-const SearchBtn = ({ placeHolderTxt, userLocation, setTargetLocation, setWeather, searchInput, isGettingUserLocation }) => {
-    const { _isLoadingScreenOn, _isWeatherDataReceived, _currentDate } = useContext(SearchContext)
+const SearchBtn = ({ placeHolderTxt, userLocation, setTargetLocation, searchInput, isGettingUserLocation }) => {
+    const { _isLoadingScreenOn, _isWeatherDataReceived, _currentDate, _weather } = useContext(SearchContext)
+    const [, setWeather] = _weather;
     const [currentDate, setCurrentDate] = _currentDate;
     const [isLoadingScreenOn, setIsLoadingScreenOn] = _isLoadingScreenOn;
     const [isWeatherDataReceived, setIsWeatherDataReceived] = _isWeatherDataReceived;
@@ -46,10 +47,11 @@ const SearchBtn = ({ placeHolderTxt, userLocation, setTargetLocation, setWeather
                     alert('Something went wrong, please refresh the page and try again.')
                     return;
                 }
+
                 const { daily, timezone, current } = weather;
-                const currentDate = daily[0];
+                const { temp, feels_like } = daily[0];
                 daily.shift();
-                setWeather({ daily, current: { ...current, moreInfo: currentDate } })
+                setWeather({ daily, current: { ...current, moreInfo: { temp, feels_like } } })
                 setCurrentDate(getDate())
                 setTargetLocation(targetLocation => {
                     return {

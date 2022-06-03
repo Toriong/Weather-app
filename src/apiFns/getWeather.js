@@ -1,6 +1,8 @@
 
 const API_key = 'c0f45851ae0ccb974b0d53c18cdae059';
 
+// wind uses imperial units
+
 export const getWeather = async (coordinates, isCelius) => {
     const { longitude, latitude } = coordinates;
 

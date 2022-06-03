@@ -57,7 +57,6 @@ const SearchBtnsContainer = ({ _placeHolderTxt, _isSearchTypesModalOn, _longAndL
                     placeHolderTxt={placeholderTxt}
                     userLocation={longAndLatOfUser}
                     setTargetLocation={setTargetLocation}
-                    setWeather={setWeather}
                     searchInput={searchInput}
                     setCurrentDate={setCurrentDate}
                     isGettingUserLocation={isGettingUserLocation}
