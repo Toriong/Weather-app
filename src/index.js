@@ -4,13 +4,16 @@ import './css/index.css';
 import WeatherApp from './WeatherApp';
 import reportWebVitals from './reportWebVitals';
 import { SearchProvider } from './provider/SearchProvider';
+import { ModalProvider } from './provider/ModalProvider';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <SearchProvider>
-      <WeatherApp />
-    </SearchProvider>
+    <ModalProvider>
+      <SearchProvider>
+        <WeatherApp />
+      </SearchProvider>
+    </ModalProvider>
   </React.StrictMode>
 );
 

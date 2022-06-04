@@ -13,6 +13,7 @@ export const SearchProvider = props => {
     const [weather, setWeather] = useState(null);
     const [currentDate, setCurrentDate] = useState("");
     const [isCelsius, setIsCelsius] = useState(false);
+    const [selectedWeatherDay, setSelectedWeatherDay] = useState({});
 
 
 
@@ -26,7 +27,8 @@ export const SearchProvider = props => {
                 _isLoadingScreenOn: [isLoadingScreenOn, setIsLoadingScreenOn],
                 _currentDate: [currentDate, setCurrentDate],
                 _weather: [weather, setWeather],
-                _isCelsius: [isCelsius, setIsCelsius]
+                _isCelsius: [isCelsius, setIsCelsius],
+                _selectedWeatherDay: [selectedWeatherDay, setSelectedWeatherDay]
             }}
         >
             {props.children}
