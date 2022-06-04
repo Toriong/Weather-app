@@ -8,71 +8,102 @@ import WeatherIcon from '../weatherUI/WeatherIcon';
 import WeatherTempTable from '../weatherUI/WeatherTempTable';
 import '../../css/comp-css/modals/selectedWeatherDay.css';
 
+// GOAL: don't show the current section of the selectedWeatherDay
+
+// GOAL: show the following data for the average data section for the selectedWeatherDay:
+// the high
+// the low 
+// the humidity
+// dew point 
+// wind speed 
+
+// GOAL: show all temps for the table 
+
 const SelectedWeatherDay = () => {
     const { _selectedWeatherDay, _targetLocation, _tempUnits, _units } = useContext(WeatherInfoContext);
     const [units] = _units
     const [targetLocation, setTargetLocation] = _targetLocation
     const [selectedWeatherDay] = _selectedWeatherDay;
-    const { date, weather, feels_like, temp, averageForTheDay, humidity: humidityNum, dew_point, wind_speed, sunrise, sunset } = selectedWeatherDay;
-    const { weather: moreInfoWeather, temp: moreInfoTemp, humidity: humidityMoreInfoNum, wind_speed: windSpeedAverage, rain, snow, dewPoint, feels_like: feelsLikeAverage, temp: tempAverage } = averageForTheDay ?? {};
+    const { date, weather, feels_like, temp, averageForTheDay, humidity: humidityNum, dew_point, wind_speed, sunrise, sunset, isPresentDay, rain: rainMain, snow: snowMain } = selectedWeatherDay;
+    const { weather: moreInfoWeather, temp: moreInfoTemp, humidity: humidityMoreInfoNum, wind_speed: windSpeedAverage, rain, snow, dewPoint, feels_like: feelsLikeAverage, temp: tempAverages, sunrise: sunriseProjected, sunset: sunsetProjected } = averageForTheDay ?? {};
     const { max, min } = moreInfoTemp ?? {}
     const { description: moreInfoDescription, icon: moreInfoIcon } = moreInfoWeather?.[0] ?? {};
     const { icon: weatherIcon, description } = weather?.[0] ?? {};
     const { speed: speedUnits, temp: tempUnits } = units;
     let _description = description.charAt(0).toUpperCase() + description.slice(1);
-    const tableData = { temp: tempAverage, feelsLike: feelsLikeAverage };
-    const _sunrise = getTime(sunrise);
-    const _sunset = getTime(sunset);
+    const weatherDayModalClassName = isPresentDay ? 'weatherDayModal presentDay' : 'weatherDayModal notPresentDay'
+
+    const weatherDescriptionContainerCss = isPresentDay ? 'weatherDescriptionContainer presentDay' : 'weatherDescriptionContainer notPresentDay'
+
+    if (!isPresentDay) {
+        var { max: mainMax, min: mainMin, ..._temp } = temp ?? {};
+        var _tempAverages = { ..._temp };
+    }
+
+    const tableData = { temp: isPresentDay ? tempAverages : _tempAverages, feelsLike: isPresentDay ? feelsLikeAverage : feels_like };
+    const _sunrise = getTime(sunrise ?? sunriseProjected);
+    const _sunset = getTime(sunset ?? sunsetProjected);
+
 
     if (moreInfoDescription) {
         var _moreInfoDescription = moreInfoDescription.charAt(0).toUpperCase() + moreInfoDescription.slice(1)
+
     }
 
 
     useEffect(() => {
         console.log('selectedWeatherDay: ', selectedWeatherDay);
         console.log('averageForTheDay: ', averageForTheDay);
+        console.log('humidity: ', humidityNum)
     })
 
+
+
+
     return (
-        <div className='weatherDayModal'>
+        <div className={weatherDayModalClassName} >
             <section>
-                <span>{date}</span>
+                <span>{isPresentDay ? 'Today' : date}</span>
                 <span>{targetLocation.name}</span>
             </section>
             <section className='weatherDescriptionSec1'>
                 <div>
                     <WeatherIcon weatherIcon={weatherIcon} />
                 </div>
-                <div className='descriptionContainer1'>
-                    <div className='currentWeatherInfo'>
-                        <span>Current:</span>
-                        <span className='infoTxt'>Temp is {Math.round(temp)}{tempUnits}.</span>
-                        <span className='infoTxt'> {_description}. Feel likes {Math.round(feels_like)}{tempUnits}.</span>
-                        <span className='infoTxt'>Humidity: {humidityNum}%</span>
-                        <span className='infoTxt'>Dew point: {Math.round(dew_point)}{tempUnits}</span>
-                        <span className='infoTxt'>Wind speed: {Math.round(wind_speed)} {speedUnits}</span>
-                    </div>
-                    <div className='averageForTheDay'>
-                        <span>Averages for the day: </span>
-                        <div>
-                            <WeatherIcon weatherIcon={moreInfoIcon} isIconSmaller />
-                            <span className='infoTxt'>{_moreInfoDescription}.</span>
+                <div className={weatherDescriptionContainerCss}>
+                    {isPresentDay &&
+                        <div className='currentWeatherInfo'>
+                            <span>Current:</span>
+                            <span className='infoTxt'>Temp is {Math.round(temp)}{tempUnits}.</span>
+                            <span className='infoTxt'> {_description}. Feel likes {Math.round(feels_like)}{tempUnits}.</span>
+                            <span className='infoTxt'>Humidity: {humidityNum}%</span>
+                            <span className='infoTxt'>Dew point: {Math.round(dew_point)}{tempUnits}</span>
+                            <span className='infoTxt'>Wind speed: {Math.round(wind_speed)} {speedUnits}</span>
                         </div>
-                        <div>
-                            <span className='infoTxt'>The high will be {Math.round(max)}{tempUnits}. The low will be {Math.round(min)}{tempUnits}.</span>
-                            <span className='infoTxt'>Humidity: {humidityMoreInfoNum}%</span>
-                            {rain && <span className='infoTxt'>Rain: {rain}mm</span>}
-                            {snow && <span className='infoTxt'>Snow: {snow}mm</span>}
-                            <span className='infoTxt'>Dew point: {Math.round(dewPoint)}{tempUnits}</span>
-                            <span className='infoTxt'>Wind speed: {Math.round(windSpeedAverage)} {speedUnits}</span>
+                    }
+                    <div className='averageForTheDay'>
+                        <span>{isPresentDay ? 'Projections for the day:' : 'Projected forecast:'} </span>
+                        {isPresentDay &&
+                            <div className='presentDayDescription'>
+                                <WeatherIcon weatherIcon={moreInfoIcon} isIconSmaller />
+                                <span className='infoTxt'>{_moreInfoDescription}.</span>
+                            </div>
+                        }
+                        <div className='projectedInfoSelectedWeatherDay'>
+                            <span className='infoTxt'>The high {isPresentDay ? 'is ' : 'will be '} {Math.round(isPresentDay ? max : mainMax)}{tempUnits}. The low {isPresentDay ? 'is ' : 'will be '} {Math.round(isPresentDay ? min : mainMin)}{tempUnits}.</span>
+                            <span className='infoTxt'>{_description}.</span>
+                            <span className='infoTxt'>Humidity: {isPresentDay ? humidityMoreInfoNum : humidityNum}%</span>
+                            {(rain || rainMain) && <span className='infoTxt'>Rain: {isPresentDay ? rain : rainMain}mm</span>}
+                            {(snow || snowMain) && <span className='infoTxt'>Snow: {isPresentDay ? snow : snowMain}mm</span>}
+                            <span className='infoTxt'>Dew point: {Math.round(isPresentDay ? dewPoint : dew_point)}{tempUnits}</span>
+                            <span className='infoTxt'>Wind speed: {Math.round(isPresentDay ? windSpeedAverage : wind_speed)} {speedUnits}</span>
                         </div>
                     </div>
                 </div>
             </section>
             <section className='tableSection'>
                 {/* put the table here of the following:  */}
-                <WeatherTempTable data={tableData} />
+                <WeatherTempTable data={tableData} isPresentDay={isPresentDay} />
             </section>
             <section className='sunriseAndSetSec'>
                 <div className='sunriseAndSetInfoContainer'>

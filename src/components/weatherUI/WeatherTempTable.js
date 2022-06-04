@@ -3,7 +3,7 @@ import { useContext } from 'react';
 import { WeatherInfoContext } from '../../provider/WeatherInfoProvider';
 import '../../css/comp-css/weather-section/weatherTempTable.css'
 
-const WeatherTempTable = ({ data }) => {
+const WeatherTempTable = ({ data, isPresentDay }) => {
     const { _units } = useContext(WeatherInfoContext);
     const { temp: tempUnits } = _units?.[0] ?? {};
     const { feelsLike, temp } = data ?? {};
@@ -28,7 +28,7 @@ const WeatherTempTable = ({ data }) => {
                 <td>{Math.round(night)} {tempUnits}</td>
             </tr>
             <tr className='thirdRow'>
-                <td>Feels like</td>
+                <td>{isPresentDay ? 'Feels like' : 'Will feel like'}</td>
                 <td>{Math.round(feelsLikeMorn)} {tempUnits}</td>
                 <td>{Math.round(feelsLikeDay)} {tempUnits}</td>
                 <td>{Math.round(feelsLikeEve)} {tempUnits}</td>

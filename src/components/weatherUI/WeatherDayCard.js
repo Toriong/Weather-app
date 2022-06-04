@@ -23,7 +23,7 @@ const WeatherDayCard = ({ index, day, isPresentDay }) => {
 
     const handleWeatherDayClick = () => {
         setIsSelectedWeatherModalOn(true);
-        setSelectedWeatherDay({ ...day, date });
+        setSelectedWeatherDay({ ...day, date, isPresentDay: isPresentDay });
     };
 
     useEffect(() => {
