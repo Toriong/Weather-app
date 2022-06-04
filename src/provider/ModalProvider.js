@@ -11,10 +11,11 @@ export const ModalProvider = props => {
 
 
 
+
     return (
         <ModalContext.Provider
             value={{
-                _isSelectedWeatherModalOn: []
+                _isSelectedWeatherModalOn: [isSelectedWeatherModalOn, setIsSelectedWeatherModalOn]
             }}
         >
             {props.children}

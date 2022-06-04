@@ -1,13 +1,14 @@
 import React, { useContext, useEffect } from 'react'
-import { SearchContext } from '../../provider/SearchProvider';
+import { WeatherInfoContext } from '../../provider/WeatherInfoProvider';
 import WeatherDayCard from './WeatherDayCard';
 import { getDate } from '../../timeFns/getDate';
 import '../../css/comp-css/weather-section/weatherSection.css'
 
 
-const WeatherSection = ({ targetLocation }) => {
-    const { _isWeatherDataReceived, _isLoadingScreenOn, _weather } = useContext(SearchContext);
+const WeatherSection = () => {
+    const { _isWeatherDataReceived, _isLoadingScreenOn, _weather, _targetLocation } = useContext(WeatherInfoContext);
     const [weather,] = _weather;
+    const [targetLocation, setTargetLocation] = _targetLocation;
     const [isWeatherDataRecevied, setIsWeatherDataReceived] = _isWeatherDataReceived;
     const [isLoadingScreenOn, setIsLoadingScreenOn] = _isLoadingScreenOn;
     const { daily: dailyForecast, current: currentDay } = weather ?? {}

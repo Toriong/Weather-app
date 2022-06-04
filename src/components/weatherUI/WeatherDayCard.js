@@ -1,23 +1,38 @@
 import React, { useContext } from 'react'
 import { getDate } from '../../timeFns/getDate';
-import { SearchContext } from '../../provider/SearchProvider';
+import { WeatherInfoContext } from '../../provider/WeatherInfoProvider';
 import '../../css/comp-css/weather-section/weatherDayCard.css'
+import { ModalContext } from '../../provider/ModalProvider';
+import WeatherIcon from './WeatherIcon';
+import { useEffect } from 'react';
 
 const WeatherDayCard = ({ index, day, isPresentDay }) => {
-    const { _currentDate, _isCelsius, _selectedWeatherDay } = useContext(SearchContext);
+    const { _currentDate, _isCelsius, _selectedWeatherDay, _units } = useContext(WeatherInfoContext);
+    const { _isSelectedWeatherModalOn } = useContext(ModalContext);
+    const [isSelectedWeatherModalOn, setIsSelectedWeatherModalOn] = _isSelectedWeatherModalOn;
     const [selectedWeatherDay, setSelectedWeatherDay] = _selectedWeatherDay;
     const [isCelsius, setIsCelsisu] = _isCelsius;
     const [currentDate, setCurrentDate] = _currentDate;
+    const { temp: tempUnits } = _units[0];
     const date = isPresentDay ? currentDate : getDate(index + 1);
-    const { weather, feels_like, moreInfo, temp } = day;
-    const tempUnits = isCelsius ? '°C' : '°F'
-    const { min, max } = moreInfo?.temp ?? temp;
+    const { weather, feels_like, averageForTheDay, temp } = day;
+    const { min, max } = averageForTheDay?.temp ?? temp;
     console.log('day: ', day)
     const { icon: weatherIcon, description } = weather[0] ?? {};
-    const weatherIconUrl = `http://openweathermap.org/img/wn/${weatherIcon}@2x.png`;
     const weatherDayCard = isPresentDay ? 'weatherDayCard' : 'weatherDayCard daily'
 
-    const handleWeatherDayClick = () => { setSelectedWeatherDay(day); };
+    const handleWeatherDayClick = () => {
+        setIsSelectedWeatherModalOn(true);
+        setSelectedWeatherDay({ ...day, date });
+    };
+
+    useEffect(() => {
+        isPresentDay && console.log('hello bacon and steak: ', day)
+    })
+
+
+    // BUG:
+    // WHAT IS HAPPENING: when the current day is presented onto the screen, the num for the degrees is appearing as 'NaN'
 
 
     return (
@@ -26,11 +41,7 @@ const WeatherDayCard = ({ index, day, isPresentDay }) => {
                 <h1>{date}</h1>
             </section>
             <section className='weatherDayCardIcon'>
-                <img
-                    src={weatherIconUrl}
-                    alt={"weather_icon"}
-                    className='weatherIcon'
-                />
+                <WeatherIcon weatherIcon={weatherIcon} />
             </section>
             <section className='weatherDescriptionSec'>
                 {isPresentDay &&

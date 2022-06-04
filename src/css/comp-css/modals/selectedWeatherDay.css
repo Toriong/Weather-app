@@ -1,4 +1,110 @@
 .weatherDayModal{
-    width: 70vw;
-    height: 70vh;
+    width: 50vw;
+    height: 85vh;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: #fff;
+    /* background-color: whitesmoke; */
+    border: solid grey .5px;
+    z-index: 100005;
+    border-radius: 8px;
+    box-shadow: 0 15px 30px, 0 15px 12px;
+    padding-top: 16px;
 }
+
+
+.weatherDayModal > section:first-child{
+    display: grid;
+    place-items: center;
+}
+
+.weatherDayModal > section > span:last-child{
+    font-size: 28px;
+    font-weight: 600;
+    margin-top: 8px;
+}
+
+.weatherDescriptionSec1{
+    display: flex;
+    justify-content: space-between;
+    margin-top: 12px;
+}
+
+.weatherDescriptionSec1>div:first-of-type{
+    /* display: grid; */
+    /* place-items: center; */
+    display: flex;
+    justify-content: center;
+    width: 50%;
+}
+
+.descriptionSelectedWeather::first-letter{
+    text-transform: capitalize;
+}
+
+.weatherDescriptionSec1 > div:first-of-type img{
+    height: 180px;
+    width: 180px;
+}
+
+.weatherDescriptionSec1>div:nth-child(2) > span::first-letter{
+    text-transform: capitalize;
+}
+
+.weatherDescriptionSec1>div:nth-child(2){
+    width: 50%;
+}
+
+.weatherDescriptionSec1 span{
+    font-size: 20px;
+}
+
+.descriptionContainer1{
+    padding-top: 40px;
+}
+
+.currentWeatherInfo{
+    display: flex;
+    flex-direction: column;
+}
+
+.currentWeatherInfo > span:not(:first-child){
+    margin-top: 4px;
+    margin-left: 16px;
+}
+
+.averageForTheDay{
+    margin-top: 10px;
+}
+
+.averageForTheDay > div:first-of-type > span:nth-child(2){
+    display: grid;
+    place-items: center;
+}
+
+.averageForTheDay > div{
+    display: flex;;
+}
+
+.averageForTheDay > *:not(:first-child){
+    margin-left: 16px;
+    
+}
+
+.infoTxt{
+    font-size: 15px !important;
+}
+
+.averageForTheDay > div:nth-of-type(2){
+    display: flex;;
+    flex-direction: column;
+}
+
+.averageForTheDay>div:nth-of-type(2) > span:not(:first-child){
+    margin-top: 6px;
+    
+}
+
+

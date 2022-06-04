@@ -3,16 +3,16 @@ import ReactDOM from 'react-dom/client';
 import './css/index.css';
 import WeatherApp from './WeatherApp';
 import reportWebVitals from './reportWebVitals';
-import { SearchProvider } from './provider/SearchProvider';
+import { WeatherInfoProvider } from './provider/WeatherInfoProvider';
 import { ModalProvider } from './provider/ModalProvider';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <ModalProvider>
-      <SearchProvider>
+      <WeatherInfoProvider>
         <WeatherApp />
-      </SearchProvider>
+      </WeatherInfoProvider>
     </ModalProvider>
   </React.StrictMode>
 );

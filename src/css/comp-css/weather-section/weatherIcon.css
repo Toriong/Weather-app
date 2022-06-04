@@ -1,0 +1,10 @@
+.weatherIcon.normal {
+    width: 145px;
+    height: 145px;
+}
+
+.weatherIcon.small{
+    width: 65px;
+    height: 65px;
+}
+

@@ -1,14 +1,15 @@
 import React, { useContext, useEffect } from 'react'
 import { getUserCityName } from '../../apiFns/getUserCityName';
 import { getWeather } from '../../apiFns/getWeather'
-import { SearchContext } from '../../provider/SearchProvider';
+import { WeatherInfoContext } from '../../provider/WeatherInfoProvider';
 import { getDate } from '../../timeFns/getDate';
 
 
 
-const SearchBtn = ({ placeHolderTxt, userLocation, setTargetLocation, searchInput, isGettingUserLocation }) => {
-    const { _isLoadingScreenOn, _isWeatherDataReceived, _currentDate, _weather } = useContext(SearchContext)
+const SearchBtn = ({ placeHolderTxt, userLocation, searchInput, isGettingUserLocation }) => {
+    const { _isLoadingScreenOn, _isWeatherDataReceived, _currentDate, _weather, _targetLocation } = useContext(WeatherInfoContext)
     const [, setWeather] = _weather;
+    const [targetLocation, setTargetLocation] = _targetLocation;
     const [currentDate, setCurrentDate] = _currentDate;
     const [isLoadingScreenOn, setIsLoadingScreenOn] = _isLoadingScreenOn;
     const [isWeatherDataReceived, setIsWeatherDataReceived] = _isWeatherDataReceived;
@@ -49,10 +50,14 @@ const SearchBtn = ({ placeHolderTxt, userLocation, setTargetLocation, searchInpu
                 }
 
                 const { daily, timezone, current } = weather;
-                const { temp, feels_like } = daily[0];
+                console.log('hello there meng: ', daily[0])
+                console.log('current yo: ', current)
+                const { temp, feels_like, weather: weatherMoreInfo, humidity, sunrise, sunset, wind_speed, rain, snow, dew_point } = daily[0];
+                console.log('dew_point, mengggg: ', dew_point)
+                console.log('rain, mengg: ', rain)
                 daily.shift();
                 daily.pop();
-                setWeather({ daily, current: { ...current, moreInfo: { temp, feels_like } } })
+                setWeather({ daily, current: { ...current, averageForTheDay: { temp, feels_like, weather: weatherMoreInfo, humidity, sunrise, sunset, wind_speed, rain, snow, dewPoint: dew_point } } })
                 setCurrentDate(getDate())
                 setTargetLocation(targetLocation => {
                     return {
@@ -66,30 +71,6 @@ const SearchBtn = ({ placeHolderTxt, userLocation, setTargetLocation, searchInpu
             })
         debugger
     };
-
-
-
-
-    // GOAL: show the location that the user search for in the weather section
-
-
-
-    // CASE 1: the user is using there own location 
-    // GOAL: display the user's current location when the user presses the search button 
-    // the user's current location is displayed in the weather section 
-    // the user location is passed as the argument for setSearchedLocation
-    // this value is the user's current location 
-    // get the value that value that has the highest confidence rating
-
-
-    // CASE 2: the user is using the location that they searched for in the input
-    // GOAL: display the location that is in the input in the weather section when user presses the search button 
-    // the location that the user search for is displayed onto the dom 
-    // the location in the array that has the highest confidence is displayed is passed for the fn setSearchedLocation
-    // get the array that is returned from getReverseGeoCode
-    // using the long and lat of the selected location, pass those values as the argument for getReverseGeoCode
-
-
 
 
     if (isOnUserLocationSearch) {
@@ -114,7 +95,6 @@ const SearchBtn = ({ placeHolderTxt, userLocation, setTargetLocation, searchInpu
                 }
                 _getWeather(_location);
             })
-            debugger
         }
     } else if (placeHolderTxt === 'Search by address, city name, or zip code') {
         handleSearchBtnClick = () => {
