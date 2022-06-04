@@ -16,6 +16,10 @@ code {
     monospace;
 }
 
+table{
+  border-collapse: collapse;
+}
+
 
 .blocker{
   z-index: 100004;

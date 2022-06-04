@@ -1,27 +1,28 @@
 import React from 'react'
 import { useEffect } from 'react';
 import { useContext } from 'react';
-import '../../css/comp-css/modals/selectedWeatherDay.css';
 import { WeatherInfoContext } from '../../provider/WeatherInfoProvider';
+import { getTime } from '../../timeFns/getTime';
+import { BsSunrise, BsSunset } from "react-icons/bs";
 import WeatherIcon from '../weatherUI/WeatherIcon';
-
-// GOAL: present the following data on this modal:
-// 
+import WeatherTempTable from '../weatherUI/WeatherTempTable';
+import '../../css/comp-css/modals/selectedWeatherDay.css';
 
 const SelectedWeatherDay = () => {
     const { _selectedWeatherDay, _targetLocation, _tempUnits, _units } = useContext(WeatherInfoContext);
     const [units] = _units
     const [targetLocation, setTargetLocation] = _targetLocation
     const [selectedWeatherDay] = _selectedWeatherDay;
-    const { date, weather, feels_like, temp, averageForTheDay, humidity: humidityNum, dew_point, wind_speed } = selectedWeatherDay;
-    const { weather: moreInfoWeather, temp: moreInfoTemp, humidity: humidityMoreInfoNum, sunrise, sunset, wind_speed: windSpeedAverage, rain, snow, dewPoint } = averageForTheDay ?? {};
+    const { date, weather, feels_like, temp, averageForTheDay, humidity: humidityNum, dew_point, wind_speed, sunrise, sunset } = selectedWeatherDay;
+    const { weather: moreInfoWeather, temp: moreInfoTemp, humidity: humidityMoreInfoNum, wind_speed: windSpeedAverage, rain, snow, dewPoint, feels_like: feelsLikeAverage, temp: tempAverage } = averageForTheDay ?? {};
     const { max, min } = moreInfoTemp ?? {}
     const { description: moreInfoDescription, icon: moreInfoIcon } = moreInfoWeather?.[0] ?? {};
     const { icon: weatherIcon, description } = weather?.[0] ?? {};
     const { speed: speedUnits, temp: tempUnits } = units;
     let _description = description.charAt(0).toUpperCase() + description.slice(1);
-
-
+    const tableData = { temp: tempAverage, feelsLike: feelsLikeAverage };
+    const _sunrise = getTime(sunrise);
+    const _sunset = getTime(sunset);
 
     if (moreInfoDescription) {
         var _moreInfoDescription = moreInfoDescription.charAt(0).toUpperCase() + moreInfoDescription.slice(1)
@@ -30,7 +31,7 @@ const SelectedWeatherDay = () => {
 
     useEffect(() => {
         console.log('selectedWeatherDay: ', selectedWeatherDay);
-        console.log('averageForTheDay: ', averageForTheDay)
+        console.log('averageForTheDay: ', averageForTheDay);
     })
 
     return (
@@ -53,7 +54,7 @@ const SelectedWeatherDay = () => {
                         <span className='infoTxt'>Wind speed: {Math.round(wind_speed)} {speedUnits}</span>
                     </div>
                     <div className='averageForTheDay'>
-                        <span>Average for the day: </span>
+                        <span>Averages for the day: </span>
                         <div>
                             <WeatherIcon weatherIcon={moreInfoIcon} isIconSmaller />
                             <span className='infoTxt'>{_moreInfoDescription}.</span>
@@ -68,8 +69,33 @@ const SelectedWeatherDay = () => {
                         </div>
                     </div>
                 </div>
-                <div>
-
+            </section>
+            <section className='tableSection'>
+                {/* put the table here of the following:  */}
+                <WeatherTempTable data={tableData} />
+            </section>
+            <section className='sunriseAndSetSec'>
+                <div className='sunriseAndSetInfoContainer'>
+                    <span className='infoTxt'>Sunrise</span>
+                    <div className='sunriseAndSetTimeContainer'>
+                        <div>
+                            <BsSunrise id='sunriseIcon' />
+                        </div>
+                        <div>
+                            <span className='infoTxt'>{_sunrise}</span>
+                        </div>
+                    </div>
+                </div>
+                <div className='sunriseAndSetInfoContainer'>
+                    <span className='infoTxt'>Sunset</span>
+                    <div className='sunriseAndSetTimeContainer'>
+                        <div>
+                            <BsSunset id='sunsetIcon' />
+                        </div>
+                        <div>
+                            <span className='infoTxt'>{_sunset}</span>
+                        </div>
+                    </div>
                 </div>
             </section>
         </div>

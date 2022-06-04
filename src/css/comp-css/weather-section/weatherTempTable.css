@@ -1,0 +1,29 @@
+
+
+.thirdRow > td:first-child,
+.secondRow > td:first-child,
+.weatherTempTable th {
+    font-weight: 400;
+    font-size: 18px;
+}
+
+.thirdRow > td:first-child{
+padding-right: 8px;
+}
+
+.weatherTempTable{
+    width: 80%;
+    height: 120px;
+    margin-top: 12px;
+}
+
+.secondRow>td:not(:first-child),
+.thirdRow > td:not(:first-child){
+    text-align: center;
+    font-size: 17px;
+    
+}
+
+.weatherTempTable > tr{
+    margin-top: 100px;
+}
