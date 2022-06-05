@@ -1,13 +1,18 @@
-.searchTypesModal{
+.modalBtns {
     border: var(--borderColor);
     position: fixed;
     width: 100px;
     transform: translateY(5px);
     background-color: white;
+    border-radius: 5px;;
 }
 
-.searchTypesModal > button{
+.modalBtns > button{
     height: 25px;
     text-align: left;
     width: 100%;
+}
+
+.modalBtns.unitsSelection > button{
+    font-size: 10px;
 }

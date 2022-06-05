@@ -4,6 +4,7 @@ import { getWeather } from '../../apiFns/getWeather'
 import { SearchContext } from '../../provider/SearchProvider';
 import { WeatherInfoContext } from '../../provider/WeatherInfoProvider';
 import { getDate } from '../../timeFns/getDate';
+import { getTimeOfLocation } from '../../timeFns/getTimeOfLocation';
 
 
 
@@ -24,26 +25,13 @@ const SearchBtn = () => {
 
 
 
-    const getTimeOfLocation = timeZone => {
-        const options = {
-            timeZone: timeZone,
-            year: 'numeric',
-            month: 'long',
-            day: 'numeric',
-            hour: 'numeric',
-            minute: 'numeric'
-        }
-        let formatter = new Intl.DateTimeFormat([], options);
-
-        return formatter.format(new Date())
-    }
 
     const _getWeather = locationName => {
         getWeather(longAndLatOfUser)
             .then(response => {
-                const { weather, didError } = response;
+                const { weather, didError, errorMsg } = response;
                 if (didError) {
-                    console.error('An error has occurred in getting weather of target location.')
+                    console.error('An error has occurred in getting weather of target location. Error message: ', errorMsg);
                     alert('An error has occurred in getting weather of target location.')
                     return;
                 };
@@ -53,11 +41,7 @@ const SearchBtn = () => {
                 }
 
                 const { daily, timezone, current } = weather;
-                console.log('hello there meng: ', daily[0])
-                console.log('current yo: ', current)
                 const { temp, feels_like, weather: weatherMoreInfo, humidity, sunrise, sunset, wind_speed, rain, snow, dew_point } = daily[0];
-                console.log('dew_point, mengggg: ', dew_point)
-                console.log('rain, mengg: ', rain)
                 daily.shift();
                 daily.pop();
                 setWeather({ daily, current: { ...current, averageForTheDay: { temp, feels_like, weather: weatherMoreInfo, humidity, sunrise, sunset, wind_speed, rain, snow, dewPoint: dew_point } } })
@@ -72,7 +56,6 @@ const SearchBtn = () => {
                 setIsLoadingScreenOn(false);
                 setIsWeatherDataReceived(true);
             })
-        debugger
     };
 
 

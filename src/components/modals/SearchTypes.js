@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useContext } from 'react';
-import '../../css/comp-css/modals/searchTypeModal.css'
 import { SearchContext } from '../../provider/SearchProvider';
 import { WeatherInfoContext } from '../../provider/WeatherInfoProvider';
+import '../../css/comp-css/modals/searchTypeModal.css'
 
 
 // NOTES:
@@ -51,7 +51,7 @@ const SearchTypes = () => {
 
 
     return (
-        <div className='searchTypesModal'>
+        <div className='modalBtns'>
             <button onClick={handleGeneralSearchBtnClick}>General search</button>
             <button onClick={handleMyLocationClick}>My location</button>
         </div>

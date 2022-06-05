@@ -1,19 +1,17 @@
 import React, { useEffect, useState } from 'react'
 import { BsSearch } from "react-icons/bs";
 import SearchTypes from '../modals/SearchTypes';
-import '../../css/comp-css/search/searchBtnsContainer.css'
 import SearchBtn from '../buttons/SearchBtn';
-import SearchInput from './SearchInputSection';
 import { useContext } from 'react';
 import { SearchContext } from '../../provider/SearchProvider';
-import { WeatherInfoContext } from '../../provider/WeatherInfoProvider';
+import '../../css/comp-css/search/searchBtnsContainer.css'
+import UnitTypes from '../buttonContainers/UnitTypes';
 
-const SearchBtnsContainer = ({ setTargetLocation }) => {
+
+const SearchBtnsContainer = () => {
     const { _isSearchTypesModalOn, _placeHolderTxt } = useContext(SearchContext);
-    const { _longAndLatOfUser } = useContext(WeatherInfoContext);
     const [placeholderTxt, setPlaceHolderTxt] = _placeHolderTxt;
     const [isSearchTypesModalOn, setIsSearchTypesModalOn] = _isSearchTypesModalOn;
-    const [longAndLatOfUser, setLongAndLatOfUser] = _longAndLatOfUser;
 
     // GOAL: when the modal appears son the screen for the search type, when the user chooses a search type, then change the placeholder text
 
@@ -41,22 +39,16 @@ const SearchBtnsContainer = ({ setTargetLocation }) => {
                 <span>*Search must contain three or more characters.</span>
             </div>
             <div className='searchBtnsSubContainer'>
+                <UnitTypes />
                 <div className='searchTypeContainer'>
                     <button onClick={handleSearchTypeBtnClick}>
                         <span>{searchTypeTxt}</span>
                     </button>
                     <div>
-                        {isSearchTypesModalOn && <SearchTypes
-                            setPlaceHolderTxt={setPlaceHolderTxt}
-                            setLongAndLatOfUser={setLongAndLatOfUser}
-                        />
-                        }
+                        {isSearchTypesModalOn && <SearchTypes />}
                     </div>
                 </div>
-                <SearchBtn
-                    userLocation={longAndLatOfUser}
-                    setTargetLocation={setTargetLocation}
-                />
+                <SearchBtn />
             </div>
         </div>
     )

@@ -4,7 +4,6 @@ bottom: 0;
 right: 0;
 height: 37.7917px;
 display: flex;
-/* border: solid pink; */
 width: 100%;
 justify-content: space-between;
 }
@@ -21,7 +20,9 @@ justify-content: space-between;
     border: var(--borderColor);
     border-radius: 4px;
     font-weight: 350;
+font-size: 11.5px;
 }
+
 
 .searchTypeContainer > button:first-child{
     margin-right: 6px;

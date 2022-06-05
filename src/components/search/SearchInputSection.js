@@ -62,17 +62,10 @@ const SearchInput = ({ setWeather, setTargetLocation }) => {
                         <SearchResults
                             isLoadingResults={isLoadingResults}
                             searchResults={searchResults}
-                            setSearchInput={setSearchInput}
-                            setIsSearchResultsOn={setIsSearchResultsOn}
                         />
                     }
                 </div>
-                <SearchBtnsContainer
-
-                    setTargetLocation={setTargetLocation}
-                    setWeather={setWeather}
-                    _searchInput={_searchInput}
-                />
+                <SearchBtnsContainer />
             </div>
         </section>
     )
