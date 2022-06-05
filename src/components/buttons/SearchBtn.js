@@ -43,7 +43,11 @@ const SearchBtn = () => {
                     return;
                 }
 
-                const { daily, timezone, current } = weather;
+                console.log(
+                    `weather: `, weather
+                )
+                const { daily, timezone, current, timezone_offset } = weather;
+
                 const { temp, feels_like, weather: weatherMoreInfo, humidity, sunrise, sunset, wind_speed, rain, snow, dew_point } = daily[0];
                 daily.shift();
                 daily.pop();
@@ -54,6 +58,7 @@ const SearchBtn = () => {
                         ...targetLocation,
                         name: locationName ?? searchInput,
                         time: getTimeOfLocation(timezone),
+                        timeZoneOffset: timezone_offset
                     }
                 });
                 setIsLoadingScreenOn(false);

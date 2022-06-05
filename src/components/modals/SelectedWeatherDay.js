@@ -17,6 +17,7 @@ const SelectedWeatherDay = () => {
     const [selectedWeatherDay] = _selectedWeatherDay;
     const { date, weather, feels_like, temp, averageForTheDay, humidity: humidityNum, dew_point, wind_speed, sunrise, sunset, isPresentDay, rain: rainMain, snow: snowMain } = selectedWeatherDay;
     const { weather: moreInfoWeather, temp: moreInfoTemp, humidity: humidityMoreInfoNum, wind_speed: windSpeedAverage, rain, snow, dewPoint, feels_like: feelsLikeAverage, temp: tempAverages, sunrise: sunriseProjected, sunset: sunsetProjected } = averageForTheDay ?? {};
+    const { name: LocationName, timeZoneOffset } = targetLocation ?? {};
     const { max, min } = moreInfoTemp ?? {}
     const { description: moreInfoDescription, icon: moreInfoIcon } = moreInfoWeather?.[0] ?? {};
     const { icon: weatherIcon, description } = weather?.[0] ?? {};
@@ -32,8 +33,8 @@ const SelectedWeatherDay = () => {
     }
 
     const tableData = { temp: isPresentDay ? tempAverages : _tempAverages, feelsLike: isPresentDay ? feelsLikeAverage : feels_like };
-    const _sunrise = getTime(sunrise);
-    const _sunset = getTime(sunset);
+    const _sunrise = getTime(sunrise ?? sunriseProjected, timeZoneOffset);
+    const _sunset = getTime(sunset ?? sunsetProjected, timeZoneOffset);
 
 
     if (moreInfoDescription) {
@@ -45,7 +46,8 @@ const SelectedWeatherDay = () => {
     useEffect(() => {
         console.log('selectedWeatherDay: ', selectedWeatherDay);
         console.log('averageForTheDay: ', averageForTheDay);
-        console.log('humidity: ', humidityNum)
+        console.log('humidity: ', humidityNum);
+        console.log('targetLocation: ', targetLocation)
     })
 
 
@@ -55,7 +57,7 @@ const SelectedWeatherDay = () => {
         <div className={weatherDayModalClassName} >
             <section>
                 <span>{isPresentDay ? 'Today' : date}</span>
-                <span>{targetLocation.name}</span>
+                <span>{LocationName}</span>
             </section>
             <section className='weatherDescriptionSec1'>
                 <div>
