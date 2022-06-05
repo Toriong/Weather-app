@@ -13,23 +13,34 @@
     justify-content: center;
     place-items: center;
     flex-direction: column;
+    max-width:691.195px;
 
 }
-
-
 
 .searchInputContainer > div:first-child input{
     width: 100%;
     height: 40px;
+    max-width: 691.195px;
     padding-left: 5px;
-    font-weight: 350;
+    font-weight: 250;
+    font-size: 17px;
+}
+
+@media (min-width: 768px) and (max-width: 1199px){
+.searchInputContainer>div:first-child{
+    width: 100%;
+    margin-left: 55px;
+
+}
 }
 
 
-@media (max-width: 768px){
+@media (max-width: 767px){
     .searchInputContainer>div:first-child {
         display: block
     }
 }
+
+
 
 

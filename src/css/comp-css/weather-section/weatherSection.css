@@ -1,6 +1,4 @@
 .weatherSection{
-    /* padding-bottom: 100px; */
-    /* padding-right: 20px; */
     min-width: 100vw;
 }
 
@@ -18,6 +16,8 @@
 .weatherSection > header > span:not(:first-child){
     margin-top: 3px;
     font-weight: 700;
+    max-width: 50vw;;
+    word-wrap: break-word;
 }
 
 
@@ -43,7 +43,16 @@ margin-top: 8px;
     width: 100%;
     overflow-x: auto;
     padding-bottom: 100px;
-    /* padding: 0px 16px 100px 16px; */
+    padding-right: 20px;
+}
+
+@media (min-width: 1920px){
+    .dailyForecastContainer{
+        justify-content: center;
+    }
+}
+
+@media(max-width: 1199px){
 }
 
 

@@ -5,7 +5,7 @@
     border: var(--borderColor);
     width: 100%;;
     z-index: 100000;
-    background-color: white;
+    background-color: #ffffff;
     overflow-y: auto;
     padding-bottom: 8px;
 }
@@ -31,6 +31,41 @@
     cursor: pointer;
 }
 
+.searchResult > div:first-child{
+    display: grid;
+    place-items: center;
+}
+
+.searchResult > div:nth-child(2) > span{
+max-width: 500px;
+    /* width: 95vw; */
+    text-align: right;
+    /* border: solid pink; */
+    white-space: nowrap;
+        overflow: hidden;
+        display: block;
+        text-overflow: ellipsis;
+        font-weight: 250;
+            font-size: 17px;
+}
+
 .searchResult:hover{
     background: #898F9C;
+}
+
+@media (max-width: 1199px){
+    .searchResult>div:nth-child(2) > span{
+        width:  45vw;
+    }
+}
+
+@media (max-width: 280px) {
+    .searchResultsModal{
+    position: fixed;
+    width: 81.5%;
+    }   
+}
+
+@media (max-width: 1199px){
+
 }

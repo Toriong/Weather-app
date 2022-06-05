@@ -39,6 +39,7 @@
     font-size: 20px;
     font-weight: 350;
     white-space: nowrap;
+
 }
 
 .wrapper{
@@ -53,7 +54,7 @@
     }
 }
 
-@media (max-width: 768px){
+@media (max-width: 767px){
 .searchBarSubContainer{
     flex-direction: column;
 }
