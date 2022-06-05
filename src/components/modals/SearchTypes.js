@@ -1,5 +1,8 @@
 import React, { useEffect, useState } from 'react';
+import { useContext } from 'react';
 import '../../css/comp-css/modals/searchTypeModal.css'
+import { SearchContext } from '../../provider/SearchProvider';
+import { WeatherInfoContext } from '../../provider/WeatherInfoProvider';
 
 
 // NOTES:
@@ -7,7 +10,15 @@ import '../../css/comp-css/modals/searchTypeModal.css'
 
 
 
-const SearchTypes = ({ setPlaceHolderTxt, setIsSearchTypesModalOn, setLongAndLatOfUser, setSearchInput, setIsGettingUserLocation }) => {
+const SearchTypes = () => {
+    const { _isSearchTypesModalOn, _searchInput, _placeHolderTxt } = useContext(SearchContext);
+    const { _longAndLatOfUser, _isGettingUserLocation } = useContext(WeatherInfoContext);
+    const [, setPlaceHolderTxt] = _placeHolderTxt;
+    const [, setIsGettingUserLocation] = _isGettingUserLocation;
+    const [, setSearchInput] = _searchInput
+    const [, setLongAndLatOfUser] = _longAndLatOfUser;
+    const [, setIsSearchTypesModalOn] = _isSearchTypesModalOn;
+
 
     const handleMyLocationClick = () => {
         if (navigator?.geolocation) {

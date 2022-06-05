@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from 'react'
+import { useContext } from 'react';
 import { getGeoCode } from '../../apiFns/getGeoCode';
 import '../../css/comp-css/search/searchInputSection.css'
+import { SearchContext } from '../../provider/SearchProvider';
+import { WeatherInfoContext } from '../../provider/WeatherInfoProvider';
 import SearchResults from '../modals/searchResults/SearchResults';
 import SearchBtnsContainer from './SearchBtnsContainer';
 
@@ -8,18 +11,13 @@ import SearchBtnsContainer from './SearchBtnsContainer';
 // GOAL: store the 7 day forecast into the state of weatherOfDays
 
 
-const SearchInput = ({ setWeather, setTargetLocation, setCurrentDate }) => {
-    const [placeholderTxt, setPlaceholderTxt] = useState('Search by address, city name, or zip code');
-    const [isSearchTypesModalOn, setIsSearchTypesModalOn] = useState(false);
-    const [isSearchResultsOn, setIsSearchResultsOn] = useState(false);
+const SearchInput = ({ setWeather, setTargetLocation }) => {
+    const { _searchInput, _placeHolderTxt, _isSearchResultsOn } = useContext(SearchContext);
+    const [placeholderTxt,] = _placeHolderTxt;
+    const [isSearchResultsOn, setIsSearchResultsOn] = _isSearchResultsOn;
     const [isLoadingResults, setIsLoadingResults] = useState(false);
-    const [longAndLatOfUser, setLongAndLatOfUser] = useState(null);
-    const [searchInput, setSearchInput] = useState("");
+    const [searchInput, setSearchInput] = _searchInput;
     const [searchResults, setSearchResults] = useState([]);
-    const _searchInput = [searchInput, setSearchInput];
-    const _longAndLatOfUser = [longAndLatOfUser, setLongAndLatOfUser];
-    const _isSearchTypesModalOn = [isSearchTypesModalOn, setIsSearchTypesModalOn];
-    const _placeholderTxt = [placeholderTxt, setPlaceholderTxt];
     let isUsingLocationOfUser = false
 
 
@@ -66,18 +64,14 @@ const SearchInput = ({ setWeather, setTargetLocation, setCurrentDate }) => {
                             searchResults={searchResults}
                             setSearchInput={setSearchInput}
                             setIsSearchResultsOn={setIsSearchResultsOn}
-                            _longAndLatOfUser={_longAndLatOfUser}
                         />
                     }
                 </div>
                 <SearchBtnsContainer
-                    _placeHolderTxt={_placeholderTxt}
-                    _isSearchTypesModalOn={_isSearchTypesModalOn}
-                    _longAndLatOfUser={_longAndLatOfUser}
+
                     setTargetLocation={setTargetLocation}
                     setWeather={setWeather}
                     _searchInput={_searchInput}
-                    setCurrentDate={setCurrentDate}
                 />
             </div>
         </section>

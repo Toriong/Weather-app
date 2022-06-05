@@ -1,12 +1,15 @@
 import React from 'react'
+import { useContext } from 'react';
 import { FaMapMarkerAlt } from 'react-icons/fa'
+import { SearchContext } from '../../../provider/SearchProvider';
+import { WeatherInfoContext } from '../../../provider/WeatherInfoProvider';
 
-const SearchResult = ({ label, longitude, latitude, fns }) => {
-    const { setSearchInput, setLongAndLatOfUser, setIsSearchResultsOn } = fns;
-
-    // GOAL: when the user clicks on a search result, do the following:
-    // display the label in the input 
-    // get the long and lat 
+const SearchResult = ({ label, longitude, latitude }) => {
+    const { _longAndLatOfUser } = useContext(WeatherInfoContext);
+    const { _isSearchResultsOn, _searchInput } = useContext(SearchContext);
+    const [, setIsSearchResultsOn] = _isSearchResultsOn;
+    const [, setLongAndLatOfUser] = _longAndLatOfUser
+    const [, setSearchInput] = _searchInput;
 
     const handleSearchResultClick = () => {
         setSearchInput(label);

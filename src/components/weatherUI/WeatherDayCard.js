@@ -7,11 +7,10 @@ import WeatherIcon from './WeatherIcon';
 import { useEffect } from 'react';
 
 const WeatherDayCard = ({ index, day, isPresentDay }) => {
-    const { _currentDate, _isCelsius, _selectedWeatherDay, _units } = useContext(WeatherInfoContext);
+    const { _currentDate, _selectedWeatherDay, _units } = useContext(WeatherInfoContext);
     const { _isSelectedWeatherModalOn } = useContext(ModalContext);
     const [isSelectedWeatherModalOn, setIsSelectedWeatherModalOn] = _isSelectedWeatherModalOn;
     const [selectedWeatherDay, setSelectedWeatherDay] = _selectedWeatherDay;
-    const [isCelsius, setIsCelsisu] = _isCelsius;
     const [currentDate, setCurrentDate] = _currentDate;
     const { temp: tempUnits } = _units[0];
     const date = isPresentDay ? currentDate : getDate(index + 1);
@@ -26,9 +25,7 @@ const WeatherDayCard = ({ index, day, isPresentDay }) => {
         setSelectedWeatherDay({ ...day, date, isPresentDay: isPresentDay });
     };
 
-    useEffect(() => {
-        isPresentDay && console.log('hello bacon and steak: ', day)
-    })
+
 
 
     // BUG:

@@ -5,15 +5,18 @@ import WeatherApp from './WeatherApp';
 import reportWebVitals from './reportWebVitals';
 import { WeatherInfoProvider } from './provider/WeatherInfoProvider';
 import { ModalProvider } from './provider/ModalProvider';
+import { SearchProvider } from './provider/SearchProvider';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <ModalProvider>
-      <WeatherInfoProvider>
-        <WeatherApp />
-      </WeatherInfoProvider>
-    </ModalProvider>
+    <SearchProvider>
+      <ModalProvider>
+        <WeatherInfoProvider>
+          <WeatherApp />
+        </WeatherInfoProvider>
+      </ModalProvider>
+    </SearchProvider>
   </React.StrictMode>
 );
 

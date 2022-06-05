@@ -12,8 +12,6 @@ export const WeatherInfoProvider = props => {
     const [isLoadingScreenOn, setIsLoadingScreenOn] = useState(false);
     const [weather, setWeather] = useState(null);
     const [currentDate, setCurrentDate] = useState("");
-    const [isCelsius, setIsCelsius] = useState(false);
-    const [tempUnits, setTempUnits] = useState('°F');
     const unitsDefaultVal = {
         temp: '°F',
         speed: 'mph'
@@ -21,6 +19,8 @@ export const WeatherInfoProvider = props => {
     const [units, setUnits] = useState(unitsDefaultVal)
     const [selectedWeatherDay, setSelectedWeatherDay] = useState({});
     const [targetLocation, setTargetLocation] = useState({});
+    const [longAndLatOfUser, setLongAndLatOfUser] = useState(null);
+    const [isGettingUserLocation, setIsGettingUserLocation] = useState(false);
 
 
 
@@ -34,11 +34,11 @@ export const WeatherInfoProvider = props => {
                 _isLoadingScreenOn: [isLoadingScreenOn, setIsLoadingScreenOn],
                 _currentDate: [currentDate, setCurrentDate],
                 _weather: [weather, setWeather],
-                _isCelsius: [isCelsius, setIsCelsius],
                 _selectedWeatherDay: [selectedWeatherDay, setSelectedWeatherDay],
                 _targetLocation: [targetLocation, setTargetLocation],
-                _tempUnits: [tempUnits, setTempUnits],
-                _units: [units, setUnits]
+                _units: [units, setUnits],
+                _longAndLatOfUser: [longAndLatOfUser, setLongAndLatOfUser],
+                _isGettingUserLocation: [isGettingUserLocation, setIsGettingUserLocation],
             }}
         >
             {props.children}

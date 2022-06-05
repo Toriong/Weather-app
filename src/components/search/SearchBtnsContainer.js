@@ -4,10 +4,13 @@ import SearchTypes from '../modals/SearchTypes';
 import '../../css/comp-css/search/searchBtnsContainer.css'
 import SearchBtn from '../buttons/SearchBtn';
 import SearchInput from './SearchInputSection';
+import { useContext } from 'react';
+import { SearchContext } from '../../provider/SearchProvider';
+import { WeatherInfoContext } from '../../provider/WeatherInfoProvider';
 
-const SearchBtnsContainer = ({ _placeHolderTxt, _isSearchTypesModalOn, _longAndLatOfUser, _searchInput, setTargetLocation, setWeather, setCurrentDate }) => {
-    const [isGettingUserLocation, setIsGettingUserLocation] = useState(false);
-    const [searchInput, setSearchInput] = _searchInput;
+const SearchBtnsContainer = ({ setTargetLocation }) => {
+    const { _isSearchTypesModalOn, _placeHolderTxt } = useContext(SearchContext);
+    const { _longAndLatOfUser } = useContext(WeatherInfoContext);
     const [placeholderTxt, setPlaceHolderTxt] = _placeHolderTxt;
     const [isSearchTypesModalOn, setIsSearchTypesModalOn] = _isSearchTypesModalOn;
     const [longAndLatOfUser, setLongAndLatOfUser] = _longAndLatOfUser;
@@ -45,21 +48,14 @@ const SearchBtnsContainer = ({ _placeHolderTxt, _isSearchTypesModalOn, _longAndL
                     <div>
                         {isSearchTypesModalOn && <SearchTypes
                             setPlaceHolderTxt={setPlaceHolderTxt}
-                            setIsSearchTypesModalOn={setIsSearchTypesModalOn}
                             setLongAndLatOfUser={setLongAndLatOfUser}
-                            setSearchInput={setSearchInput}
-                            setIsGettingUserLocation={setIsGettingUserLocation}
                         />
                         }
                     </div>
                 </div>
                 <SearchBtn
-                    placeHolderTxt={placeholderTxt}
                     userLocation={longAndLatOfUser}
                     setTargetLocation={setTargetLocation}
-                    searchInput={searchInput}
-                    setCurrentDate={setCurrentDate}
-                    isGettingUserLocation={isGettingUserLocation}
                 />
             </div>
         </div>

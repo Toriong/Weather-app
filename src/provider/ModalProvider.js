@@ -5,7 +5,6 @@ export const ModalContext = createContext();
 
 
 
-// rename this provider to WeatherProvider
 export const ModalProvider = props => {
     const [isSelectedWeatherModalOn, setIsSelectedWeatherModalOn] = useState(false);
 

@@ -1,25 +1,28 @@
 import React, { useContext, useEffect } from 'react'
 import { getUserCityName } from '../../apiFns/getUserCityName';
 import { getWeather } from '../../apiFns/getWeather'
+import { SearchContext } from '../../provider/SearchProvider';
 import { WeatherInfoContext } from '../../provider/WeatherInfoProvider';
 import { getDate } from '../../timeFns/getDate';
 
 
 
-const SearchBtn = ({ placeHolderTxt, userLocation, searchInput, isGettingUserLocation }) => {
-    const { _isLoadingScreenOn, _isWeatherDataReceived, _currentDate, _weather, _targetLocation } = useContext(WeatherInfoContext)
+const SearchBtn = () => {
+    const { _isLoadingScreenOn, _isWeatherDataReceived, _currentDate, _weather, _targetLocation, _longAndLatOfUser, _isGettingUserLocation } = useContext(WeatherInfoContext)
+    const { _searchInput, _placeHolderTxt } = useContext(SearchContext);
+    const [placeHolderTxt] = _placeHolderTxt;
+    const [isGettingUserLocation] = _isGettingUserLocation;
+    const [searchInput,] = _searchInput;
+    const [longAndLatOfUser,] = _longAndLatOfUser;
     const [, setWeather] = _weather;
     const [targetLocation, setTargetLocation] = _targetLocation;
     const [currentDate, setCurrentDate] = _currentDate;
     const [isLoadingScreenOn, setIsLoadingScreenOn] = _isLoadingScreenOn;
     const [isWeatherDataReceived, setIsWeatherDataReceived] = _isWeatherDataReceived;
     const isOnUserLocationSearch = placeHolderTxt === "Using your location. Press the 'search' icon to get results";
-    const isButtonDisabled = ((isOnUserLocationSearch && !navigator?.geolocation) || isGettingUserLocation) ? true : false;
+    const isButtonDisabled = ((isOnUserLocationSearch && !navigator?.geolocation) || isGettingUserLocation || ((searchInput.length <= 2) && !isOnUserLocationSearch)) ? true : false;
 
 
-    useEffect(() => {
-        console.log('userLocation: ', userLocation)
-    })
 
     const getTimeOfLocation = timeZone => {
         const options = {
@@ -36,7 +39,7 @@ const SearchBtn = ({ placeHolderTxt, userLocation, searchInput, isGettingUserLoc
     }
 
     const _getWeather = locationName => {
-        getWeather(userLocation)
+        getWeather(longAndLatOfUser)
             .then(response => {
                 const { weather, didError } = response;
                 if (didError) {
@@ -75,14 +78,13 @@ const SearchBtn = ({ placeHolderTxt, userLocation, searchInput, isGettingUserLoc
 
     if (isOnUserLocationSearch) {
         var handleSearchBtnClick = () => {
-            console.log('userLocation: ', userLocation)
-            if (!userLocation) {
+            if (!longAndLatOfUser) {
                 alert("Couldn't get your location. Either your browser doesn't support geolocation or you have disabled location access from your computer.")
                 return;
             }
             setIsWeatherDataReceived(false);
-            setIsLoadingScreenOn(true)
-            getUserCityName(userLocation).then(location => {
+            setIsLoadingScreenOn(true);
+            getUserCityName(longAndLatOfUser).then(location => {
                 const { country, state, name } = location;
                 if (state) {
                     var _location = `${name}, ${state}, ${country}`
@@ -99,7 +101,8 @@ const SearchBtn = ({ placeHolderTxt, userLocation, searchInput, isGettingUserLoc
     } else if (placeHolderTxt === 'Search by address, city name, or zip code') {
         handleSearchBtnClick = () => {
             setIsWeatherDataReceived(false);
-            _getWeather()
+            setIsLoadingScreenOn(true);
+            _getWeather();
         };
     }
 
