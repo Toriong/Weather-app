@@ -5,8 +5,9 @@ import { WeatherInfoContext } from '../../provider/WeatherInfoProvider'
 import { getDate } from '../../timeFns/getDate';
 import { getTimeOfLocation } from '../../timeFns/getTimeOfLocation';
 
-const UnitTypes = () => {
-    const { _units, _isWeatherDataReceived, _isLoadingScreenOn, _weather, _currentDate, _targetLocation } = useContext(WeatherInfoContext);
+const UnitTypes = ({ setIsUnitsSelectionModalOn }) => {
+    const { _units, _isWeatherDataReceived, _isLoadingScreenOn, _weather, _currentDate, _targetLocation, _longAndLatOfDisplayedWeather } = useContext(WeatherInfoContext);
+    const [longAndLatOfDisplayedWeather] = _longAndLatOfDisplayedWeather;
     const [weather, setWeather] = _weather;
     const [currenetDate, setCurrentDate] = _currentDate;
     const [targetLocation, setTargetLocation] = _targetLocation;
@@ -14,20 +15,33 @@ const UnitTypes = () => {
     const [isWeatherDataReceived, setIsWeatherDataReceived] = _isWeatherDataReceived;
     const [isLoadingScreenOn, setIsLoadingScreenOn] = _isLoadingScreenOn;
 
-    const handleUnitsTypeBtnClick = () => {
-        const isOnImperial = (units.temp === '°F')
-        const _units = { temp: isOnImperial ? '°F' : '°C', speed: isOnImperial ? 'mph' : 'm/s' }
+
+    // GOAL: when the user clicks on unit option then update the state of units 
+    // the state of units is updated to the chosen units (to metric for example)
+    // if the unit of measurement chosen is metric, then update the state of units as follows: {temp: C, speed: m/s}
+    // if the unit of measurement is imperial, then update the state of units as follows: {temp: F, speed: mph}
+    // get the name of the button, the name is the unit of measurement (either 'metric' or 'imperial')
+    // the user choses a different unit of measure (metric), the user chooses one of the buttons 
+    const handleUnitsTypeBtnClick = event => {
+        const { name: btnName } = event.target;
+        const wasImperialUnitsChosen = btnName === 'imperial';
+        const _units = { temp: wasImperialUnitsChosen ? '°F' : '°C', speed: wasImperialUnitsChosen ? 'mph' : 'm/s' }
+        setUnits(_units);
+        setIsUnitsSelectionModalOn(false);
         if (isWeatherDataReceived) {
             setIsWeatherDataReceived(false);
             setIsLoadingScreenOn(true);
             setUnits(_units);
-            getWeather(null, isOnImperial).then(response => {
+            setWeather(null);
+            getWeather(longAndLatOfDisplayedWeather, wasImperialUnitsChosen).then(response => {
                 const { weather, didError, errorMsg } = response;
+
                 if (didError) {
                     console.error('An error has occurred in getting weather of target location. Error message: ', errorMsg);
                     alert('An error has occurred in getting weather of target location.')
                     return;
                 };
+
                 if (!weather) {
                     alert('Something went wrong, please refresh the page and try again.')
                     return;
@@ -45,10 +59,12 @@ const UnitTypes = () => {
                         time: getTimeOfLocation(timezone),
                     }
                 });
+            }).finally(() => {
                 setIsLoadingScreenOn(false);
                 setIsWeatherDataReceived(true);
             })
-        }
+        };
+        debugger
         // CASE 1: the weather results are displayed onto the UI
         // GOAL: get the weather results again but with the opposite units
         // the weather results with the opposite units are displayed onto the DOM
@@ -66,8 +82,8 @@ const UnitTypes = () => {
     }
     return (
         <div className='modalBtns unitsSelection'>
-            <button>{'Imperial (°F, mph)'}</button>
-            <button>{'Metric (°C, m/s)'}</button>
+            <button name='imperial' onClick={event => { handleUnitsTypeBtnClick(event); }}>{'Imperial (°F, mph)'}</button>
+            <button name='metric' onClick={event => { handleUnitsTypeBtnClick(event); }}>{'Metric (°C, m/s)'}</button>
         </div>
     )
 }

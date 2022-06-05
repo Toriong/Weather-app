@@ -8,16 +8,7 @@ import WeatherIcon from '../weatherUI/WeatherIcon';
 import WeatherTempTable from '../weatherUI/WeatherTempTable';
 import '../../css/comp-css/modals/selectedWeatherDay.css';
 
-// GOAL: don't show the current section of the selectedWeatherDay
 
-// GOAL: show the following data for the average data section for the selectedWeatherDay:
-// the high
-// the low 
-// the humidity
-// dew point 
-// wind speed 
-
-// GOAL: show all temps for the table 
 
 const SelectedWeatherDay = () => {
     const { _selectedWeatherDay, _targetLocation, _tempUnits, _units } = useContext(WeatherInfoContext);
@@ -41,8 +32,8 @@ const SelectedWeatherDay = () => {
     }
 
     const tableData = { temp: isPresentDay ? tempAverages : _tempAverages, feelsLike: isPresentDay ? feelsLikeAverage : feels_like };
-    const _sunrise = getTime(sunrise ?? sunriseProjected);
-    const _sunset = getTime(sunset ?? sunsetProjected);
+    const _sunrise = getTime(sunrise);
+    const _sunset = getTime(sunset);
 
 
     if (moreInfoDescription) {

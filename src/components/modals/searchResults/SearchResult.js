@@ -5,15 +5,15 @@ import { SearchContext } from '../../../provider/SearchProvider';
 import { WeatherInfoContext } from '../../../provider/WeatherInfoProvider';
 
 const SearchResult = ({ label, longitude, latitude }) => {
-    const { _longAndLatOfUser } = useContext(WeatherInfoContext);
+    const { _longAndLat } = useContext(WeatherInfoContext);
     const { _isSearchResultsOn, _searchInput } = useContext(SearchContext);
     const [, setIsSearchResultsOn] = _isSearchResultsOn;
-    const [, setLongAndLatOfUser] = _longAndLatOfUser
+    const [, setLongAndLat] = _longAndLat
     const [, setSearchInput] = _searchInput;
 
     const handleSearchResultClick = () => {
         setSearchInput(label);
-        setLongAndLatOfUser({ longitude, latitude });
+        setLongAndLat({ longitude, latitude });
         setIsSearchResultsOn(false);
     }
 

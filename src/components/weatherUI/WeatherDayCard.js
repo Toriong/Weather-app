@@ -14,9 +14,8 @@ const WeatherDayCard = ({ index, day, isPresentDay }) => {
     const [currentDate, setCurrentDate] = _currentDate;
     const { temp: tempUnits } = _units[0];
     const date = isPresentDay ? currentDate : getDate(index + 1);
-    const { weather, feels_like, averageForTheDay, temp } = day;
+    const { weather, feels_like, averageForTheDay, temp } = day ?? {};
     const { min, max } = averageForTheDay?.temp ?? temp;
-    console.log('day: ', day)
     const { icon: weatherIcon, description } = weather[0] ?? {};
     const weatherDayCard = isPresentDay ? 'weatherDayCard' : 'weatherDayCard daily'
 
@@ -44,7 +43,7 @@ const WeatherDayCard = ({ index, day, isPresentDay }) => {
                 {isPresentDay &&
                     <>
                         <span>Current temp:</span>
-                        <span>{Math.round(temp)} °F</span>
+                        <span>{Math.round(temp)} {tempUnits}</span>
                     </>
                 }
                 {isPresentDay ?

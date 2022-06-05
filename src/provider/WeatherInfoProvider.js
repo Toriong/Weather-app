@@ -19,7 +19,8 @@ export const WeatherInfoProvider = props => {
     const [units, setUnits] = useState(unitsDefaultVal)
     const [selectedWeatherDay, setSelectedWeatherDay] = useState({});
     const [targetLocation, setTargetLocation] = useState({});
-    const [longAndLatOfUser, setLongAndLatOfUser] = useState(null);
+    const [longAndLat, setLongAndLat] = useState(null);
+    const [longAndLatOfDisplayedWeather, setLongAndLatOfDisplayedWeather] = useState({});
     const [isGettingUserLocation, setIsGettingUserLocation] = useState(false);
 
 
@@ -37,8 +38,9 @@ export const WeatherInfoProvider = props => {
                 _selectedWeatherDay: [selectedWeatherDay, setSelectedWeatherDay],
                 _targetLocation: [targetLocation, setTargetLocation],
                 _units: [units, setUnits],
-                _longAndLatOfUser: [longAndLatOfUser, setLongAndLatOfUser],
+                _longAndLat: [longAndLat, setLongAndLat],
                 _isGettingUserLocation: [isGettingUserLocation, setIsGettingUserLocation],
+                _longAndLatOfDisplayedWeather: [longAndLatOfDisplayedWeather, setLongAndLatOfDisplayedWeather]
             }}
         >
             {props.children}

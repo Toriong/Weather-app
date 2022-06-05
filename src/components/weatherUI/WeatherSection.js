@@ -9,7 +9,7 @@ const WeatherSection = () => {
     const { _isWeatherDataReceived, _isLoadingScreenOn, _weather, _targetLocation } = useContext(WeatherInfoContext);
     const [weather,] = _weather;
     const [targetLocation, setTargetLocation] = _targetLocation;
-    const [isWeatherDataRecevied, setIsWeatherDataReceived] = _isWeatherDataReceived;
+    const [isWeatherDataReceived, setIsWeatherDataReceived] = _isWeatherDataReceived;
     const [isLoadingScreenOn, setIsLoadingScreenOn] = _isLoadingScreenOn;
     const { daily: dailyForecast, current: currentDay } = weather ?? {}
     const { name: targetLocationName, time: targetLocationTime } = targetLocation;
@@ -28,7 +28,7 @@ const WeatherSection = () => {
             {isLoadingScreenOn &&
                 <span id="loadingWeatherTxt">Loading, please wait...</span>
             }
-            {isWeatherDataRecevied &&
+            {isWeatherDataReceived &&
                 <>
                     <header>
                         <span>{targetLocationTime}</span>

@@ -9,12 +9,14 @@ import { getTimeOfLocation } from '../../timeFns/getTimeOfLocation';
 
 
 const SearchBtn = () => {
-    const { _isLoadingScreenOn, _isWeatherDataReceived, _currentDate, _weather, _targetLocation, _longAndLatOfUser, _isGettingUserLocation } = useContext(WeatherInfoContext)
+    const { _isLoadingScreenOn, _isWeatherDataReceived, _currentDate, _weather, _targetLocation, _longAndLat, _isGettingUserLocation, _units, _longAndLatOfDisplayedWeather } = useContext(WeatherInfoContext)
     const { _searchInput, _placeHolderTxt } = useContext(SearchContext);
+    const [units] = _units;
     const [placeHolderTxt] = _placeHolderTxt;
+    const [longAndLatOfDisplayedWeather, setLongAndLatOfDisplayedWeather] = _longAndLatOfDisplayedWeather;
     const [isGettingUserLocation] = _isGettingUserLocation;
     const [searchInput,] = _searchInput;
-    const [longAndLatOfUser,] = _longAndLatOfUser;
+    const [longAndLat,] = _longAndLat;
     const [, setWeather] = _weather;
     const [targetLocation, setTargetLocation] = _targetLocation;
     const [currentDate, setCurrentDate] = _currentDate;
@@ -22,12 +24,13 @@ const SearchBtn = () => {
     const [isWeatherDataReceived, setIsWeatherDataReceived] = _isWeatherDataReceived;
     const isOnUserLocationSearch = placeHolderTxt === "Using your location. Press the 'search' icon to get results";
     const isButtonDisabled = ((isOnUserLocationSearch && !navigator?.geolocation) || isGettingUserLocation || ((searchInput.length <= 2) && !isOnUserLocationSearch)) ? true : false;
+    const isOnImperial = units.temp === '°F'
 
 
 
 
     const _getWeather = locationName => {
-        getWeather(longAndLatOfUser)
+        getWeather(longAndLat, isOnImperial)
             .then(response => {
                 const { weather, didError, errorMsg } = response;
                 if (didError) {
@@ -55,19 +58,20 @@ const SearchBtn = () => {
                 });
                 setIsLoadingScreenOn(false);
                 setIsWeatherDataReceived(true);
+                setLongAndLatOfDisplayedWeather(longAndLat);
             })
     };
 
 
     if (isOnUserLocationSearch) {
         var handleSearchBtnClick = () => {
-            if (!longAndLatOfUser) {
+            if (!longAndLat) {
                 alert("Couldn't get your location. Either your browser doesn't support geolocation or you have disabled location access from your computer.")
                 return;
             }
             setIsWeatherDataReceived(false);
             setIsLoadingScreenOn(true);
-            getUserCityName(longAndLatOfUser).then(location => {
+            getUserCityName(longAndLat).then(location => {
                 const { country, state, name } = location;
                 if (state) {
                     var _location = `${name}, ${state}, ${country}`
@@ -79,6 +83,7 @@ const SearchBtn = () => {
                     _location = "Unable to get your location. "
                 }
                 _getWeather(_location);
+                setLongAndLatOfDisplayedWeather(longAndLat);
             })
         }
     } else if (placeHolderTxt === 'Search by address, city name, or zip code') {

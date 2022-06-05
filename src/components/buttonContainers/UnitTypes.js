@@ -20,7 +20,7 @@ const UnitTypes = () => {
                 <span>{unitsType}</span>
             </button>
             <div>
-                {isUnitsSelectionModalOn && <UnitTypesModal />}
+                {isUnitsSelectionModalOn && <UnitTypesModal setIsUnitsSelectionModalOn={setIsUnitsSelectionModalOn} />}
             </div>
         </div>
     )

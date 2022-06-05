@@ -12,11 +12,11 @@ import '../../css/comp-css/modals/searchTypeModal.css'
 
 const SearchTypes = () => {
     const { _isSearchTypesModalOn, _searchInput, _placeHolderTxt } = useContext(SearchContext);
-    const { _longAndLatOfUser, _isGettingUserLocation } = useContext(WeatherInfoContext);
+    const { _longAndLat, _isGettingUserLocation } = useContext(WeatherInfoContext);
     const [, setPlaceHolderTxt] = _placeHolderTxt;
     const [, setIsGettingUserLocation] = _isGettingUserLocation;
     const [, setSearchInput] = _searchInput
-    const [, setLongAndLatOfUser] = _longAndLatOfUser;
+    const [, setLongAndLatOfUser] = _longAndLat;
     const [, setIsSearchTypesModalOn] = _isSearchTypesModalOn;
 
 
