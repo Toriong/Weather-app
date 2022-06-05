@@ -1,12 +1,15 @@
 import React from 'react'
-import { useContext } from 'react'
+import { useContext } from 'react';
 import { getWeather } from '../../apiFns/getWeather';
+import { ModalContext } from '../../provider/ModalProvider';
 import { WeatherInfoContext } from '../../provider/WeatherInfoProvider'
 import { getDate } from '../../timeFns/getDate';
 import { getTimeOfLocation } from '../../timeFns/getTimeOfLocation';
 
-const UnitTypes = ({ setIsUnitsSelectionModalOn }) => {
-    const { _units, _isWeatherDataReceived, _isLoadingScreenOn, _weather, _currentDate, _targetLocation, _longAndLatOfDisplayedWeather } = useContext(WeatherInfoContext);
+const UnitTypesBtns = ({ setIsUnitsSelectionModalOn }) => {
+    const { _units, _isWeatherDataReceived, _isLoadingScreenOn, _weather, _currentDate, _targetLocation, _longAndLatOfDisplayedWeather } = useContext(WeatherInfoContext)
+    const { _isSearchAndUnitTypesModalOn } = useContext(ModalContext);
+    const [, setIsSearchAndUnitTypesModalOn] = _isSearchAndUnitTypesModalOn;
     const [longAndLatOfDisplayedWeather] = _longAndLatOfDisplayedWeather;
     const [weather, setWeather] = _weather;
     const [currenetDate, setCurrentDate] = _currentDate;
@@ -15,12 +18,13 @@ const UnitTypes = ({ setIsUnitsSelectionModalOn }) => {
     const [isWeatherDataReceived, setIsWeatherDataReceived] = _isWeatherDataReceived;
     const [isLoadingScreenOn, setIsLoadingScreenOn] = _isLoadingScreenOn;
 
+
     const handleUnitsTypeBtnClick = event => {
         const { name: btnName } = event.target;
         const wasImperialUnitsChosen = btnName === 'imperial';
         const _units = { temp: wasImperialUnitsChosen ? '°F' : '°C', speed: wasImperialUnitsChosen ? 'mph' : 'm/s' }
         setUnits(_units);
-        setIsUnitsSelectionModalOn(false);
+        setIsUnitsSelectionModalOn ? setIsUnitsSelectionModalOn(false) : setIsSearchAndUnitTypesModalOn(false);
         if (isWeatherDataReceived) {
             setIsWeatherDataReceived(false);
             setIsLoadingScreenOn(true);
@@ -59,13 +63,12 @@ const UnitTypes = ({ setIsUnitsSelectionModalOn }) => {
         };
     }
 
-
     return (
-        <div className='modalBtns unitsSelection'>
+        <>
             <button name='imperial' onClick={event => { handleUnitsTypeBtnClick(event); }}>{'Imperial (°F, mph)'}</button>
             <button name='metric' onClick={event => { handleUnitsTypeBtnClick(event); }}>{'Metric (°C, m/s)'}</button>
-        </div>
+        </>
     )
 }
 
-export default UnitTypes
+export default UnitTypesBtns

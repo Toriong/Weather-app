@@ -15,16 +15,11 @@ const WeatherSection = () => {
     const { name: targetLocationName, time: targetLocationTime } = targetLocation;
 
 
-
-    useEffect(() => {
-        // console.log('weather: ', weather);
-        // console.log('targetLocation: ', targetLocation)
-        console.log('dailyForecast: ', dailyForecast)
-    })
+    const weatherSectionClassName = isLoadingScreenOn ? 'weatherSection loading' : 'weatherSection';
 
 
     return (
-        <section className='weatherSection'>
+        <section className={weatherSectionClassName}>
             {isLoadingScreenOn &&
                 <span id="loadingWeatherTxt">Loading, please wait...</span>
             }

@@ -16,3 +16,17 @@
 .modalBtns.unitsSelection > button{
     font-size: 10px;
 }
+
+.modalBtns.searchTypeAndUnits{
+    transform: translate(-45px, 1px);
+    width:130px
+}
+
+.modalBtns.searchTypeAndUnits > button{
+    font-size: 9px;
+}
+
+.modalBtns.searchTypeAndUnits > button:nth-child(3){
+    border-top: solid silver .001px;
+    color: grey;
+}

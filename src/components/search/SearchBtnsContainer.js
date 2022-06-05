@@ -4,8 +4,11 @@ import SearchTypes from '../modals/SearchTypes';
 import SearchBtn from '../buttons/SearchBtn';
 import { useContext } from 'react';
 import { SearchContext } from '../../provider/SearchProvider';
-import '../../css/comp-css/search/searchBtnsContainer.css'
+import { AiOutlineInfoCircle } from "react-icons/ai";
 import UnitTypes from '../buttonContainers/UnitTypes';
+import SearchTypesContainer from '../buttonContainers/SearchTypesContainer'
+import HamburgerBtnContainer from '../buttonContainers/HamburgerBtnContainer';
+import '../../css/comp-css/search/searchBtnsContainer.css'
 
 
 const SearchBtnsContainer = () => {
@@ -15,13 +18,15 @@ const SearchBtnsContainer = () => {
 
     // GOAL: when the modal appears son the screen for the search type, when the user chooses a search type, then change the placeholder text
 
-    const handleSearchTypeBtnClick = () => { setIsSearchTypesModalOn(isSearchTypesModalOn => !isSearchTypesModalOn) }
+    const handleSearchTypeBtnClick = () => { setIsSearchTypesModalOn(isSearchTypesModalOn => !isSearchTypesModalOn) };
 
 
     // GOAL: when the user presses my location, display on the search input: 'Using your location. Press the search button, to see results'.
     // the following text appears in the search input: 'Using your location. Press the search button to see results'
     // the following text is passed into the setPlaceHolderTxt: 'Using your location. Press the search button to see results'
     // the user presses the my location button in the searchTypes button 
+
+
 
     if (placeholderTxt === "Search by city") {
         var searchTypeTxt = 'By city';
@@ -36,19 +41,20 @@ const SearchBtnsContainer = () => {
     return (
         <div className='searchBtnsContainer'>
             <div>
-                <span>*Search must contain three or more characters.</span>
+                <span>*Enter at least three characters.</span>
             </div>
             <div className='searchBtnsSubContainer'>
                 <UnitTypes />
-                <div className='searchTypeContainer'>
-                    <button onClick={handleSearchTypeBtnClick}>
-                        <span>{searchTypeTxt}</span>
-                    </button>
-                    <div>
-                        {isSearchTypesModalOn && <SearchTypes />}
-                    </div>
-                </div>
+                <SearchTypesContainer
+                    searchTypeTxt={searchTypeTxt}
+                    handleSearchTypeBtnClick={handleSearchTypeBtnClick}
+                    isSearchTypesModalOn={isSearchTypesModalOn}
+                />
                 <SearchBtn />
+            </div>
+            <div className='searchBtnsSubContainerOnSmallerScreen'>
+                <HamburgerBtnContainer />
+                <SearchBtn isOnSmallerScreen />
             </div>
         </div>
     )

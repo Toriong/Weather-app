@@ -26,6 +26,10 @@
 }
 
 
-
+@media (max-width: 768px){
+    .searchInputContainer>div:first-child {
+        display: block
+    }
+}
 
 

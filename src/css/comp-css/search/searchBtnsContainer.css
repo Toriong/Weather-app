@@ -13,15 +13,31 @@ justify-content: space-between;
     display: flex;
 }
 
+.hamburgerBtnContainer > button,
+.searchBtnsSubContainerOnSmallerScreen > button,
 .searchBtnsSubContainer > button,
 .searchTypeContainer > button{
-    width: 100px;
     height: 30px;
     border: var(--borderColor);
     border-radius: 4px;
     font-weight: 350;
-font-size: 11.5px;
+    font-size: 11.5px;
 }
+
+
+.hamburgerBtnContainer > button{
+    width: 40px;
+    margin-right: 8px;
+}
+.searchBtnsSubContainer>button,
+.searchTypeContainer>button{
+    width: 100px;
+}
+
+.searchBtnsSubContainerOnSmallerScreen>button{
+    width: 40px;
+}
+
 
 
 .searchTypeContainer > button:first-child{
@@ -38,4 +54,52 @@ font-size: 11.5px;
     position: absolute;
     top: 0;
     white-space: nowrap;
+}
+
+.searchBtnsSubContainerOnSmallerScreen{
+    display: none;
+}
+
+#searchInfoBtn{
+    display: none;
+}
+
+@media(max-width: 767px){
+    .searchBtnsContainer{
+        height: fit-content;
+    }
+
+    .searchBtnsSubContainerOnSmallerScreen>button,
+    .hamburgerBtnContainer > button{
+        height: 25px;
+    }
+
+    .searchBtnsContainer{
+        bottom: 3px;
+    }
+}
+
+@media (max-width: 1149px) {
+    .searchBtnsSubContainer {
+        display: none;
+    }
+
+    .searchBtnsSubContainerOnSmallerScreen{
+        display: flex;
+    }
+}
+
+
+@media (max-width: 576px){
+    .searchBtnsContainer>div:first-child span{
+        font-size: clamp(7px, 2vw, 8px);
+    }
+
+    .searchBtnsContainer > div:first-child > span{
+        /* display: none; */
+    }
+
+        #searchInfoBtn {
+            /* display: flex; */
+        }
 }

@@ -5,10 +5,11 @@ import { SearchContext } from '../../provider/SearchProvider';
 import { WeatherInfoContext } from '../../provider/WeatherInfoProvider';
 import { getDate } from '../../timeFns/getDate';
 import { getTimeOfLocation } from '../../timeFns/getTimeOfLocation';
+import { BiSearch } from "react-icons/bi";
 
 
 
-const SearchBtn = () => {
+const SearchBtn = ({ isOnSmallerScreen }) => {
     const { _isLoadingScreenOn, _isWeatherDataReceived, _currentDate, _weather, _targetLocation, _longAndLat, _isGettingUserLocation, _units, _longAndLatOfDisplayedWeather } = useContext(WeatherInfoContext)
     const { _searchInput, _placeHolderTxt } = useContext(SearchContext);
     const [units] = _units;
@@ -106,7 +107,11 @@ const SearchBtn = () => {
             disabled={isButtonDisabled}
             onClick={handleSearchBtnClick}
         >
-            {isGettingUserLocation ? 'Getting location...' : 'Search'}
+            {!isOnSmallerScreen ?
+                (isGettingUserLocation ? 'Getting location...' : 'Search')
+                :
+                <BiSearch />
+            }
         </button>
     )
 }
