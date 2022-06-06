@@ -49,7 +49,7 @@ const SearchBtn = ({ isOnSmallerScreen }) => {
                     `weather: `, weather
                 )
                 const { daily, timezone, current, timezone_offset } = weather;
-
+                console.log('bacon and cheese: ', timezone)
                 const { temp, feels_like, weather: weatherMoreInfo, humidity, sunrise, sunset, wind_speed, rain, snow, dew_point } = daily[0];
                 daily.shift();
                 daily.pop();

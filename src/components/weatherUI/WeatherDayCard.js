@@ -5,7 +5,7 @@ import WeatherIcon from './WeatherIcon';
 import { getTime } from '../../timeFns/getTime'
 import '../../css/comp-css/weather-section/weatherDayCard.css'
 
-const WeatherDayCard = ({ day, isPresentDay }) => {
+const WeatherDayCard = ({ day, isPresentDay, index }) => {
     const { _currentDate, _selectedWeatherDay, _units, _targetLocation } = useContext(WeatherInfoContext);
     const { _isSelectedWeatherModalOn } = useContext(ModalContext);
     const [targetLocation] = _targetLocation
@@ -34,7 +34,7 @@ const WeatherDayCard = ({ day, isPresentDay }) => {
 
 
     return (
-        <div className={weatherDayCardCss} onClick={handleWeatherDayClick}>
+        <div className={weatherDayCardCss} onClick={handleWeatherDayClick} key={index}>
             <section>
                 <h1>{date}</h1>
             </section>

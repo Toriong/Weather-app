@@ -2,6 +2,10 @@
   --borderColor: silver solid 0.8px
 }
 
+span{
+  color: black;
+}
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',

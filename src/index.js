@@ -6,6 +6,7 @@ import reportWebVitals from './reportWebVitals';
 import { WeatherInfoProvider } from './provider/WeatherInfoProvider';
 import { ModalProvider } from './provider/ModalProvider';
 import { SearchProvider } from './provider/SearchProvider';
+import { Route } from 'react-router';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(

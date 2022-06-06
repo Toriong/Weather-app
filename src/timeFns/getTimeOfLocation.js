@@ -1,5 +1,5 @@
 
-export const getTimeOfLocation = (timeZone, willGetOnlyDate) => {
+export const getTimeOfLocation = (timeZone, willGetOnlyDate, willGetOnlyYear) => {
     const options = {
         timeZone: timeZone,
         year: 'numeric',
@@ -11,6 +11,13 @@ export const getTimeOfLocation = (timeZone, willGetOnlyDate) => {
     if (willGetOnlyDate) {
         delete options.hour;
         delete options.minute;
+    }
+
+    if (willGetOnlyYear) {
+        delete options.hour;
+        delete options.minute;
+        delete options.month;
+        delete options.day;
     }
 
     let formatter = new Intl.DateTimeFormat([], options);

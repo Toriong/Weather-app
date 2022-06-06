@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useContext } from 'react';
+import Footer from './components/Footer';
 import SelectedWeatherDay from './components/modals/SelectedWeatherDay';
 import SearchBar from './components/search/SearchBar';
 import WeatherSection from './components/weatherUI/WeatherSection';
@@ -37,6 +38,7 @@ const WeatherApp = () => {
         </>
 
       }
+      <Footer />
     </div>
   );
 }
