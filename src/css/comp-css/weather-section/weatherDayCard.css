@@ -10,6 +10,10 @@
   box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22);
 }
 
+.weatherDayCard.presentDay{
+  font-size: clamp(15.6px, calc(10px + 2vmin), 31.6px) !important;
+} 
+
 .weatherDayCard.daily{
   height: 310px;
 }
@@ -42,12 +46,14 @@
 
 }
 
-
-
-
 .highAndLowTempSection,
 .weatherDescriptionSec > span:nth-child(3){
   margin-top: 14px;
+}
+
+.weatherDescriptionSec.daily > span{
+  text-align: center;
+  width: 100%;
 }
 
 .weatherDescription{
@@ -81,3 +87,18 @@ text-transform: capitalize;
 .highAndLowTempSection > div > span:last-child{
   margin-top: 8px;
 }
+
+@media (min-width: 1024px) and (max-width: 1199px){
+  .weatherDescriptionSec.daily > span{
+    font-size: clamp(14.5px, 1vw, 20px)
+
+  }
+}
+
+@media(max-width: 576px){
+  .weatherDayCard{
+    width: 60vw;
+    min-width: 255px;
+  }
+}
+

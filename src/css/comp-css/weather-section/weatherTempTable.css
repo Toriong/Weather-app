@@ -27,3 +27,24 @@ padding-right: 8px;
 .weatherTempTable > tr{
     margin-top: 100px;
 }
+
+
+@media (max-width: 576px){
+    .weatherDayModal th,
+    .thirdRow>td:first-child,
+    .secondRow>td:first-child {
+        font-size: 10px;
+    }
+
+    
+
+    .thirdRow>td:not(:first-child) .secondRow>td:not(:first-child) {
+        font-size: 11px;
+    }
+
+
+    .thirdRow>td:not(:first-child),
+    .secondRow>td:not(:first-child){
+        font-size: 11px;
+    }
+}

@@ -11,7 +11,8 @@ import { BiSearch } from "react-icons/bi";
 
 const SearchBtn = ({ isOnSmallerScreen }) => {
     const { _isLoadingScreenOn, _isWeatherDataReceived, _currentDate, _weather, _targetLocation, _longAndLat, _isGettingUserLocation, _units, _longAndLatOfDisplayedWeather } = useContext(WeatherInfoContext)
-    const { _searchInput, _placeHolderTxt } = useContext(SearchContext);
+    const { _searchInput, _placeHolderTxt, _doesGeoLocationWork } = useContext(SearchContext);
+    const [doesGoeLocationWork,] = _doesGeoLocationWork;
     const [units] = _units;
     const [placeHolderTxt] = _placeHolderTxt;
     const [longAndLatOfDisplayedWeather, setLongAndLatOfDisplayedWeather] = _longAndLatOfDisplayedWeather;
@@ -24,7 +25,7 @@ const SearchBtn = ({ isOnSmallerScreen }) => {
     const [isLoadingScreenOn, setIsLoadingScreenOn] = _isLoadingScreenOn;
     const [isWeatherDataReceived, setIsWeatherDataReceived] = _isWeatherDataReceived;
     const isOnUserLocationSearch = placeHolderTxt === "Using your location. Press the 'search' icon to get results";
-    const isButtonDisabled = ((isOnUserLocationSearch && !navigator?.geolocation) || isGettingUserLocation || ((searchInput.length <= 2) && !isOnUserLocationSearch)) ? true : false;
+    const isButtonDisabled = ((isOnUserLocationSearch && !navigator?.geolocation) || isGettingUserLocation || ((searchInput.length <= 2) && !isOnUserLocationSearch) || (isOnUserLocationSearch && !doesGoeLocationWork)) ? true : false;
     const isOnImperial = units.temp === '°F'
 
 
@@ -52,8 +53,8 @@ const SearchBtn = ({ isOnSmallerScreen }) => {
                 const { temp, feels_like, weather: weatherMoreInfo, humidity, sunrise, sunset, wind_speed, rain, snow, dew_point } = daily[0];
                 daily.shift();
                 daily.pop();
-                setWeather({ daily, current: { ...current, averageForTheDay: { temp, feels_like, weather: weatherMoreInfo, humidity, sunrise, sunset, wind_speed, rain, snow, dewPoint: dew_point } } })
-                setCurrentDate(getDate())
+                setWeather({ daily, current: { ...current, averageForTheDay: { temp, feels_like, weather: weatherMoreInfo, humidity, sunrise, sunset, wind_speed, rain, snow, dewPoint: dew_point } }, timezone })
+                setCurrentDate(getTimeOfLocation(timezone, true))
                 setTargetLocation(targetLocation => {
                     return {
                         ...targetLocation,
@@ -108,7 +109,7 @@ const SearchBtn = ({ isOnSmallerScreen }) => {
             onClick={handleSearchBtnClick}
         >
             {!isOnSmallerScreen ?
-                (isGettingUserLocation ? 'Getting location...' : 'Search')
+                (isGettingUserLocation ? 'Getting location...' : <BiSearch id='searchIconOnLaptop' />)
                 :
                 <BiSearch />
             }

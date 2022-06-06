@@ -1,5 +1,5 @@
 .weatherSection{
-    min-width: 100vw;
+    max-width: 2560px;
 }
 
 
@@ -13,11 +13,17 @@
 
 
 
+.weatherSection > header > span{
+    font-size: clamp(15.6px, calc(10px + 2vmin), 31.6px) !important;
+}
+
 .weatherSection > header > span:not(:first-child){
     margin-top: 3px;
     font-weight: 700;
-    max-width: 50vw;;
+    max-width: 90vw;;
     word-wrap: break-word;
+    min-width: 140px;
+    text-align: center;
 }
 
 
@@ -40,11 +46,20 @@ margin-top: 8px;
 
 .dailyForecastContainer{
     display: flex;
-    width: 100%;
+    /* width: 95%; */
     overflow-x: auto;
     padding-bottom: 100px;
     padding-right: 20px;
 }
+
+
+.weatherSection > header,
+.dailyForecastContainer,
+#currentDaySection{
+    min-width: 280px;
+}
+
+
 
 @media (min-width: 1920px){
     .dailyForecastContainer{
@@ -52,7 +67,14 @@ margin-top: 8px;
     }
 }
 
-@media(max-width: 1199px){
+
+/* for tablets and below */
+@media(max-width: 1023px){
+.dailyForecastContainer{
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
 }
 
 

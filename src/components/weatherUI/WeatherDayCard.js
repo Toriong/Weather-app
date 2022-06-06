@@ -1,23 +1,25 @@
 import React, { useContext } from 'react'
-import { getDate } from '../../timeFns/getDate';
 import { WeatherInfoContext } from '../../provider/WeatherInfoProvider';
-import '../../css/comp-css/weather-section/weatherDayCard.css'
 import { ModalContext } from '../../provider/ModalProvider';
 import WeatherIcon from './WeatherIcon';
-import { useEffect } from 'react';
+import { getTime } from '../../timeFns/getTime'
+import '../../css/comp-css/weather-section/weatherDayCard.css'
 
-const WeatherDayCard = ({ index, day, isPresentDay }) => {
-    const { _currentDate, _selectedWeatherDay, _units } = useContext(WeatherInfoContext);
+const WeatherDayCard = ({ day, isPresentDay }) => {
+    const { _currentDate, _selectedWeatherDay, _units, _targetLocation } = useContext(WeatherInfoContext);
     const { _isSelectedWeatherModalOn } = useContext(ModalContext);
+    const [targetLocation] = _targetLocation
     const [isSelectedWeatherModalOn, setIsSelectedWeatherModalOn] = _isSelectedWeatherModalOn;
     const [selectedWeatherDay, setSelectedWeatherDay] = _selectedWeatherDay;
     const [currentDate, setCurrentDate] = _currentDate;
     const { temp: tempUnits } = _units[0];
-    const date = isPresentDay ? currentDate : getDate(index + 1);
-    const { weather, feels_like, averageForTheDay, temp } = day ?? {};
+    const { weather, feels_like, averageForTheDay, temp, dt } = day ?? {};
+    // const date = isPresentDay ? currentDate : getDate(index + 1);
+    const date = getTime(dt, targetLocation.timeZoneOffset, 'MMMM Do YYYY')
     const { min, max } = averageForTheDay?.temp ?? temp;
     const { icon: weatherIcon, description } = weather[0] ?? {};
-    const weatherDayCard = isPresentDay ? 'weatherDayCard' : 'weatherDayCard daily'
+    const weatherDayCardCss = isPresentDay ? 'weatherDayCard presentDay' : 'weatherDayCard daily'
+    const weatherDescriptionSecCss = isPresentDay ? 'weatherDescriptionSec' : 'weatherDescriptionSec daily'
 
     const handleWeatherDayClick = () => {
         setIsSelectedWeatherModalOn(true);
@@ -32,14 +34,14 @@ const WeatherDayCard = ({ index, day, isPresentDay }) => {
 
 
     return (
-        <div className={weatherDayCard} onClick={handleWeatherDayClick}>
+        <div className={weatherDayCardCss} onClick={handleWeatherDayClick}>
             <section>
                 <h1>{date}</h1>
             </section>
             <section className='weatherDayCardIcon'>
                 <WeatherIcon weatherIcon={weatherIcon} />
             </section>
-            <section className='weatherDescriptionSec'>
+            <section className={weatherDescriptionSecCss}>
                 {isPresentDay &&
                     <>
                         <span>Current temp:</span>

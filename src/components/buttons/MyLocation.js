@@ -5,9 +5,10 @@ import { SearchContext } from '../../provider/SearchProvider';
 import { WeatherInfoContext } from '../../provider/WeatherInfoProvider';
 
 const MyLocation = ({ isOnSmallerScreen }) => {
-    const { _isSearchTypesModalOn, _searchInput, _placeHolderTxt } = useContext(SearchContext);
+    const { _isSearchTypesModalOn, _searchInput, _placeHolderTxt, _doesGeoLocationWork } = useContext(SearchContext);
     const { _longAndLat, _isGettingUserLocation } = useContext(WeatherInfoContext);
     const { _isSearchAndUnitTypesModalOn } = useContext(ModalContext);
+    const [, setDoesGoeLocationWork] = _doesGeoLocationWork;
     const [, setIsSearchAndUnitTypesModalOn] = _isSearchAndUnitTypesModalOn;
     const [, setPlaceHolderTxt] = _placeHolderTxt;
     const [, setIsGettingUserLocation] = _isGettingUserLocation;
@@ -17,15 +18,21 @@ const MyLocation = ({ isOnSmallerScreen }) => {
 
     const handleMyLocationClick = () => {
         if (navigator?.geolocation) {
-            console.log('hey there meng')
+            const geoLocalFailed = setTimeout(() => {
+                setIsGettingUserLocation(false);
+                setDoesGoeLocationWork(false);
+                alert('Geo location has failed. Please use the general search and type in your location.')
+            }, 5000);
             navigator.geolocation.getCurrentPosition(position => {
+                clearTimeout(geoLocalFailed);
                 const { longitude, latitude } = position.coords;
                 console.log('position.coords: ', position.coords)
                 setLongAndLat({ longitude, latitude });
                 setIsGettingUserLocation(false);
-            });
+            })
         } else {
-            alert("This browser doesn't support geolocation.")
+            alert("This browser doesn't support geolocation.");
+            return;
         }
         setPlaceHolderTxt("Using your location. Press the 'search' icon to get results");
         isOnSmallerScreen ? setIsSearchAndUnitTypesModalOn(false) : setIsSearchTypesModalOn(false);

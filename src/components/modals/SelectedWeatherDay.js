@@ -33,8 +33,8 @@ const SelectedWeatherDay = () => {
     }
 
     const tableData = { temp: isPresentDay ? tempAverages : _tempAverages, feelsLike: isPresentDay ? feelsLikeAverage : feels_like };
-    const _sunrise = getTime(sunrise ?? sunriseProjected, timeZoneOffset);
-    const _sunset = getTime(sunset ?? sunsetProjected, timeZoneOffset);
+    const _sunrise = getTime(sunrise ?? sunriseProjected, timeZoneOffset, 'LT');
+    const _sunset = getTime(sunset ?? sunsetProjected, timeZoneOffset, 'LT');
 
 
     if (moreInfoDescription) {
@@ -43,85 +43,81 @@ const SelectedWeatherDay = () => {
     }
 
 
-    useEffect(() => {
-        console.log('selectedWeatherDay: ', selectedWeatherDay);
-        console.log('averageForTheDay: ', averageForTheDay);
-        console.log('humidity: ', humidityNum);
-        console.log('targetLocation: ', targetLocation)
-    })
 
 
 
 
     return (
         <div className={weatherDayModalClassName} >
-            <section>
-                <span>{isPresentDay ? 'Today' : date}</span>
-                <span>{LocationName}</span>
-            </section>
-            <section className='weatherDescriptionSec1'>
-                <div>
-                    <WeatherIcon weatherIcon={weatherIcon} />
-                </div>
-                <div className={weatherDescriptionContainerCss}>
-                    {isPresentDay &&
-                        <div className='currentWeatherInfo'>
-                            <span>Current:</span>
-                            <span className='infoTxt'>Temp is {Math.round(temp)}{tempUnits}.</span>
-                            <span className='infoTxt'> {_description}. Feel likes {Math.round(feels_like)}{tempUnits}.</span>
-                            <span className='infoTxt'>Humidity: {humidityNum}%</span>
-                            <span className='infoTxt'>Dew point: {Math.round(dew_point)}{tempUnits}</span>
-                            <span className='infoTxt'>Wind speed: {Math.round(wind_speed)} {speedUnits}</span>
-                        </div>
-                    }
-                    <div className='averageForTheDay'>
-                        <span>{isPresentDay ? 'Projections for the day:' : 'Projected forecast:'} </span>
+            <div>
+                <section className='locationInfo'>
+                    <span>{date}</span>
+                    <span>{LocationName}</span>
+                </section>
+                <section className='weatherDescriptionSec1'>
+                    <div>
+                        <WeatherIcon weatherIcon={weatherIcon} />
+                    </div>
+                    <div className={weatherDescriptionContainerCss}>
                         {isPresentDay &&
-                            <div className='presentDayDescription'>
-                                <WeatherIcon weatherIcon={moreInfoIcon} isIconSmaller />
-                                <span className='infoTxt'>{_moreInfoDescription}.</span>
+                            <div className='currentWeatherInfo'>
+                                <span>Current:</span>
+                                <span className='infoTxt'>Temp is {Math.round(temp)}{tempUnits}.</span>
+                                <span className='infoTxt'> {_description}. Feel likes {Math.round(feels_like)}{tempUnits}.</span>
+                                <span className='infoTxt'>Humidity: {humidityNum}%</span>
+                                <span className='infoTxt'>Dew point: {Math.round(dew_point)}{tempUnits}</span>
+                                <span className='infoTxt'>Wind speed: {Math.round(wind_speed)} {speedUnits}</span>
                             </div>
                         }
-                        <div className='projectedInfoSelectedWeatherDay'>
-                            <span className='infoTxt'>The high {isPresentDay ? 'is ' : 'will be '} {Math.round(isPresentDay ? max : mainMax)}{tempUnits}. The low {isPresentDay ? 'is ' : 'will be '} {Math.round(isPresentDay ? min : mainMin)}{tempUnits}.</span>
-                            <span className='infoTxt'>{_description}.</span>
-                            <span className='infoTxt'>Humidity: {isPresentDay ? humidityMoreInfoNum : humidityNum}%</span>
-                            {(rain || rainMain) && <span className='infoTxt'>Rain: {isPresentDay ? rain : rainMain}mm</span>}
-                            {(snow || snowMain) && <span className='infoTxt'>Snow: {isPresentDay ? snow : snowMain}mm</span>}
-                            <span className='infoTxt'>Dew point: {Math.round(isPresentDay ? dewPoint : dew_point)}{tempUnits}</span>
-                            <span className='infoTxt'>Wind speed: {Math.round(isPresentDay ? windSpeedAverage : wind_speed)} {speedUnits}</span>
+                        <div className='averageForTheDay'>
+                            <span>{isPresentDay ? 'Projections for the day:' : 'Projected forecast:'} </span>
+                            {isPresentDay &&
+                                <div className='presentDayDescription'>
+                                    <WeatherIcon weatherIcon={moreInfoIcon} isIconSmaller />
+                                    <span className='infoTxt'>{_moreInfoDescription}.</span>
+                                </div>
+                            }
+                            <div className='projectedInfoSelectedWeatherDay'>
+                                <span className='infoTxt'>The high {isPresentDay ? 'is ' : 'will be '} {Math.round(isPresentDay ? max : mainMax)}{tempUnits}. The low {isPresentDay ? 'is ' : 'will be '} {Math.round(isPresentDay ? min : mainMin)}{tempUnits}.</span>
+                                <span className='infoTxt'>{_description}.</span>
+                                <span className='infoTxt'>Humidity: {isPresentDay ? humidityMoreInfoNum : humidityNum}%</span>
+                                {(rain || rainMain) && <span className='infoTxt'>Rain: {isPresentDay ? rain : rainMain}mm</span>}
+                                {(snow || snowMain) && <span className='infoTxt'>Snow: {isPresentDay ? snow : snowMain}mm</span>}
+                                <span className='infoTxt'>Dew point: {Math.round(isPresentDay ? dewPoint : dew_point)}{tempUnits}</span>
+                                <span className='infoTxt'>Wind speed: {Math.round(isPresentDay ? windSpeedAverage : wind_speed)} {speedUnits}</span>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </section>
-            <section className='tableSection'>
-                {/* put the table here of the following:  */}
-                <WeatherTempTable data={tableData} isPresentDay={isPresentDay} />
-            </section>
-            <section className='sunriseAndSetSec'>
-                <div className='sunriseAndSetInfoContainer'>
-                    <span className='infoTxt'>Sunrise</span>
-                    <div className='sunriseAndSetTimeContainer'>
-                        <div>
-                            <BsSunrise id='sunriseIcon' />
-                        </div>
-                        <div>
-                            <span className='infoTxt'>{_sunrise}</span>
-                        </div>
-                    </div>
-                </div>
-                <div className='sunriseAndSetInfoContainer'>
-                    <span className='infoTxt'>Sunset</span>
-                    <div className='sunriseAndSetTimeContainer'>
-                        <div>
-                            <BsSunset id='sunsetIcon' />
-                        </div>
-                        <div>
-                            <span className='infoTxt'>{_sunset}</span>
+                </section>
+                <section className='tableSection'>
+                    {/* put the table here of the following:  */}
+                    <WeatherTempTable data={tableData} isPresentDay={isPresentDay} />
+                </section>
+                <section className='sunriseAndSetSec'>
+                    <div className='sunriseAndSetInfoContainer'>
+                        <span className='infoTxt'>Sunrise</span>
+                        <div className='sunriseAndSetTimeContainer'>
+                            <div>
+                                <BsSunrise id='sunriseIcon' />
+                            </div>
+                            <div>
+                                <span className='infoTxt'>{_sunrise}</span>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </section>
+                    <div className='sunriseAndSetInfoContainer'>
+                        <span className='infoTxt'>Sunset</span>
+                        <div className='sunriseAndSetTimeContainer'>
+                            <div>
+                                <BsSunset id='sunsetIcon' />
+                            </div>
+                            <div>
+                                <span className='infoTxt'>{_sunset}</span>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
         </div>
     )
 }
