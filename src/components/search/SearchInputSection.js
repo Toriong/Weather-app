@@ -29,6 +29,7 @@ const SearchInput = () => {
     const [willStopTimer, setWillStopTimer] = useState(false);
     console.log(placeholderTxt)
     if (placeholderTxt === 'Search by city name') {
+        var inputType = 'text';
         var handleOnChange = event => {
             setSearchInput(event.target.value);
             if (event.target.value.length >= 3) {
@@ -83,7 +84,7 @@ const SearchInput = () => {
             <div>
                 <input
                     disabled={isUsingLocationOfUser}
-                    type="text"
+                    type={inputType}
                     placeholder={placeholderTxt}
                     onChange={event => { handleOnChange(event) }}
                     value={searchInput}

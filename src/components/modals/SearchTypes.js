@@ -4,7 +4,8 @@ import { SearchContext } from '../../provider/SearchProvider';
 import { WeatherInfoContext } from '../../provider/WeatherInfoProvider';
 import '../../css/comp-css/modals/searchTypeModal.css'
 import MyLocation from '../buttons/MyLocation';
-import GeneralSearch from '../buttons/CityName';
+import CityName from '../buttons/CityName';
+import ZipCode from '../buttons/ZipCode';
 
 
 // NOTES:
@@ -14,7 +15,7 @@ import GeneralSearch from '../buttons/CityName';
 
 const SearchTypes = () => (
     <div className='modalBtns'>
-        <GeneralSearch />
+        <CityName />
         <MyLocation />
     </div>
 )

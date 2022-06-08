@@ -126,7 +126,7 @@ const SearchBtn = ({ isOnSmallerScreen }) => {
             setIsLoadingScreenOn(true);
             _getWeather();
         };
-    };
+    }
 
 
     useEffect(() => {

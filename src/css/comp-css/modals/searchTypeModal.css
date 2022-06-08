@@ -26,7 +26,8 @@
     font-size: 9px;
 }
 
-.modalBtns.searchTypeAndUnits > button:nth-child(3){
+
+.backBtn{
     border-top: solid silver .001px;
     color: grey;
 }

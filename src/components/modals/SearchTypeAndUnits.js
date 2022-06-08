@@ -7,6 +7,7 @@ import { useState } from 'react';
 import MyLocation from '../buttons/MyLocation';
 import GeneralSearch from '../buttons/CityName';
 import UnitTypesBtns from '../buttons/UnitTypesBtns';
+import ZipCode from '../buttons/ZipCode';
 
 const SearchTypeAndUnits = () => {
     const { _units } = useContext(WeatherInfoContext);
@@ -45,13 +46,13 @@ const SearchTypeAndUnits = () => {
                 <>
                     <GeneralSearch isOnSmallerScreen />
                     <MyLocation isOnSmallerScreen />
-                    <button onClick={handleBackBtnClick}>Back</button>
+                    <button className='backBtn' onClick={handleBackBtnClick}>Back</button>
                 </>
             }
             {wasUnitsBtnClicked &&
                 <>
                     <UnitTypesBtns />
-                    <button onClick={handleBackBtnClick}>Back</button>
+                    <button className='backBtn' onClick={handleBackBtnClick}>Back</button>
                 </>
             }
         </div>
