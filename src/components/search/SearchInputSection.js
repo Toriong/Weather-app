@@ -18,8 +18,6 @@ const SearchInput = () => {
     const [isLoadingResults, setIsLoadingResults] = useState(false);
     const [searchInput, setSearchInput] = _searchInput;
     const [searchResults, setSearchResults] = useState([]);
-    const [willStartTimer, setWillStartTimer] = useState(false);
-    const [willStopTimer, setWillStopTimer] = useState(false);
     const [alertTimer, setAlertTimer] = useState(null);
 
     // GOAL: have the alert only appear once on the screen. 
@@ -61,7 +59,7 @@ const SearchInput = () => {
     }
 
     useEffect(() => () => {
-        clearTimeout(alertTimer)
+        alertTimer && clearTimeout(alertTimer)
     }, [])
 
 

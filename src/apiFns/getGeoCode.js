@@ -12,6 +12,7 @@ export const getGeoCode = async (address) => {
         const response = await fetch(proxyServerUrl);
         if (response.ok) {
             const data = await response.json();
+            console.log('data: ', data)
             const addresses = JSON.parse(data.contents).data;
             return { addresses };
         };

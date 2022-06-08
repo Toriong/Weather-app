@@ -1,4 +1,6 @@
 import React from 'react'
+import { useEffect } from 'react';
+import { useState } from 'react';
 import { useContext } from 'react';
 import { getWeather } from '../../apiFns/getWeather';
 import { ModalContext } from '../../provider/ModalProvider';
@@ -17,6 +19,7 @@ const UnitTypesBtns = ({ setIsUnitsSelectionModalOn }) => {
     const [units, setUnits] = _units;
     const [isWeatherDataReceived, setIsWeatherDataReceived] = _isWeatherDataReceived;
     const [isLoadingScreenOn, setIsLoadingScreenOn] = _isLoadingScreenOn;
+    const [alertTimer, setAlertTimer] = useState(null)
 
 
     const handleUnitsTypeBtnClick = event => {
@@ -30,9 +33,13 @@ const UnitTypesBtns = ({ setIsUnitsSelectionModalOn }) => {
             setIsLoadingScreenOn(true);
             setUnits(_units);
             setWeather(null);
+            !alertTimer && setAlertTimer(setTimeout(() => {
+                alert('Sorry, but it looks like it is taking longer than usually getting weather data. Please refresh the page and try again.')
+                setAlertTimer(null);
+            }, 15000));
             getWeather(longAndLatOfDisplayedWeather, wasImperialUnitsChosen).then(response => {
                 const { weather, didError, errorMsg } = response;
-
+                clearTimeout(alertTimer);
                 if (didError) {
                     console.error('An error has occurred in getting weather of target location. Error message: ', errorMsg);
                     alert('An error has occurred in getting weather of target location.')
@@ -61,7 +68,9 @@ const UnitTypesBtns = ({ setIsUnitsSelectionModalOn }) => {
                 setIsWeatherDataReceived(true);
             })
         };
-    }
+    };
+
+
 
     return (
         <>

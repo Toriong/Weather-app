@@ -69,19 +69,18 @@ const WeatherApp = () => {
     pathname = pathname.replace(/%20/g, ' ')
     pathname = pathname.replace(/\//g, ' ');
     const splitByComma = pathname.split(",");
+    console.log('spitByComma: ', splitByComma)
     const cityName = splitByComma[0];
+    console.log('cityName: ', cityName)
     const country = splitByComma[splitByComma.length - 1];
     const secondIdentifier = (splitByComma.length > 3) && splitByComma[1];
-    // const searchQuery = (splitByComma.length > 1) ? `${cityName}, ${country}` : pathname;
     if (secondIdentifier) {
       var searchQuery = `${cityName}, ${secondIdentifier}, ${country}`;
     } else {
       searchQuery = (splitByComma.length > 1) ? `${cityName}, ${country}` : pathname
     }
+    const getGeoCodeTimer = setTimeout(() => { alert('Sorry, an error has occurred. Refresh the page and try again.'); }, 15000)
 
-    console.log('searchQuery: ', searchQuery)
-
-    const getGeoCodeTimer = setTimeout(() => { alert('Sorry, but it looks like it is taking longer than usually to get the weather data that you requested. Try refreshing the page and try again.') }, 10000)
     getGeoCode(searchQuery.toLocaleLowerCase()).then(data => {
       console.log('data: ', data)
       clearTimeout(getGeoCodeTimer);
@@ -97,14 +96,9 @@ const WeatherApp = () => {
         return;
       };
       if (addresses.length === 1) {
-        // GOAL: get the label, long, and the lat
-        console.log('hello there meng')
         const { longitude, latitude, label } = addresses[0];
         var vals = { isOnImperial, locationName: location, wasBrowserDirectBtnClicked: true, longAndLat: { longitude, latitude } };
       } else {
-        // BRAIN DUMP:
-        // get the target city that the user search on the first refresh of the page 
-        console.log('addresses menggg: ', addresses)
         let targetLocation = addresses.find(({ label }) => label === searchQuery);
         targetLocation = !targetLocation ? addresses.find(({ label }) => label === location) : targetLocation;
         const highestConfidentAddressNum = addresses.map(({ confidence }) => confidence).sort()[0];
@@ -115,6 +109,7 @@ const WeatherApp = () => {
           return;
         }
         const { label, longitude, latitude } = targetLocation;
+        console.log('targetLocation: ', targetLocation)
         vals = { isOnImperial, locationName: location, wasBrowserDirectBtnClicked: true, longAndLat: { longitude, latitude } }
       }
       const fns = { setWeather, setTargetLocation, setCurrentDate, setIsLoadingScreenOn, setIsWeatherDataReceived, setLongAndLatOfDisplayedWeather, setSearchInput, setPlaceHolderTxt }
@@ -142,7 +137,7 @@ const WeatherApp = () => {
 
   useLayoutEffect(() => {
     const { pathname } = history.location;
-    setIsLoadingScreenOn(true);
+    (pathname !== '/') && setIsLoadingScreenOn(true);
     (pathname !== '/') && getWeatherData(pathname);
   }, []);
 
