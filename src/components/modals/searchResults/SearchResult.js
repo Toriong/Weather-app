@@ -11,7 +11,7 @@ const SearchResult = ({ searchResult, index }) => {
     const [, setIsSearchResultsOn] = _isSearchResultsOn;
     const [, setLongAndLat] = _longAndLat
     const [, setSearchInput] = _searchInput;
-    const _searchResult = state ? `${name}, ${state}, ${country}` : `${name}, ${country}`;
+    const _searchResult = (state && (name !== state)) ? `${name}, ${state}, ${country}` : `${name}, ${country}`;
 
 
     const handleSearchResultClick = () => {

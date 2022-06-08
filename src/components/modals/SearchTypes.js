@@ -4,7 +4,7 @@ import { SearchContext } from '../../provider/SearchProvider';
 import { WeatherInfoContext } from '../../provider/WeatherInfoProvider';
 import '../../css/comp-css/modals/searchTypeModal.css'
 import MyLocation from '../buttons/MyLocation';
-import GeneralSearch from '../buttons/GeneralSearch';
+import GeneralSearch from '../buttons/CityName';
 
 
 // NOTES:

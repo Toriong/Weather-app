@@ -21,10 +21,6 @@ const HamburgerBtnContainer = () => {
                 {isSearchAndUnitTypesModalOn &&
                     <SearchTypeAndUnits />
                 }
-                {/* open modal here that contains the following: */}
-                {/* the search type  */}
-                {/* the measurement type */}
-                {/* have the modal navigate back and forth */}
             </div>
         </div>
     )

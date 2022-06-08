@@ -5,7 +5,7 @@ import { SearchContext } from '../../provider/SearchProvider';
 import { WeatherInfoContext } from '../../provider/WeatherInfoProvider'
 import { useState } from 'react';
 import MyLocation from '../buttons/MyLocation';
-import GeneralSearch from '../buttons/GeneralSearch';
+import GeneralSearch from '../buttons/CityName';
 import UnitTypesBtns from '../buttons/UnitTypesBtns';
 
 const SearchTypeAndUnits = () => {

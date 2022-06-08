@@ -27,7 +27,8 @@ const SearchInput = () => {
 
 
     const [willStopTimer, setWillStopTimer] = useState(false);
-    if (placeholderTxt === 'Search by address, city name, or zip code') {
+    console.log(placeholderTxt)
+    if (placeholderTxt === 'Search by city name') {
         var handleOnChange = event => {
             setSearchInput(event.target.value);
             if (event.target.value.length >= 3) {
@@ -48,6 +49,7 @@ const SearchInput = () => {
                         console.error('An error has occurred: ', errorMsg);
                         return;
                     };
+                    console.log('_locations: ', _locations)
                     setSearchResults(_locations);
                     setIsLoadingResults(false);
                 });
@@ -70,6 +72,10 @@ const SearchInput = () => {
             setWillStopTimer(false);
         }
     }, [willStopTimer])
+
+    useEffect(() => {
+        console.log('placeholderTxt: ', placeholderTxt)
+    })
 
 
     return (

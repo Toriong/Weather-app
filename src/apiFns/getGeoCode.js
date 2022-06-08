@@ -69,7 +69,7 @@ export const getGeoLocation = async input => {
             };
 
             console.log('_locations: ', _locations)
-            return { _locations: _locations.length ? _locations : [] }
+            return { _locations: _locations?.length ? _locations : [] }
 
 
         };

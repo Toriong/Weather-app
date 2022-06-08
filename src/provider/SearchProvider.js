@@ -9,7 +9,7 @@ export const SearchProvider = props => {
     const [searchInput, setSearchInput] = useState('');
     const [isSearchTypesModalOn, setIsSearchTypesModalOn] = useState(false);
     const [isSearchResultsOn, setIsSearchResultsOn] = useState(false);
-    const [placeholderTxt, setPlaceholderTxt] = useState('Search by address, city name, or zip code');
+    const [placeholderTxt, setPlaceholderTxt] = useState('Search by city name');
     const [doesGoeLocationWork, setDoesGoeLocationWork] = useState(true);
     const [wasSearchBtnClicked, setWasSearchBtnClicked] = useState(false);
 

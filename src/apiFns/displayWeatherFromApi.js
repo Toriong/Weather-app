@@ -43,7 +43,7 @@ export const displayWeatherFromApi = (vals, fns) => {
             });
             setIsLoadingScreenOn(false);
             setIsWeatherDataReceived(true);
-            setPlaceHolderTxt('Search by address, city name, or zip code')
+            setPlaceHolderTxt('Search by city name')
             setLongAndLatOfDisplayedWeather(longAndLat);
             setSearchInput && setSearchInput(locationName);
             !wasBrowserDirectBtnClicked && updateUrl(locationName);

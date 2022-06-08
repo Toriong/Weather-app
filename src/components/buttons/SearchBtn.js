@@ -118,7 +118,7 @@ const SearchBtn = ({ isOnSmallerScreen }) => {
                     _getWeather(_location);
                 })
         }
-    } else if (placeHolderTxt === 'Search by address, city name, or zip code') {
+    } else if (placeHolderTxt === 'Search by city name') {
         handleSearchBtnClick = () => {
             // this will prevent the code that will get the weather data when the url changes without the user pressing the search button 
             setWasSearchBtnClicked(true)

@@ -18,14 +18,12 @@ const SearchBtnsContainer = () => {
 
 
 
-    if (placeholderTxt === "Search by city") {
+    if (placeholderTxt === "Search by city name") {
         var searchTypeTxt = 'By city';
     } else if (placeholderTxt === 'Search by zip code') {
         searchTypeTxt = 'By zip code';
     } else if (placeholderTxt === "Using your location. Press the 'search' icon to get results") {
         searchTypeTxt = 'My location';
-    } else if (placeholderTxt === 'Search by address, city name, or zip code') {
-        searchTypeTxt = 'General search';
     }
 
     return (
