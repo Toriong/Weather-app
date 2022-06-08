@@ -15,21 +15,6 @@ import { WeatherInfoContext } from './provider/WeatherInfoProvider';
 import history from './history/history';
 
 
-const usePrevious = (value) => {
-  const ref = useRef()
-  useEffect(() => { ref.current = value })
-
-  return ref.current
-}
-
-const useLocationChange = (action) => {
-  const location = useLocation()
-  const prevLocation = usePrevious(location)
-  useEffect(() => {
-    console.log('currentLocation: ', location)
-    console.log('prev: ', prevLocation)
-  }, [location])
-}
 
 
 // GOAL: present modal onto the screen when the user presses one of the weather card's 
@@ -109,7 +94,6 @@ const WeatherApp = () => {
           return;
         }
         const { label, longitude, latitude } = targetLocation;
-        console.log('targetLocation: ', targetLocation)
         vals = { isOnImperial, locationName: location, wasBrowserDirectBtnClicked: true, longAndLat: { longitude, latitude } }
       }
       const fns = { setWeather, setTargetLocation, setCurrentDate, setIsLoadingScreenOn, setIsWeatherDataReceived, setLongAndLatOfDisplayedWeather, setSearchInput, setPlaceHolderTxt }

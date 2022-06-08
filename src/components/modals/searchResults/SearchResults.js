@@ -1,3 +1,4 @@
+
 import React, { useEffect } from 'react';
 import SearchResult from './SearchResult';
 import '../../../css/comp-css/modals/searchResults.css'
@@ -13,11 +14,8 @@ const SearchResults = ({ searchResults, isLoadingResults }) => {
                 :
                 searchResults?.length ?
                     searchResults.map((searchResult, index) => {
-                        const { latitude, longitude, label } = searchResult;
                         return <SearchResult
-                            latitude={latitude}
-                            longitude={longitude}
-                            label={label}
+                            searchResult={searchResult}
                             index={index}
                         />
                     })

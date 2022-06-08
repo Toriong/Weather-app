@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useContext } from 'react';
-import { getGeoCode } from '../../apiFns/getGeoCode';
+import { getGeoCode, getGeoLocation } from '../../apiFns/getGeoCode';
 import '../../css/comp-css/search/searchInputSection.css'
 import { SearchContext } from '../../provider/SearchProvider';
 import { WeatherInfoContext } from '../../provider/WeatherInfoProvider';
@@ -23,9 +23,10 @@ const SearchInput = () => {
     // GOAL: have the alert only appear once on the screen. 
 
 
-    // GOAL: start the timer in the handleOnChange function 
+    // GOAL: start the timer in the handleOnChange function
 
 
+    const [willStopTimer, setWillStopTimer] = useState(false);
     if (placeholderTxt === 'Search by address, city name, or zip code') {
         var handleOnChange = event => {
             setSearchInput(event.target.value);
@@ -36,18 +37,18 @@ const SearchInput = () => {
                     alert('It is taking longer than usually getting addresses. Try refreshing the page and try again.')
                     setAlertTimer(null);
                 }, 15000));
-                getGeoCode(event.target.value).then(data => {
-                    clearTimeout(alertTimer);
+                getGeoLocation(event.target.value).then(data => {
+                    setWillStopTimer(true);
                     if (!data) {
                         alert('An error has occurred in getting address search results, refresh the page and try again.');
                         return;
                     }
-                    const { addresses, didError, errorMsg } = data ?? {}
+                    const { _locations, didError, errorMsg } = data ?? {}
                     if (didError) {
                         console.error('An error has occurred: ', errorMsg);
                         return;
                     };
-                    setSearchResults(addresses);
+                    setSearchResults(_locations);
                     setIsLoadingResults(false);
                 });
             } else {
@@ -60,7 +61,15 @@ const SearchInput = () => {
 
     useEffect(() => () => {
         alertTimer && clearTimeout(alertTimer)
-    }, [])
+    }, []);
+
+    useEffect(() => {
+        if (willStopTimer) {
+            clearTimeout(alertTimer);
+            setAlertTimer(null);
+            setWillStopTimer(false);
+        }
+    }, [willStopTimer])
 
 
     return (

@@ -1,4 +1,5 @@
 const positionStackApiKey = '04f67790145823ecccf869bcdf43342d';
+const API_key = 'c0f45851ae0ccb974b0d53c18cdae059';
 
 // write an article about using a proxy server to solve cors error 
 
@@ -46,6 +47,40 @@ export const getReverseGeoCode = async coordinates => {
             return { didError: true, errorMsg: error }
         }
     }
+}
+
+export const getGeoLocation = async input => {
+    const openWeatherGeoLocationApi = `http://api.openweathermap.org/geo/1.0/direct?q=${input}&limit=10&appid=${API_key}`;
+    const proxyServerUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(openWeatherGeoLocationApi)}`
+
+    try {
+        const response = await fetch(proxyServerUrl);
+        if (response.ok) {
+            const data = await response.json();
+            const locations = JSON.parse(data.contents);
+            let regionNames = new Intl.DisplayNames(['en'], { type: 'region' });
+            if (locations.length) {
+                var _locations = locations.map(location => {
+                    console.log('location: ', location)
+                    const country = regionNames.of(location.country);
+
+                    return { ...location, country };
+                });
+            };
+
+            console.log('_locations: ', _locations)
+            return { _locations: _locations.length ? _locations : [] }
+
+
+        };
+        // alert('An error has occurred, please try again later.')
+    } catch (error) {
+        if (error) {
+            console.error('An error has occurred: ', error)
+            return { didError: true, errorMsg: error }
+        }
+    }
+
 }
 
 
