@@ -18,8 +18,9 @@
     overflow-y: auto;
 }
 
+
+
 .weatherDayModal.notPresentDay{
-    height: fit-content;
     padding-bottom: 25px;;
 }
 
@@ -29,16 +30,30 @@
 
 
 .weatherDayModal > div > section:first-child{
-    display: grid;
+    /* display: grid; */
+    /* place-items: center; */
+    display: flex;
+    justify-content: center;
     place-items: center;
+    flex-direction: column;
 }
 
 .weatherDayModal > div > section > span:last-child{
-    font-size: 28px;
+    font-size: 25px;
     font-weight: 600;
     margin-top: 8px;
     word-wrap: break-word;;
     max-width: 450px;
+}
+
+@media(min-width: 768px) {
+    .weatherDayModal>div>section>span:last-child {
+        /* width: 100%; */
+        max-width: 100%;
+        display: block;
+        text-align: center;
+        padding: 0px 16px 0px 16px;
+    }
 }
 
 .weatherDescriptionSec1{
@@ -170,6 +185,12 @@ margin-right: 30px;
     font-size: clamp(15.6px, calc(10px + 2vmin), 31.6px) !important;
 }
 
+#closeModalBtn{
+    position: absolute;
+    top: 6px;
+    right: 7px;
+}
+
 @media (min-width: 1024px) and (max-width: 1199px){
     .weatherDayModal{
       width: 70vw;  
@@ -185,15 +206,26 @@ margin-right: 30px;
 
 }
 
+
 @media (min-width: 768px){
     .weatherDayModal{
         max-height: 710.094px;
         max-width: 720px;
     }
+
+    .weatherDayModal.notPresentDay {
+    max-height: 500px;
+    }
 }
 
 
 @media(max-width: 767px){
+    #closeModalBtn {
+        position: absolute;
+        top: 35px;
+        right: 10px;
+    }
+
     .weatherDayModal{
         padding-top: 30px;
         border-radius: 0%;
@@ -268,5 +300,7 @@ margin-right: 30px;
         width: 90vw;
     }
 }
+
+
 
 

@@ -11,6 +11,7 @@ export const SearchProvider = props => {
     const [isSearchResultsOn, setIsSearchResultsOn] = useState(false);
     const [placeholderTxt, setPlaceholderTxt] = useState('Search by address, city name, or zip code');
     const [doesGoeLocationWork, setDoesGoeLocationWork] = useState(true);
+    const [wasSearchBtnClicked, setWasSearchBtnClicked] = useState(false);
 
     return (
         <SearchContext.Provider
@@ -19,7 +20,8 @@ export const SearchProvider = props => {
                 _isSearchTypesModalOn: [isSearchTypesModalOn, setIsSearchTypesModalOn],
                 _placeHolderTxt: [placeholderTxt, setPlaceholderTxt],
                 _isSearchResultsOn: [isSearchResultsOn, setIsSearchResultsOn],
-                _doesGeoLocationWork: [doesGoeLocationWork, setDoesGoeLocationWork]
+                _doesGeoLocationWork: [doesGoeLocationWork, setDoesGoeLocationWork],
+                _wasSearchBtnClicked: [wasSearchBtnClicked, setWasSearchBtnClicked]
             }}
         >
             {props.children}

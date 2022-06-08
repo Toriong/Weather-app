@@ -4,7 +4,7 @@ import { FaMapMarkerAlt } from 'react-icons/fa'
 import { SearchContext } from '../../../provider/SearchProvider';
 import { WeatherInfoContext } from '../../../provider/WeatherInfoProvider';
 
-const SearchResult = ({ label, longitude, latitude }) => {
+const SearchResult = ({ label, longitude, latitude, index }) => {
     const { _longAndLat } = useContext(WeatherInfoContext);
     const { _isSearchResultsOn, _searchInput } = useContext(SearchContext);
     const [, setIsSearchResultsOn] = _isSearchResultsOn;
@@ -19,6 +19,7 @@ const SearchResult = ({ label, longitude, latitude }) => {
 
     return (
         <div
+            key={index}
             className='searchResult'
             onClick={handleSearchResultClick}
         >

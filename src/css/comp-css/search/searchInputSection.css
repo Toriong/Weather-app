@@ -39,6 +39,11 @@
     .searchInputContainer>div:first-child {
         display: block
     }
+
+    .searchInputContainer>div:first-child input{
+        font-size: clamp(8.2px, 2.8vw, 17px);
+
+    }
 }
 
 

@@ -12,12 +12,13 @@ const SearchResults = ({ searchResults, isLoadingResults }) => {
                 <span>Loading results...</span>
                 :
                 searchResults?.length ?
-                    searchResults.map(searchResult => {
+                    searchResults.map((searchResult, index) => {
                         const { latitude, longitude, label } = searchResult;
                         return <SearchResult
                             latitude={latitude}
                             longitude={longitude}
                             label={label}
+                            index={index}
                         />
                     })
                     :

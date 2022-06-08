@@ -11,16 +11,21 @@ import SearchBtnsContainer from './SearchBtnsContainer';
 // GOAL: store the 7 day forecast into the state of weatherOfDays
 
 
-const SearchInput = ({ setWeather, setTargetLocation }) => {
+const SearchInput = () => {
     const { _searchInput, _placeHolderTxt, _isSearchResultsOn } = useContext(SearchContext);
     const [placeholderTxt,] = _placeHolderTxt;
     const [isSearchResultsOn, setIsSearchResultsOn] = _isSearchResultsOn;
     const [isLoadingResults, setIsLoadingResults] = useState(false);
     const [searchInput, setSearchInput] = _searchInput;
     const [searchResults, setSearchResults] = useState([]);
-    let isUsingLocationOfUser = false
+    const [willStartTimer, setWillStartTimer] = useState(false);
+    const [willStopTimer, setWillStopTimer] = useState(false);
+    const [alertTimer, setAlertTimer] = useState(null);
+
+    // GOAL: have the alert only appear once on the screen. 
 
 
+    // GOAL: start the timer in the handleOnChange function 
 
 
     if (placeholderTxt === 'Search by address, city name, or zip code') {
@@ -29,11 +34,19 @@ const SearchInput = ({ setWeather, setTargetLocation }) => {
             if (event.target.value.length >= 3) {
                 setIsLoadingResults(true);
                 setIsSearchResultsOn(true);
+                !alertTimer && setAlertTimer(setTimeout(() => {
+                    alert('It is taking longer than usually getting addresses. Try refreshing the page and try again.')
+                    setAlertTimer(null);
+                }, 15000));
                 getGeoCode(event.target.value).then(data => {
+                    clearTimeout(alertTimer);
+                    if (!data) {
+                        alert('An error has occurred in getting address search results, refresh the page and try again.');
+                        return;
+                    }
                     const { addresses, didError, errorMsg } = data ?? {}
                     if (didError) {
                         console.error('An error has occurred: ', errorMsg);
-                        alert('An error has occurred. Refresh the page and try again.')
                         return;
                     };
                     setSearchResults(addresses);
@@ -44,8 +57,13 @@ const SearchInput = ({ setWeather, setTargetLocation }) => {
             }
         };
     } else if (placeholderTxt === "Using your location. Press the 'search' icon to get results") {
-        isUsingLocationOfUser = true;
+        var isUsingLocationOfUser = true;
     }
+
+    useEffect(() => () => {
+        clearTimeout(alertTimer)
+    }, [])
+
 
     return (
         <section className='searchInputContainer'>

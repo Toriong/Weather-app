@@ -6,22 +6,25 @@ import reportWebVitals from './reportWebVitals';
 import { WeatherInfoProvider } from './provider/WeatherInfoProvider';
 import { ModalProvider } from './provider/ModalProvider';
 import { SearchProvider } from './provider/SearchProvider';
-import { Route } from 'react-router';
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+
+
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <React.StrictMode>
+  <BrowserRouter>
     <SearchProvider>
       <ModalProvider>
         <WeatherInfoProvider>
-          <WeatherApp />
+          <Routes>
+            <Route exact path='/:location' element={<WeatherApp />} />
+            <Route path='/' element={<WeatherApp />} />
+          </Routes>
         </WeatherInfoProvider>
       </ModalProvider>
     </SearchProvider>
-  </React.StrictMode>
+  </BrowserRouter>
 );
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
+
 reportWebVitals();

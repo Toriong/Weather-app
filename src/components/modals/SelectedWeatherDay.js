@@ -7,10 +7,13 @@ import { BsSunrise, BsSunset } from "react-icons/bs";
 import WeatherIcon from '../weatherUI/WeatherIcon';
 import WeatherTempTable from '../weatherUI/WeatherTempTable';
 import '../../css/comp-css/modals/selectedWeatherDay.css';
+import { useLayoutEffect } from 'react';
+import useGetViewPortWidth from '../../customHooks/useGetViewPortWidth';
+import { GrClose } from "react-icons/gr";
 
 
 
-const SelectedWeatherDay = () => {
+const SelectedWeatherDay = ({ closeModal }) => {
     const { _selectedWeatherDay, _targetLocation, _tempUnits, _units } = useContext(WeatherInfoContext);
     const [units] = _units
     const [targetLocation, setTargetLocation] = _targetLocation
@@ -23,6 +26,7 @@ const SelectedWeatherDay = () => {
     const { icon: weatherIcon, description } = weather?.[0] ?? {};
     const { speed: speedUnits, temp: tempUnits } = units;
     let _description = description.charAt(0).toUpperCase() + description.slice(1);
+    const { widthPixels } = useGetViewPortWidth()
     const weatherDayModalClassName = isPresentDay ? 'weatherDayModal presentDay' : 'weatherDayModal notPresentDay'
 
     const weatherDescriptionContainerCss = isPresentDay ? 'weatherDescriptionContainer presentDay' : 'weatherDescriptionContainer notPresentDay'
@@ -39,8 +43,17 @@ const SelectedWeatherDay = () => {
 
     if (moreInfoDescription) {
         var _moreInfoDescription = moreInfoDescription.charAt(0).toUpperCase() + moreInfoDescription.slice(1)
-
     }
+
+    useLayoutEffect(() => {
+        const touchMovePrevented = document.body.addEventListener('touchmove', event => { event.preventDefault() })
+        document.body.style.overflow = 'hidden';
+
+        return () => {
+            document.body.style.overflow = 'visible';
+            document.body.removeEventListener('touchmove', touchMovePrevented);
+        }
+    }, [widthPixels])
 
 
 
@@ -49,6 +62,7 @@ const SelectedWeatherDay = () => {
 
     return (
         <div className={weatherDayModalClassName} >
+            <button id='closeModalBtn' onClick={closeModal}><GrClose /></button>
             <div>
                 <section className='locationInfo'>
                     <span>{date}</span>

@@ -1,5 +1,6 @@
 .weatherSection{
     max-width: 2560px;
+    min-height: 80vh;
 }
 
 
@@ -58,7 +59,7 @@ margin-top: 8px;
     min-width: 280px;
 }
 
-@media(min-width: 768px){
+@media(min-width: 1024px){
 .dailyForecastContainer{
     padding-right: 20px;
 }    

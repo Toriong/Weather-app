@@ -35,7 +35,7 @@ const WeatherSection = () => {
                     </header>
                     <section id='currentDaySection'>
                         {/* put the current date here */}
-                        <WeatherDayCard isPresentDay day={currentDay} />
+                        {currentDay && <WeatherDayCard isPresentDay day={currentDay} />}
                     </section>
                     <section className='dailyForecastContainer'>
                         {!!dailyForecast?.length &&

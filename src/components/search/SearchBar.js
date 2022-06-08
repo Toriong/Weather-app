@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import '../../css/comp-css/search/searchBar.css'
 import SearchInputSection from './SearchInputSection'
 
-const SearchBar = ({ setWeather, setTargetLocation, setCurrentDate }) => {
+const SearchBar = () => {
 
     return (
         <div className='wrapper'>
@@ -11,7 +11,7 @@ const SearchBar = ({ setWeather, setTargetLocation, setCurrentDate }) => {
                     <section>
                         <h1>Gabe's 7 day forecast</h1>
                     </section>
-                    <SearchInputSection setWeather={setWeather} setTargetLocation={setTargetLocation} setCurrentDate={setCurrentDate} />
+                    <SearchInputSection />
                 </div>
             </div>
         </div>

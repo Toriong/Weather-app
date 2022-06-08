@@ -21,8 +21,8 @@ const MyLocation = ({ isOnSmallerScreen }) => {
             const geoLocalFailed = setTimeout(() => {
                 setIsGettingUserLocation(false);
                 setDoesGoeLocationWork(false);
-                alert('Geo location has failed. Please use the general search and type in your location.')
-            }, 5000);
+                alert('Geo location has failed. Your browser may not support geolocation. Try refreshing the page or switch to general search and type in your location.')
+            }, 10000);
             navigator.geolocation.getCurrentPosition(position => {
                 clearTimeout(geoLocalFailed);
                 const { longitude, latitude } = position.coords;

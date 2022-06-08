@@ -1,30 +1,20 @@
-import React, { useEffect, useState } from 'react'
-import { BsSearch } from "react-icons/bs";
-import SearchTypes from '../modals/SearchTypes';
+import React from 'react'
 import SearchBtn from '../buttons/SearchBtn';
 import { useContext } from 'react';
 import { SearchContext } from '../../provider/SearchProvider';
-import { AiOutlineInfoCircle } from "react-icons/ai";
 import UnitTypes from '../buttonContainers/UnitTypes';
 import SearchTypesContainer from '../buttonContainers/SearchTypesContainer'
 import HamburgerBtnContainer from '../buttonContainers/HamburgerBtnContainer';
 import '../../css/comp-css/search/searchBtnsContainer.css'
 
+//GOAL: throw an alert if it takes over 20 seconds to get the address results 
 
 const SearchBtnsContainer = () => {
     const { _isSearchTypesModalOn, _placeHolderTxt } = useContext(SearchContext);
     const [placeholderTxt, setPlaceHolderTxt] = _placeHolderTxt;
     const [isSearchTypesModalOn, setIsSearchTypesModalOn] = _isSearchTypesModalOn;
 
-    // GOAL: when the modal appears son the screen for the search type, when the user chooses a search type, then change the placeholder text
-
     const handleSearchTypeBtnClick = () => { setIsSearchTypesModalOn(isSearchTypesModalOn => !isSearchTypesModalOn) };
-
-
-    // GOAL: when the user presses my location, display on the search input: 'Using your location. Press the search button, to see results'.
-    // the following text appears in the search input: 'Using your location. Press the search button to see results'
-    // the following text is passed into the setPlaceHolderTxt: 'Using your location. Press the search button to see results'
-    // the user presses the my location button in the searchTypes button 
 
 
 
