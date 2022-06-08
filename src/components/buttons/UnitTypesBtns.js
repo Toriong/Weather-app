@@ -19,7 +19,8 @@ const UnitTypesBtns = ({ setIsUnitsSelectionModalOn }) => {
     const [units, setUnits] = _units;
     const [isWeatherDataReceived, setIsWeatherDataReceived] = _isWeatherDataReceived;
     const [isLoadingScreenOn, setIsLoadingScreenOn] = _isLoadingScreenOn;
-    const [alertTimer, setAlertTimer] = useState(null)
+    const [alertTimer, setAlertTimer] = useState(null);
+    const [willClearTimer, setWillClearTimer] = useState(false);
 
 
     const handleUnitsTypeBtnClick = event => {
@@ -33,13 +34,13 @@ const UnitTypesBtns = ({ setIsUnitsSelectionModalOn }) => {
             setIsLoadingScreenOn(true);
             setUnits(_units);
             setWeather(null);
-            !alertTimer && setAlertTimer(setTimeout(() => {
+            const alertTimer = setTimeout(() => {
                 alert('Sorry, but it looks like it is taking longer than usually getting weather data. Please refresh the page and try again.')
-                setAlertTimer(null);
-            }, 15000));
+            }, 15000)
             getWeather(longAndLatOfDisplayedWeather, wasImperialUnitsChosen).then(response => {
-                const { weather, didError, errorMsg } = response;
                 clearTimeout(alertTimer);
+                console.log('hello there world')
+                const { weather, didError, errorMsg } = response;
                 if (didError) {
                     console.error('An error has occurred in getting weather of target location. Error message: ', errorMsg);
                     alert('An error has occurred in getting weather of target location.')
@@ -50,7 +51,6 @@ const UnitTypesBtns = ({ setIsUnitsSelectionModalOn }) => {
                     alert('Something went wrong, please refresh the page and try again.')
                     return;
                 }
-
                 const { daily, timezone, current } = weather;
                 const { temp, feels_like, weather: weatherMoreInfo, humidity, sunrise, sunset, wind_speed, rain, snow, dew_point } = daily[0];
                 daily.shift();
@@ -63,7 +63,6 @@ const UnitTypesBtns = ({ setIsUnitsSelectionModalOn }) => {
                         time: getTimeOfLocation(timezone),
                     }
                 });
-            }).finally(() => {
                 setIsLoadingScreenOn(false);
                 setIsWeatherDataReceived(true);
             })

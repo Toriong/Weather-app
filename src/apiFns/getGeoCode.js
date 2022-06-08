@@ -43,7 +43,10 @@ const convertToCountryName = locations => {
 // use this to get the city name of the target location
 export const getReverseGeoCode = async coordinates => {
     const { longitude, latitude } = coordinates;
-    const openWeatherApi = `http://api.openweathermap.org/geo/1.0/reverse?lat=${latitude}&lon=${longitude}&limit=5&appid=${API_key}`
+
+    const _longitude = Number(latitude).toFixed(4);
+
+    const openWeatherApi = `http://api.openweathermap.org/geo/1.0/reverse?lat=${Number(latitude).toFixed(8)}&lon=${Number(longitude).toFixed(8)}&limit=5&appid=${API_key}`
     const proxyServerUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(openWeatherApi)}`
 
     try {

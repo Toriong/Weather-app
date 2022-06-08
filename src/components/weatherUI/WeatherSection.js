@@ -12,7 +12,7 @@ const WeatherSection = () => {
     const [isWeatherDataReceived, setIsWeatherDataReceived] = _isWeatherDataReceived;
     const [isLoadingScreenOn, setIsLoadingScreenOn] = _isLoadingScreenOn;
     const { daily: dailyForecast, current: currentDay } = weather ?? {}
-    const { name: targetLocationName, time: targetLocationTime } = targetLocation;
+    const { name: targetLocationName, time: targetLocationTime } = targetLocation ?? {};
 
 
     const weatherSectionClassName = isLoadingScreenOn ? 'weatherSection loading' : 'weatherSection';
