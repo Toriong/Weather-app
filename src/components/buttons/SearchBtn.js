@@ -83,7 +83,7 @@ const SearchBtn = ({ isOnSmallerScreen }) => {
                 setIsLoadingScreenOn(false);
                 setIsWeatherDataReceived(true);
                 setLongAndLatOfDisplayedWeather(longAndLat);
-                isUnableToRetrieveLocal ? updateUrl(null, true) : updateUrl(locationName ?? searchInput);
+                isUnableToRetrieveLocal ? updateUrl(null, true) : updateUrl(longAndLat);
             }).finally(() => {
                 setWasSearchBtnClicked(true);
             });

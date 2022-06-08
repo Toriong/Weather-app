@@ -8,16 +8,21 @@ export const getWeather = async (coordinates, isImperial = true) => {
     const { longitude, latitude } = coordinates;
     const _units = isImperial ? 'imperial' : 'metric'
 
+
     // USE THIS API PATH TO GET USER'S LOCATION 
     // const openWeatherAPI = `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${API_key}`
-    const openWeatherAPI = `https://api.openweathermap.org/data/2.5/onecall?lat=${latitude}&lon=${longitude}&exclude=${null}&appid=${API_key}&units=${_units}`
+    const openWeatherAPI = `https://api.openweathermap.org/data/2.5/onecall?lat=${Number(latitude)}&lon=${Number(longitude)}&exclude=${null}&appid=${API_key}&units=${_units}`
 
     try {
         const response = await fetch(openWeatherAPI);
         if (response) {
-            const weather = await response.json();
-            console.log('weather and bacon: ', weather)
-            return { weather };
+            const data = await response.json();
+            const { cod, message } = data;
+            if (cod === '400') {
+                console.error('Failed to get weather data. Error message: ', message)
+                return null;
+            }
+            return { weather: data };
         }
     } catch (error) {
         if (error) {

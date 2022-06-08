@@ -6,7 +6,8 @@ import { getWeather } from "./getWeather";
 
 
 export const displayWeatherFromApi = (vals, fns) => {
-    const { longAndLat, isOnImperial, locationName, searchInput, wasBrowserDirectBtnClicked } = vals
+    const { longAndLat, isOnImperial, locationName, searchInput, willUpdateUrl } = vals
+    console.log('longAndLat: ', longAndLat)
     const { setWeather, setTargetLocation, setCurrentDate, setIsLoadingScreenOn, setIsWeatherDataReceived, setLongAndLatOfDisplayedWeather, setSearchInput, setPlaceHolderTxt } = fns;
     setWeather(null);
     setIsLoadingScreenOn(true);
@@ -17,8 +18,8 @@ export const displayWeatherFromApi = (vals, fns) => {
     getWeather(longAndLat, isOnImperial)
         .then(response => {
             clearTimeout(timerGetWeather);
-            const { weather, didError, errorMsg } = response;
-            if (didError) {
+            const { weather, didError, errorMsg } = response ?? {}
+            if (didError || (response === null)) {
                 console.error('An error has occurred in getting weather of target location. Error message: ', errorMsg);
                 alert('An error has occurred in getting weather of target location.')
                 return;
@@ -46,6 +47,6 @@ export const displayWeatherFromApi = (vals, fns) => {
             setPlaceHolderTxt('Search by city name')
             setLongAndLatOfDisplayedWeather(longAndLat);
             setSearchInput && setSearchInput(locationName);
-            !wasBrowserDirectBtnClicked && updateUrl(locationName);
+            willUpdateUrl && updateUrl(locationName);
         })
 }

@@ -17,7 +17,7 @@ root.render(
       <ModalProvider>
         <WeatherInfoProvider>
           <Routes>
-            <Route exact path='/:location' element={<WeatherApp />} />
+            <Route exact path='/:latitude/:longitude' element={<WeatherApp />} />
             <Route path='/' element={<WeatherApp />} />
           </Routes>
         </WeatherInfoProvider>
