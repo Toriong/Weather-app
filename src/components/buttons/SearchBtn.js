@@ -41,7 +41,6 @@ const SearchBtn = ({ isOnSmallerScreen }) => {
 
 
 
-
     const _getWeather = (locationName, isUnableToRetrieveLocal) => {
         setAlertTimerGetWeather(setTimeout(() => {
             alert('Sorry, but it looks like it is taking longer than usually to get the weather data that you requested. Refresh the page and try again.')

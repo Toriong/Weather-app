@@ -13,6 +13,7 @@ import { ModalContext } from './provider/ModalProvider';
 import { SearchContext } from './provider/SearchProvider';
 import { WeatherInfoContext } from './provider/WeatherInfoProvider';
 import history from './history/history';
+import { GiConsoleController } from 'react-icons/gi';
 
 
 
@@ -21,7 +22,7 @@ import history from './history/history';
 
 const WeatherApp = () => {
   const { location } = useParams();
-  const { _isLoadingScreenOn, _isWeatherDataReceived, _currentDate, _weather, _targetLocation, _units, _longAndLatOfDisplayedWeather } = useContext(WeatherInfoContext)
+  const { _isLoadingScreenOn, _isWeatherDataReceived, _currentDate, _weather, _targetLocation, _units, _longAndLatOfDisplayedWeather, _longAndLat } = useContext(WeatherInfoContext)
   const { _wasSearchBtnClicked, _searchInput, _placeHolderTxt } = useContext(SearchContext);
   const { _isSelectedWeatherModalOn } = useContext(ModalContext);
   const [, setPlaceHolderTxt] = _placeHolderTxt;
@@ -32,11 +33,16 @@ const WeatherApp = () => {
   const [, setIsLoadingScreenOn] = _isLoadingScreenOn;
   const [, setIsWeatherDataReceived] = _isWeatherDataReceived;
   const [, setCurrentDate] = _currentDate;
+  const [longAndLat] = _longAndLat;
   const [units,] = _units;
   const isOnImperial = units.temp === '°F';
   const [wasSearchBtnClicked,] = _wasSearchBtnClicked;
   const [isSelectedWeatherModalOn, setIsSelectedWeatherModalOn] = _isSelectedWeatherModalOn;
   const firstRender = useRef({ didOccur: false });
+
+  useEffect(() => {
+    console.log('longAndLat: ', longAndLat)
+  })
 
 
 

@@ -1,9 +1,10 @@
 
 const API_key = 'c0f45851ae0ccb974b0d53c18cdae059';
 
-// wind uses imperial units
+// access the local storage here to check if the user is using imperial or metric units 
 
 export const getWeather = async (coordinates, isImperial = true) => {
+    console.log('coordinates: ', coordinates)
     const { longitude, latitude } = coordinates;
     const _units = isImperial ? 'imperial' : 'metric'
 
