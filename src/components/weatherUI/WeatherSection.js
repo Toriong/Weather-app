@@ -2,6 +2,8 @@ import React, { useContext } from 'react'
 import { WeatherInfoContext } from '../../provider/WeatherInfoProvider';
 import WeatherDayCard from './WeatherDayCard';
 import '../../css/comp-css/weather-section/weatherSection.css'
+import ResetSearch from '../buttons/ResetSearch';
+import useGetViewPortWidth from '../../customHooks/useGetViewPortWidth';
 
 
 const WeatherSection = () => {
@@ -13,6 +15,7 @@ const WeatherSection = () => {
     const { daily: dailyForecast, current: currentDay } = weather ?? {}
     const { name: targetLocationName, time: targetLocationTime } = targetLocation ?? {};
     const weatherSectionClassName = isLoadingScreenOn ? 'weatherSection loading' : 'weatherSection';
+    const { widthPixels } = useGetViewPortWidth();
 
     return (
         <section className={weatherSectionClassName}>
@@ -29,8 +32,10 @@ const WeatherSection = () => {
                     <section className='dailyForecastContainer'>
                         {!!dailyForecast?.length && dailyForecast.map((day, index) => <WeatherDayCard day={day} index={index} />)}
                     </section>
+                    {(widthPixels > 767) && <ResetSearch resetBtnCss={'resetBtn notOnMobile'} />}
                 </>
             }
+
         </section>
     )
 }

@@ -35,10 +35,7 @@ max-width: 691.195px;
 }
 
 
-.searchBtnsSubContainer>button{
-    width: 65px;
-}
-
+.searchBtnsSubContainer>button,
 .searchTypeContainer>button{
     width: 100px;
 }

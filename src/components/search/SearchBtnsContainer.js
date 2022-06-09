@@ -6,15 +6,21 @@ import UnitTypes from '../buttonContainers/UnitTypes';
 import SearchTypesContainer from '../buttonContainers/SearchTypesContainer'
 import HamburgerBtnContainer from '../buttonContainers/HamburgerBtnContainer';
 import '../../css/comp-css/search/searchBtnsContainer.css'
+import { ModalContext } from '../../provider/ModalProvider';
 
-//GOAL: throw an alert if it takes over 20 seconds to get the address results 
 
 const SearchBtnsContainer = () => {
-    const { _isSearchTypesModalOn, _placeHolderTxt } = useContext(SearchContext);
-    const [placeholderTxt, setPlaceHolderTxt] = _placeHolderTxt;
+    const { _placeHolderTxt } = useContext(SearchContext);
+    const { _isUnitsSelectionModalOn, _isSearchTypesModalOn } = useContext(ModalContext);
+    const [isUnitsSelectionModalOn, setIsUnitsSelectionModalOn] = _isUnitsSelectionModalOn;
+    const [placeholderTxt,] = _placeHolderTxt;
     const [isSearchTypesModalOn, setIsSearchTypesModalOn] = _isSearchTypesModalOn;
 
-    const handleSearchTypeBtnClick = () => { setIsSearchTypesModalOn(isSearchTypesModalOn => !isSearchTypesModalOn) };
+    const handleSearchTypeBtnClick = () => {
+        // when this button is clicked close the units modal
+        isUnitsSelectionModalOn && setIsUnitsSelectionModalOn(false);
+        setIsSearchTypesModalOn(isSearchTypesModalOn => !isSearchTypesModalOn)
+    };
 
 
 

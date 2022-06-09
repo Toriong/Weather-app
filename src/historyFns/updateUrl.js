@@ -6,7 +6,7 @@ export const updateUrl = (_location, willReset) => {
 
     if (state) {
         var path = `${name}/${state}/${country}`;
-    } else {
+    } else if (_location) {
         console.log('hello world')
         path = `${name}/${country}`
     }

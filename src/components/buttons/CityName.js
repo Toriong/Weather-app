@@ -5,8 +5,8 @@ import { WeatherInfoContext } from '../../provider/WeatherInfoProvider';
 import { ModalContext } from '../../provider/ModalProvider';
 
 const CityName = ({ isOnSmallerScreen }) => {
-    const { _isSearchTypesModalOn, _searchInput, _placeHolderTxt } = useContext(SearchContext);
-    const { _isSearchAndUnitTypesModalOn } = useContext(ModalContext);
+    const { _searchInput, _placeHolderTxt } = useContext(SearchContext);
+    const { _isSearchAndUnitTypesModalOn, _isSearchTypesModalOn } = useContext(ModalContext);
     const [, setIsSearchAndUnitTypesModalOn] = _isSearchAndUnitTypesModalOn;
     const [, setPlaceHolderTxt] = _placeHolderTxt;
     const [, setSearchInput] = _searchInput

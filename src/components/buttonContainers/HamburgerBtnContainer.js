@@ -1,7 +1,6 @@
 import React, { useContext } from 'react'
-import { useState } from 'react';
 import { GiHamburgerMenu } from "react-icons/gi";
-import SearchTypeAndUnits from '../modals/SearchTypeAndUnits';
+import HamburgerBtns from '../modals/HamburgerBtns';
 import { ModalContext } from '../../provider/ModalProvider'
 
 
@@ -19,7 +18,7 @@ const HamburgerBtnContainer = () => {
             </button>
             <div>
                 {isSearchAndUnitTypesModalOn &&
-                    <SearchTypeAndUnits />
+                    <HamburgerBtns />
                 }
             </div>
         </div>

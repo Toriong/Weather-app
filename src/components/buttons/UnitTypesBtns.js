@@ -1,14 +1,16 @@
 import React from 'react'
 import { useContext } from 'react';
 import { getWeather } from '../../apiFns/getWeather';
+import useGetViewPortWidth from '../../customHooks/useGetViewPortWidth';
 import { ModalContext } from '../../provider/ModalProvider';
 import { WeatherInfoContext } from '../../provider/WeatherInfoProvider'
 import { getDate } from '../../timeFns/getDate';
 import { getTimeOfLocation } from '../../timeFns/getTimeOfLocation';
 
-const UnitTypesBtns = ({ setIsUnitsSelectionModalOn }) => {
+const UnitTypesBtns = () => {
     const { _units, _isWeatherDataReceived, _isLoadingScreenOn, _weather, _currentDate, _targetLocation, _longAndLatOfDisplayedWeather } = useContext(WeatherInfoContext)
-    const { _isSearchAndUnitTypesModalOn } = useContext(ModalContext);
+    const { _isSearchAndUnitTypesModalOn, _isUnitsSelectionModalOn } = useContext(ModalContext);
+    const [isUnitsSelectionModalOn, setIsUnitsSelectionModalOn] = _isUnitsSelectionModalOn;
     const [, setIsSearchAndUnitTypesModalOn] = _isSearchAndUnitTypesModalOn;
     const [longAndLatOfDisplayedWeather] = _longAndLatOfDisplayedWeather;
     const [, setWeather] = _weather;
@@ -17,6 +19,8 @@ const UnitTypesBtns = ({ setIsUnitsSelectionModalOn }) => {
     const [, setUnits] = _units;
     const [isWeatherDataReceived, setIsWeatherDataReceived] = _isWeatherDataReceived;
     const [, setIsLoadingScreenOn] = _isLoadingScreenOn;
+    const { widthPixels } = useGetViewPortWidth()
+    const isHamburgerModalOn = widthPixels <= 1023;
 
 
     const handleUnitsTypeBtnClick = event => {
@@ -25,7 +29,7 @@ const UnitTypesBtns = ({ setIsUnitsSelectionModalOn }) => {
         localStorage.setItem('wasImperialUnitsChosen', wasImperialUnitsChosen);
         const _units = { temp: wasImperialUnitsChosen ? '°F' : '°C', speed: wasImperialUnitsChosen ? 'mph' : 'm/s' }
         setUnits(_units);
-        setIsUnitsSelectionModalOn ? setIsUnitsSelectionModalOn(false) : setIsSearchAndUnitTypesModalOn(false);
+        !isHamburgerModalOn ? setIsUnitsSelectionModalOn(false) : setIsSearchAndUnitTypesModalOn(false);
         if (isWeatherDataReceived) {
             setIsWeatherDataReceived(false);
             setIsLoadingScreenOn(true);

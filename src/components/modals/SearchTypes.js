@@ -1,7 +1,7 @@
 import React from 'react';
 import MyLocation from '../buttons/MyLocation';
 import CityName from '../buttons/CityName';
-import '../../css/comp-css/modals/searchTypeModal.css'
+import '../../css/comp-css/modals/modalBtns.css'
 
 
 

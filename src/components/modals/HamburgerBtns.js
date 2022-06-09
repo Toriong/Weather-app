@@ -7,9 +7,9 @@ import { useState } from 'react';
 import MyLocation from '../buttons/MyLocation';
 import GeneralSearch from '../buttons/CityName';
 import UnitTypesBtns from '../buttons/UnitTypesBtns';
-import ZipCode from '../buttons/ZipCode';
+import ResetSearch from '../buttons/ResetSearch';
 
-const SearchTypeAndUnits = () => {
+const HamburgerBtns = () => {
     const { _units } = useContext(WeatherInfoContext);
     const { _placeHolderTxt } = useContext(SearchContext);
     const [wasSearchTypeClicked, setWasSearchTypeClicked] = useState(false);
@@ -40,6 +40,7 @@ const SearchTypeAndUnits = () => {
                 <>
                     <button onClick={handleSearchTypeClick}>Search type: {searchTypeTxt}</button>
                     <button onClick={handleUnitsBtnClick}>Units: {unitsType}</button>
+                    <ResetSearch />
                 </>
             }
             {wasSearchTypeClicked &&
@@ -59,4 +60,4 @@ const SearchTypeAndUnits = () => {
     )
 }
 
-export default SearchTypeAndUnits
+export default HamburgerBtns

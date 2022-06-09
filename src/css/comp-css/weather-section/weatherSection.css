@@ -1,6 +1,21 @@
 .weatherSection{
     max-width: 2560px;
     min-height: 80vh;
+    position: relative;
+}
+
+.resetBtn{
+    position: absolute;
+    width: 100px;
+    height: 30px;
+    border: solid .5px #c0c0c0;
+    top: 10px;
+    right: 20px;
+    border-radius: 4px;;
+}
+
+.resetBtn.onMobile {
+    display: none;
 }
 
 .weatherSection.loading{
@@ -63,6 +78,12 @@ margin-top: 8px;
 .dailyForecastContainer,
 #currentDaySection{
     min-width: 280px;
+}
+
+@media(max-width: 1023px){
+    .resetBtn.notOnMobile{
+        display: none;
+    }
 }
 
 @media(min-width: 1024px){

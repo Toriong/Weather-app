@@ -22,7 +22,7 @@ const WeatherApp = () => {
   const { _isSelectedWeatherModalOn } = useContext(ModalContext);
   const [, setSelectedLocation] = _selectedLocation;
   const [, setPlaceHolderTxt] = _placeHolderTxt;
-  const [, setLongAndLat] = _longAndLat;
+  const [weather, setLongAndLat] = _longAndLat;
   const [, setWeather] = _weather;
   const [, setSearchInput] = _searchInput;
   const [, setTargetLocation] = _targetLocation;
@@ -62,9 +62,55 @@ const WeatherApp = () => {
     window.location.reload();
   }
 
+  const handleGeoLocationResponse = (data, timerGetWeather, isUsingStateLocation) => {
+    clearTimeout(timerGetWeather);
+    const { didError, errorMsg, _locations } = data ?? {}
+
+    if ((didError && !_locations?.[0]) || !data) {
+      console.error('An error has occurred. Error message: ', errorMsg)
+      alert('An error has occurred. Refresh the page and try again.')
+    } else if (!didError && _locations?.length > 1) {
+      console.log('_location: ', _locations)
+      const targetLocation = _locations.find(({ name: _city, country: _country, state: _state }) => {
+        if (state) {
+          return ((_city === city) && (_country === country) && (state === _state));
+        };
+
+        return ((_city === city) && (_country === country));
+      });
+      // for the first failure, 'location' was using city, state, and country, then send 'city, country' to the api to get the locations again  
+      if (isUsingStateLocation && !targetLocation) {
+        getGeoLocation(`${city}, ${country}`).then(data => {
+          handleGeoLocationResponse(data, timerGetWeather, isUsingStateLocation);
+        })
+      } else if (!targetLocation) {
+        respondToError();
+        return;
+      }
+      const { name: targetCity, country: targetCountry, state: targetState, lon: longitude, lat: latitude } = targetLocation ?? {};
+      const timerGetWeather = setTimeout(() => {
+        alert('It is taking longer than usually to get weather data. You can refresh the page and try again.')
+      }, 10000)
+      setTimerGetWeather(timerGetWeather)
+      const clearTimerGetWeather = () => clearTimeout(timerGetWeather);
+      targetLocation && _displayWeatherResults(longitude, latitude, targetCity, targetCountry, targetState, clearTimerGetWeather);
+    } else if (!didError && (_locations?.length === 1)) {
+      const timerGetWeather = setTimeout(() => {
+        alert('It is taking longer than usually to get weather data. You can refresh the page and try again.')
+      }, 10000)
+      setTimerGetWeather(timerGetWeather)
+      const clearTimerGetWeather = () => clearTimeout(timerGetWeather);
+      const { name: targetCity, country: targetCountry, state: targetState, lon: longitude, lat: latitude } = _locations?.[0];
+      _displayWeatherResults(longitude, latitude, targetCity, targetCountry, targetState, clearTimerGetWeather);
+    } else if (_locations?.length <= 0) {
+      respondToError();
+    }
+  }
+
   const getWeatherData = isLoadingScreenOn => {
     resetWeatherUI(isLoadingScreenOn);
-    if (state && (state !== city)) {
+    const isUsingStateLocation = state && (state !== city)
+    if (isUsingStateLocation) {
       var location = `${city}, ${state}, ${country}`;
     } else {
       location = `${city}, ${country}`
@@ -73,44 +119,10 @@ const WeatherApp = () => {
       alert('An error has occurred in getting weather data. Refresh the page and try again.')
     }, 10000)
     getGeoLocation(location).then(data => {
-      clearTimeout(timerGetWeather);
-      const { didError, errorMsg, _locations } = data ?? {}
-      if ((didError && !_locations?.[0]) || !data) {
-        console.error('An error has occurred. Error message: ', errorMsg)
-        alert('An error has occurred. Refresh the page and try again.')
-      } else if (!didError && _locations?.length > 1) {
-        console.log('_location: ', _locations)
-        const targetLocation = _locations.find(({ name: _city, country: _country, state: _state }) => {
-          if (state) {
-            return ((_city === city) && (_country === country) && (state === _state));
-          };
-
-          return ((_city === city) && (_country === country));
-        });
-        if (!targetLocation) {
-          respondToError();
-          return;
-        }
-        const { name: targetCity, country: targetCountry, state: targetState, lon: longitude, lat: latitude } = targetLocation ?? {};
-        const timerGetWeather = setTimeout(() => {
-          alert('It is taking longer than usually to get weather data. You can refresh the page and try again.')
-        }, 10000)
-        setTimerGetWeather(timerGetWeather)
-        const clearTimerGetWeather = () => clearTimeout(timerGetWeather);
-        targetLocation && _displayWeatherResults(longitude, latitude, targetCity, targetCountry, targetState, clearTimerGetWeather);
-      } else if (!didError && (_locations?.length === 1)) {
-        const timerGetWeather = setTimeout(() => {
-          alert('It is taking longer than usually to get weather data. You can refresh the page and try again.')
-        }, 10000)
-        setTimerGetWeather(timerGetWeather)
-        const clearTimerGetWeather = () => clearTimeout(timerGetWeather);
-        const { name: targetCity, country: targetCountry, state: targetState, lon: longitude, lat: latitude } = _locations?.[0];
-        _displayWeatherResults(longitude, latitude, targetCity, targetCountry, targetState, clearTimerGetWeather);
-      } else if (_locations?.length <= 0) {
-        respondToError();
-      }
-    })
+      handleGeoLocationResponse(data, timerGetWeather, isUsingStateLocation);
+    });
   }
+
 
 
 

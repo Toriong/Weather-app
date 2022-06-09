@@ -1,9 +1,9 @@
 import React from 'react'
 import UnitTypesBtns from '../buttons/UnitTypesBtns';
 
-const UnitTypes = ({ setIsUnitsSelectionModalOn }) => (
+const UnitTypes = () => (
     <div className='modalBtns unitsSelection'>
-        <UnitTypesBtns setIsUnitsSelectionModalOn={setIsUnitsSelectionModalOn} />
+        <UnitTypesBtns />
     </div>
 );
 

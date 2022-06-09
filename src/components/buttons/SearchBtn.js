@@ -7,10 +7,13 @@ import { BiSearch } from "react-icons/bi";
 import { updateUrl } from '../../historyFns/updateUrl';
 import { useState } from 'react';
 import { getReverseGeoCode } from '../../apiFns/getGeoCode';
+import { ModalContext } from '../../provider/ModalProvider';
 
 const SearchBtn = ({ isOnSmallerScreen }) => {
     const { _isLoadingScreenOn, _isWeatherDataReceived, _currentDate, _weather, _targetLocation, _longAndLat, _isGettingUserLocation, _units, _longAndLatOfDisplayedWeather } = useContext(WeatherInfoContext)
     const { _searchInput, _placeHolderTxt, _doesGeoLocationWork, _wasSearchBtnClicked, _selectedLocation } = useContext(SearchContext);
+    const { _isSearchAndUnitTypesModalOn } = useContext(ModalContext);
+    const [isSearchAndUnitTypesModalOn, setIsSearchAndUnitTypesModalOn] = _isSearchAndUnitTypesModalOn;
     const [selectedLocation,] = _selectedLocation;
     const [wasSearchBtnClicked, setWasSearchBtnClicked] = _wasSearchBtnClicked;
     const [doesGoeLocationWork,] = _doesGeoLocationWork;
@@ -95,6 +98,7 @@ const SearchBtn = ({ isOnSmallerScreen }) => {
 
     if (isOnUserLocationSearch) {
         var handleSearchBtnClick = () => {
+            isSearchAndUnitTypesModalOn && setIsSearchAndUnitTypesModalOn(false);
             if (!longAndLat) {
                 alert("Couldn't get your location. Either your browser doesn't support geolocation or you have disabled location access from your computer.")
                 return;
@@ -121,6 +125,7 @@ const SearchBtn = ({ isOnSmallerScreen }) => {
     } else if (placeHolderTxt === 'Search by city name') {
         handleSearchBtnClick = () => {
             // this fn will prevent the code that will get the weather data when the url changes without the user pressing the search button 
+            isSearchAndUnitTypesModalOn && setIsSearchAndUnitTypesModalOn(false);
             setWasSearchBtnClicked(true)
             setIsWeatherDataReceived(false);
             setIsLoadingScreenOn(true);

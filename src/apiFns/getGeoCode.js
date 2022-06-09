@@ -40,7 +40,7 @@ export const getReverseGeoCode = async coordinates => {
 }
 
 export const getGeoLocation = async input => {
-    const openWeatherGeoLocationApi = `http://api.openweathermap.org/geo/1.0/direct?q=${input}&limit=10&appid=${API_key}`;
+    const openWeatherGeoLocationApi = `http://api.openweathermap.org/geo/1.0/direct?q=${input}&limit=100&appid=${API_key}`;
     const proxyServerUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(openWeatherGeoLocationApi)}`
 
     try {

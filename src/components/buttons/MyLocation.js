@@ -5,9 +5,9 @@ import { SearchContext } from '../../provider/SearchProvider';
 import { WeatherInfoContext } from '../../provider/WeatherInfoProvider';
 
 const MyLocation = ({ isOnSmallerScreen }) => {
-    const { _isSearchTypesModalOn, _searchInput, _placeHolderTxt, _doesGeoLocationWork } = useContext(SearchContext);
+    const { _searchInput, _placeHolderTxt, _doesGeoLocationWork } = useContext(SearchContext);
     const { _longAndLat, _isGettingUserLocation } = useContext(WeatherInfoContext);
-    const { _isSearchAndUnitTypesModalOn } = useContext(ModalContext);
+    const { _isSearchAndUnitTypesModalOn, _isSearchTypesModalOn } = useContext(ModalContext);
     const [, setDoesGoeLocationWork] = _doesGeoLocationWork;
     const [, setIsSearchAndUnitTypesModalOn] = _isSearchAndUnitTypesModalOn;
     const [, setPlaceHolderTxt] = _placeHolderTxt;
