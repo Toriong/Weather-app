@@ -1,22 +1,21 @@
 import React from 'react'
-import { useEffect } from 'react';
 import { useContext } from 'react';
 import { WeatherInfoContext } from '../../provider/WeatherInfoProvider';
 import { getTime } from '../../timeFns/getTime';
 import { BsSunrise, BsSunset } from "react-icons/bs";
 import WeatherIcon from '../weatherUI/WeatherIcon';
 import WeatherTempTable from '../weatherUI/WeatherTempTable';
-import '../../css/comp-css/modals/selectedWeatherDay.css';
 import { useLayoutEffect } from 'react';
 import useGetViewPortWidth from '../../customHooks/useGetViewPortWidth';
 import { GrClose } from "react-icons/gr";
+import '../../css/comp-css/modals/selectedWeatherDay.css';
 
 
 
 const SelectedWeatherDay = ({ closeModal }) => {
-    const { _selectedWeatherDay, _targetLocation, _tempUnits, _units } = useContext(WeatherInfoContext);
+    const { _selectedWeatherDay, _targetLocation, _units } = useContext(WeatherInfoContext);
     const [units] = _units
-    const [targetLocation, setTargetLocation] = _targetLocation
+    const [targetLocation,] = _targetLocation
     const [selectedWeatherDay] = _selectedWeatherDay;
     const { date, weather, feels_like, temp, averageForTheDay, humidity: humidityNum, dew_point, wind_speed, sunrise, sunset, isPresentDay, rain: rainMain, snow: snowMain } = selectedWeatherDay;
     const { weather: moreInfoWeather, temp: moreInfoTemp, humidity: humidityMoreInfoNum, wind_speed: windSpeedAverage, rain, snow, dewPoint, feels_like: feelsLikeAverage, temp: tempAverages, sunrise: sunriseProjected, sunset: sunsetProjected } = averageForTheDay ?? {};
@@ -104,7 +103,6 @@ const SelectedWeatherDay = ({ closeModal }) => {
                     </div>
                 </section>
                 <section className='tableSection'>
-                    {/* put the table here of the following:  */}
                     <WeatherTempTable data={tableData} isPresentDay={isPresentDay} />
                 </section>
                 <section className='sunriseAndSetSec'>

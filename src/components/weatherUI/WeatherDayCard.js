@@ -9,11 +9,10 @@ const WeatherDayCard = ({ day, isPresentDay, index }) => {
     const { _selectedWeatherDay, _units, _targetLocation } = useContext(WeatherInfoContext);
     const { _isSelectedWeatherModalOn } = useContext(ModalContext);
     const [targetLocation] = _targetLocation
-    const [isSelectedWeatherModalOn, setIsSelectedWeatherModalOn] = _isSelectedWeatherModalOn;
-    const [selectedWeatherDay, setSelectedWeatherDay] = _selectedWeatherDay;
+    const [, setIsSelectedWeatherModalOn] = _isSelectedWeatherModalOn;
+    const [, setSelectedWeatherDay] = _selectedWeatherDay;
     const { temp: tempUnits } = _units[0];
     const { weather, feels_like, averageForTheDay, temp, dt } = day ?? {};
-    // const date = isPresentDay ? currentDate : getDate(index + 1);
     const date = getTime(dt, targetLocation.timeZoneOffset, 'dddd, MMM Do YYYY')
     const { min, max } = averageForTheDay?.temp ?? temp;
     const { icon: weatherIcon, description } = weather[0] ?? {};

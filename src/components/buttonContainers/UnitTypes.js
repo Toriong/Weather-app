@@ -14,9 +14,6 @@ const UnitTypes = () => {
 
     const toggleUnitsSelectionModal = () => { setIsUnitsSelectionModalOn(isUnitsSelectionModalOn => !isUnitsSelectionModalOn); };
 
-    // GOAL: get the search type that is stored in the local storage on first render in this comp
-
-    // GOAL: when the user clicks on a unit type, save it into the local storage 
 
     return (
         <div className='unitsSelectionContainer'>

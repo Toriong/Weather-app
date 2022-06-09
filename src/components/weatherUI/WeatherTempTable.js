@@ -10,7 +10,6 @@ const WeatherTempTable = ({ data, isPresentDay }) => {
     const { day: feelsLikeDay, eve: feelsLikeEve, morn: feelsLikeMorn, night: feelsLikeNight } = feelsLike ?? {};
     const { day, eve, morn, night } = temp ?? {};
 
-    // GOAL: display weather data for the selected day
     return (
         <table className='weatherTempTable'>
             <tr>

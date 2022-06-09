@@ -1,6 +1,4 @@
 import React from 'react'
-import { useEffect } from 'react';
-import { useState } from 'react';
 import { useContext } from 'react';
 import { getWeather } from '../../apiFns/getWeather';
 import { ModalContext } from '../../provider/ModalProvider';
@@ -13,12 +11,12 @@ const UnitTypesBtns = ({ setIsUnitsSelectionModalOn }) => {
     const { _isSearchAndUnitTypesModalOn } = useContext(ModalContext);
     const [, setIsSearchAndUnitTypesModalOn] = _isSearchAndUnitTypesModalOn;
     const [longAndLatOfDisplayedWeather] = _longAndLatOfDisplayedWeather;
-    const [weather, setWeather] = _weather;
-    const [currenetDate, setCurrentDate] = _currentDate;
-    const [targetLocation, setTargetLocation] = _targetLocation;
-    const [units, setUnits] = _units;
+    const [, setWeather] = _weather;
+    const [, setCurrentDate] = _currentDate;
+    const [, setTargetLocation] = _targetLocation;
+    const [, setUnits] = _units;
     const [isWeatherDataReceived, setIsWeatherDataReceived] = _isWeatherDataReceived;
-    const [isLoadingScreenOn, setIsLoadingScreenOn] = _isLoadingScreenOn;
+    const [, setIsLoadingScreenOn] = _isLoadingScreenOn;
 
 
     const handleUnitsTypeBtnClick = event => {

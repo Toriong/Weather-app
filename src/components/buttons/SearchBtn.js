@@ -1,5 +1,4 @@
 import React, { useContext, useEffect } from 'react'
-import { getUserCityName } from '../../apiFns/getUserCityName';
 import { getWeather } from '../../apiFns/getWeather'
 import { SearchContext } from '../../provider/SearchProvider';
 import { WeatherInfoContext } from '../../provider/WeatherInfoProvider';
@@ -7,6 +6,7 @@ import { getTimeOfLocation } from '../../timeFns/getTimeOfLocation';
 import { BiSearch } from "react-icons/bi";
 import { updateUrl } from '../../historyFns/updateUrl';
 import { useState } from 'react';
+import { getReverseGeoCode } from '../../apiFns/getGeoCode';
 
 const SearchBtn = ({ isOnSmallerScreen }) => {
     const { _isLoadingScreenOn, _isWeatherDataReceived, _currentDate, _weather, _targetLocation, _longAndLat, _isGettingUserLocation, _units, _longAndLatOfDisplayedWeather } = useContext(WeatherInfoContext)
@@ -16,15 +16,15 @@ const SearchBtn = ({ isOnSmallerScreen }) => {
     const [doesGoeLocationWork,] = _doesGeoLocationWork;
     const [units] = _units;
     const [placeHolderTxt] = _placeHolderTxt;
-    const [longAndLatOfDisplayedWeather, setLongAndLatOfDisplayedWeather] = _longAndLatOfDisplayedWeather;
+    const [, setLongAndLatOfDisplayedWeather] = _longAndLatOfDisplayedWeather;
     const [isGettingUserLocation] = _isGettingUserLocation;
     const [searchInput,] = _searchInput;
     const [longAndLat,] = _longAndLat;
     const [, setWeather] = _weather;
-    const [targetLocation, setTargetLocation] = _targetLocation;
-    const [currentDate, setCurrentDate] = _currentDate;
-    const [isLoadingScreenOn, setIsLoadingScreenOn] = _isLoadingScreenOn;
-    const [isWeatherDataReceived, setIsWeatherDataReceived] = _isWeatherDataReceived;
+    const [, setTargetLocation] = _targetLocation;
+    const [, setCurrentDate] = _currentDate;
+    const [, setIsLoadingScreenOn] = _isLoadingScreenOn;
+    const [, setIsWeatherDataReceived] = _isWeatherDataReceived;
     const [alertTimerGetWeather, setAlertTimerGetWeather] = useState(null);
     const [alertTimerGetCityName, setAlertTimerGetCityName] = useState(null)
     const [willClearTimerGetWeather, setWillClearTimerGetWeather] = useState(false);
@@ -75,7 +75,6 @@ const SearchBtn = ({ isOnSmallerScreen }) => {
                 daily.pop();
                 setWeather({ daily, current: { ...current, averageForTheDay: { temp, feels_like, weather: weatherMoreInfo, humidity, sunrise, sunset, wind_speed, rain, snow, dewPoint: dew_point } }, timezone })
                 setCurrentDate(getTimeOfLocation(timezone, true))
-                // if the locationName is null and the searchInput is absent then get the name of the city from the weather obj
                 setTargetLocation(targetLocation => {
                     return {
                         ...targetLocation,
@@ -106,17 +105,22 @@ const SearchBtn = ({ isOnSmallerScreen }) => {
             !alertTimerGetCityName && setAlertTimerGetCityName(setTimeout(() => {
                 // will get the weather data, but will tell the user that the program is unable to get the name of their current location 
                 _getWeather(null, true);
-            }, 10000));
+            }, 15000));
 
-            getUserCityName(longAndLat)
-                .then(location => {
+            getReverseGeoCode(longAndLat)
+                .then(data => {
                     setWillClearTimerGetCityName(true);
-                    _getWeather(location);
+                    if (data?._locations?.[0]) {
+                        console.log('data: ', data)
+                        _getWeather(data?._locations?.[0])
+                        return;
+                    };
+                    alert('An error has occurred. Refresh the page and try again.')
                 })
         }
     } else if (placeHolderTxt === 'Search by city name') {
         handleSearchBtnClick = () => {
-            // this will prevent the code that will get the weather data when the url changes without the user pressing the search button 
+            // this fn will prevent the code that will get the weather data when the url changes without the user pressing the search button 
             setWasSearchBtnClicked(true)
             setIsWeatherDataReceived(false);
             setIsLoadingScreenOn(true);

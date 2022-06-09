@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import '../../css/comp-css/search/searchBar.css'
 import SearchInputSection from './SearchInputSection'
 

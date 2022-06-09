@@ -26,6 +26,7 @@ export const getReverseGeoCode = async coordinates => {
                 return;
             };
             const locations = JSON.parse(contents);
+            console.log('locations: ', locations)
             return { _locations: locations?.length ? convertCountryCodesToNames(locations) : [] };
 
         };

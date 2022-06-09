@@ -33,7 +33,12 @@ max-width: 691.195px;
     width: 40px;
     margin-right: 8px;
 }
-.searchBtnsSubContainer>button,
+
+
+.searchBtnsSubContainer>button{
+    width: 65px;
+}
+
 .searchTypeContainer>button{
     width: 100px;
 }
