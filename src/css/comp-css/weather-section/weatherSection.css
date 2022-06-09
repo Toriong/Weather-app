@@ -3,6 +3,15 @@
     min-height: 80vh;
 }
 
+.weatherSection.loading{
+    justify-content: center;
+    padding-top: 80px;
+    display: flex;
+}
+
+#loadingWeatherTxt{
+    text-align: center;
+}
 
 .weatherSection > header{
     display: flex;
@@ -11,8 +20,6 @@
     flex-direction: column;
     padding-top: 8px;
 }
-
-
 
 .weatherSection > header > span{
     font-size: clamp(15.6px, calc(10px + 2vmin), 31.6px) !important;
@@ -26,7 +33,6 @@
     min-width: 140px;
     text-align: center;
 }
-
 
 .weatherSection h3{
     padding: 0;

@@ -12,11 +12,12 @@ export const WeatherInfoProvider = props => {
     const [isLoadingScreenOn, setIsLoadingScreenOn] = useState(false);
     const [weather, setWeather] = useState(null);
     const [currentDate, setCurrentDate] = useState("");
+    const wasImperialUnitsChosen = localStorage.getItem('wasImperialUnitsChosen') && JSON.parse(localStorage.getItem('wasImperialUnitsChosen'));
     const unitsDefaultVal = {
-        temp: '°F',
-        speed: 'mph'
-    }
-    const [units, setUnits] = useState(unitsDefaultVal)
+        temp: wasImperialUnitsChosen ? '°F' : '°C',
+        speed: wasImperialUnitsChosen ? 'mph' : 'm/s'
+    };
+    const [units, setUnits] = useState(unitsDefaultVal);
     const [selectedWeatherDay, setSelectedWeatherDay] = useState({});
     const [targetLocation, setTargetLocation] = useState({});
     const [longAndLat, setLongAndLat] = useState(null);

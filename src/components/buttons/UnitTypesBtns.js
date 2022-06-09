@@ -19,13 +19,12 @@ const UnitTypesBtns = ({ setIsUnitsSelectionModalOn }) => {
     const [units, setUnits] = _units;
     const [isWeatherDataReceived, setIsWeatherDataReceived] = _isWeatherDataReceived;
     const [isLoadingScreenOn, setIsLoadingScreenOn] = _isLoadingScreenOn;
-    const [alertTimer, setAlertTimer] = useState(null);
-    const [willClearTimer, setWillClearTimer] = useState(false);
 
 
     const handleUnitsTypeBtnClick = event => {
         const { name: btnName } = event.target;
         const wasImperialUnitsChosen = btnName === 'imperial';
+        localStorage.setItem('wasImperialUnitsChosen', wasImperialUnitsChosen);
         const _units = { temp: wasImperialUnitsChosen ? '°F' : '°C', speed: wasImperialUnitsChosen ? 'mph' : 'm/s' }
         setUnits(_units);
         setIsUnitsSelectionModalOn ? setIsUnitsSelectionModalOn(false) : setIsSearchAndUnitTypesModalOn(false);

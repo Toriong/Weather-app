@@ -74,11 +74,6 @@ const SearchInput = () => {
         }
     }, [willStopTimer])
 
-    useEffect(() => {
-        console.log('placeholderTxt: ', placeholderTxt)
-    })
-
-
     return (
         <section className='searchInputContainer'>
             <div>

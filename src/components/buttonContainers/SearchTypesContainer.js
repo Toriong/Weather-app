@@ -3,6 +3,7 @@ import SearchTypes from '../modals/SearchTypes'
 
 
 const SearchTypesContainer = ({ searchTypeTxt, handleSearchTypeBtnClick, isSearchTypesModalOn }) => {
+
     return (
         <div className='searchTypeContainer'>
             <button onClick={handleSearchTypeBtnClick}>

@@ -1,35 +1,6 @@
-import { AiOutlineConsoleSql } from "react-icons/ai";
-
-const positionStackApiKey = '04f67790145823ecccf869bcdf43342d';
 const API_key = 'c0f45851ae0ccb974b0d53c18cdae059';
 
-// write an article about using a proxy server to solve cors error 
-
-// use this function when the user enters in an address on the search bar 
-
-export const getGeoCode = async (address) => {
-    const positionStackUrl = `http://api.positionstack.com/v1/forward?access_key=${positionStackApiKey}&query=${address}`
-    const proxyServerUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(positionStackUrl)}`
-
-    try {
-        const response = await fetch(proxyServerUrl);
-        if (response.ok) {
-            const data = await response.json();
-            console.log('data: ', data)
-            const addresses = JSON.parse(data.contents).data;
-            console.log('addresses: ', addresses)
-            return { addresses };
-        };
-        alert('An error has occurred, please try again later.')
-    } catch (error) {
-        if (error) {
-            console.error('An error has occurred: ', error)
-            return { didError: true, errorMsg: error }
-        }
-    }
-}
-
-const convertToCountryName = locations => {
+const convertCountryCodesToNames = locations => {
     let regionNames = new Intl.DisplayNames(['en'], { type: 'region' });
     return locations.map(location => {
         // the value that is stored in location.country is the country code
@@ -39,12 +10,10 @@ const convertToCountryName = locations => {
     });
 }
 
-// use this to get the city name of the target location
+// this fn will get the name of the city 
 export const getReverseGeoCode = async coordinates => {
     const { longitude, latitude } = coordinates;
-
-
-    const openWeatherApi = `http://api.openweathermap.org/geo/1.0/reverse?lat=${Number(latitude).toFixed(8)}&lon=${Number(longitude).toFixed(8)}&limit=5&appid=${API_key}`
+    const openWeatherApi = `http://api.openweathermap.org/geo/1.0/reverse?lat=${latitude}&lon=${longitude}&limit=5&appid=${API_key}`
     const proxyServerUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(openWeatherApi)}`
 
     try {
@@ -57,7 +26,7 @@ export const getReverseGeoCode = async coordinates => {
                 return;
             };
             const locations = JSON.parse(contents);
-            return { _locations: locations?.length ? convertToCountryName(locations) : [] };
+            return { _locations: locations?.length ? convertCountryCodesToNames(locations) : [] };
 
         };
         alert('An error has occurred, please try again later.')
@@ -84,11 +53,9 @@ export const getGeoLocation = async input => {
             };
             const locations = JSON.parse(contents);
 
-            return { _locations: locations?.length ? convertToCountryName(locations) : [] };
-
+            return { _locations: locations?.length ? convertCountryCodesToNames(locations) : [] };
 
         };
-        // alert('An error has occurred, please try again later.')
     } catch (error) {
         if (error) {
             console.error('An error has occurred: ', error)

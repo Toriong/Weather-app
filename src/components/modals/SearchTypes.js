@@ -1,11 +1,8 @@
-import React, { useEffect, useState } from 'react';
-import { useContext } from 'react';
-import { SearchContext } from '../../provider/SearchProvider';
-import { WeatherInfoContext } from '../../provider/WeatherInfoProvider';
-import '../../css/comp-css/modals/searchTypeModal.css'
+import React from 'react';
 import MyLocation from '../buttons/MyLocation';
 import CityName from '../buttons/CityName';
-import ZipCode from '../buttons/ZipCode';
+import '../../css/comp-css/modals/searchTypeModal.css'
+
 
 
 // NOTES:

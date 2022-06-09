@@ -88,10 +88,30 @@ text-transform: capitalize;
   margin-top: 8px;
 }
 
+.weatherDayCard > section h1{
+  text-align: center;
+}
+
+.weatherDayCard.presentDay>section h1 {
+  font-size: 25px;
+}
+
+@media (min-width: 1024px) {
+  .weatherDayCard.daily{
+    width: 50vw;
+  }
+
+  .weatherDayCard > section h1{
+    text-align: center;
+  }
+  .weatherDayCard.daily>section:first-child h1 {
+    font-size: clamp(12px, 1.5vw, 17px);
+  }
+}
+
 @media (min-width: 1024px) and (max-width: 1199px){
   .weatherDescriptionSec.daily > span{
     font-size: clamp(14.5px, 1vw, 20px)
-
   }
 }
 
@@ -99,6 +119,10 @@ text-transform: capitalize;
   .weatherDayCard{
     width: 60vw;
     min-width: 255px;
+  }
+
+  .weatherDayCard.presentDay h1{
+    font-size: 17px !important;
   }
 }
 

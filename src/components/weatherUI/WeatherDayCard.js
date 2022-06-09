@@ -6,16 +6,15 @@ import { getTime } from '../../timeFns/getTime'
 import '../../css/comp-css/weather-section/weatherDayCard.css'
 
 const WeatherDayCard = ({ day, isPresentDay, index }) => {
-    const { _currentDate, _selectedWeatherDay, _units, _targetLocation } = useContext(WeatherInfoContext);
+    const { _selectedWeatherDay, _units, _targetLocation } = useContext(WeatherInfoContext);
     const { _isSelectedWeatherModalOn } = useContext(ModalContext);
     const [targetLocation] = _targetLocation
     const [isSelectedWeatherModalOn, setIsSelectedWeatherModalOn] = _isSelectedWeatherModalOn;
     const [selectedWeatherDay, setSelectedWeatherDay] = _selectedWeatherDay;
-    const [currentDate, setCurrentDate] = _currentDate;
     const { temp: tempUnits } = _units[0];
     const { weather, feels_like, averageForTheDay, temp, dt } = day ?? {};
     // const date = isPresentDay ? currentDate : getDate(index + 1);
-    const date = getTime(dt, targetLocation.timeZoneOffset, 'MMMM Do YYYY')
+    const date = getTime(dt, targetLocation.timeZoneOffset, 'dddd, MMM Do YYYY')
     const { min, max } = averageForTheDay?.temp ?? temp;
     const { icon: weatherIcon, description } = weather[0] ?? {};
     const weatherDayCardCss = isPresentDay ? 'weatherDayCard presentDay' : 'weatherDayCard daily'
@@ -25,12 +24,6 @@ const WeatherDayCard = ({ day, isPresentDay, index }) => {
         setIsSelectedWeatherModalOn(true);
         setSelectedWeatherDay({ ...day, date, isPresentDay: isPresentDay });
     };
-
-
-
-
-    // BUG:
-    // WHAT IS HAPPENING: when the current day is presented onto the screen, the num for the degrees is appearing as 'NaN'
 
 
     return (
