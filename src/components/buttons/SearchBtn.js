@@ -3,20 +3,15 @@ import { getUserCityName } from '../../apiFns/getUserCityName';
 import { getWeather } from '../../apiFns/getWeather'
 import { SearchContext } from '../../provider/SearchProvider';
 import { WeatherInfoContext } from '../../provider/WeatherInfoProvider';
-import { getDate } from '../../timeFns/getDate';
 import { getTimeOfLocation } from '../../timeFns/getTimeOfLocation';
 import { BiSearch } from "react-icons/bi";
-import history from '../../history/history';
 import { updateUrl } from '../../historyFns/updateUrl';
 import { useState } from 'react';
 
-// WHAT IS HAPPENING: 
-// the history state is storing the previous pathname
-// when getting the url params, the params is the current city that is being displayed onto the dom 
-
 const SearchBtn = ({ isOnSmallerScreen }) => {
     const { _isLoadingScreenOn, _isWeatherDataReceived, _currentDate, _weather, _targetLocation, _longAndLat, _isGettingUserLocation, _units, _longAndLatOfDisplayedWeather } = useContext(WeatherInfoContext)
-    const { _searchInput, _placeHolderTxt, _doesGeoLocationWork, _wasSearchBtnClicked } = useContext(SearchContext);
+    const { _searchInput, _placeHolderTxt, _doesGeoLocationWork, _wasSearchBtnClicked, _selectedLocation } = useContext(SearchContext);
+    const [selectedLocation,] = _selectedLocation;
     const [wasSearchBtnClicked, setWasSearchBtnClicked] = _wasSearchBtnClicked;
     const [doesGoeLocationWork,] = _doesGeoLocationWork;
     const [units] = _units;
@@ -41,11 +36,11 @@ const SearchBtn = ({ isOnSmallerScreen }) => {
 
 
 
-    const _getWeather = (locationName, isUnableToRetrieveLocal) => {
-        setAlertTimerGetWeather(setTimeout(() => {
+    const _getWeather = (location, isUnableToRetrieveLocal) => {
+        !alertTimerGetWeather && setAlertTimerGetWeather(setTimeout(() => {
             alert('Sorry, but it looks like it is taking longer than usually to get the weather data that you requested. Refresh the page and try again.')
             setAlertTimerGetWeather(null);
-        }, 10000))
+        }, 10000));
         getWeather(longAndLat, isOnImperial)
             .then(response => {
                 setWillClearTimerGetWeather(true);
@@ -63,9 +58,18 @@ const SearchBtn = ({ isOnSmallerScreen }) => {
                     alert('Something went wrong, please refresh the page and try again.')
                     return;
                 };
-                console.log('weather: ', weather)
+
+                const { country, state, name } = location ?? selectedLocation;
+
+                if (state && (name !== state)) {
+                    var _location = `${name}, ${state}, ${country}`
+                } else if (state && country) {
+                    _location = `${state}, ${country}`;
+                } else if (name && country) {
+                    _location = `${name}, ${country}`
+                }
+
                 const { daily, timezone, current, timezone_offset } = weather;
-                console.log('bacon and cheese: ', timezone)
                 const { temp, feels_like, weather: weatherMoreInfo, humidity, sunrise, sunset, wind_speed, rain, snow, dew_point } = daily[0];
                 daily.shift();
                 daily.pop();
@@ -75,7 +79,7 @@ const SearchBtn = ({ isOnSmallerScreen }) => {
                 setTargetLocation(targetLocation => {
                     return {
                         ...targetLocation,
-                        name: isUnableToRetrieveLocal ? "Couldn't get the name of your location" : locationName ?? searchInput,
+                        name: isUnableToRetrieveLocal ? "Couldn't get the name of your location" : (_location ?? searchInput),
                         time: getTimeOfLocation(timezone),
                         timeZoneOffset: timezone_offset
                     }
@@ -83,7 +87,7 @@ const SearchBtn = ({ isOnSmallerScreen }) => {
                 setIsLoadingScreenOn(false);
                 setIsWeatherDataReceived(true);
                 setLongAndLatOfDisplayedWeather(longAndLat);
-                isUnableToRetrieveLocal ? updateUrl(null, true) : updateUrl(longAndLat);
+                isUnableToRetrieveLocal ? updateUrl(null, true) : updateUrl(location ?? selectedLocation);
             }).finally(() => {
                 setWasSearchBtnClicked(true);
             });
@@ -99,7 +103,7 @@ const SearchBtn = ({ isOnSmallerScreen }) => {
             setWasSearchBtnClicked(true)
             setIsWeatherDataReceived(false);
             setIsLoadingScreenOn(true);
-            setAlertTimerGetCityName(setTimeout(() => {
+            !alertTimerGetCityName && setAlertTimerGetCityName(setTimeout(() => {
                 // will get the weather data, but will tell the user that the program is unable to get the name of their current location 
                 _getWeather(null, true);
             }, 10000));
@@ -107,15 +111,7 @@ const SearchBtn = ({ isOnSmallerScreen }) => {
             getUserCityName(longAndLat)
                 .then(location => {
                     setWillClearTimerGetCityName(true);
-                    const { country, state, name } = location;
-                    if (state) {
-                        var _location = `${name}, ${state}, ${country}`
-                    } else if (state && country) {
-                        _location = `${state}, ${country}`;
-                    } else if (country) {
-                        _location = country
-                    }
-                    _getWeather(_location);
+                    _getWeather(location);
                 })
         }
     } else if (placeHolderTxt === 'Search by city name') {

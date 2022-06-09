@@ -17,6 +17,7 @@ export const getGeoCode = async (address) => {
             const data = await response.json();
             console.log('data: ', data)
             const addresses = JSON.parse(data.contents).data;
+            console.log('addresses: ', addresses)
             return { addresses };
         };
         alert('An error has occurred, please try again later.')
@@ -30,21 +31,18 @@ export const getGeoCode = async (address) => {
 
 const convertToCountryName = locations => {
     let regionNames = new Intl.DisplayNames(['en'], { type: 'region' });
-    var _locations = locations.map(location => {
+    return locations.map(location => {
         // the value that is stored in location.country is the country code
         const country = regionNames.of(location.country);
 
         return { ...location, country };
     });
-
-    return _locations
 }
 
 // use this to get the city name of the target location
 export const getReverseGeoCode = async coordinates => {
     const { longitude, latitude } = coordinates;
 
-    const _longitude = Number(latitude).toFixed(4);
 
     const openWeatherApi = `http://api.openweathermap.org/geo/1.0/reverse?lat=${Number(latitude).toFixed(8)}&lon=${Number(longitude).toFixed(8)}&limit=5&appid=${API_key}`
     const proxyServerUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(openWeatherApi)}`
@@ -85,17 +83,8 @@ export const getGeoLocation = async input => {
                 return;
             };
             const locations = JSON.parse(contents);
-            let regionNames = new Intl.DisplayNames(['en'], { type: 'region' });
-            if (locations.length) {
-                var _locations = locations.map(location => {
-                    const country = regionNames.of(location.country);
 
-                    return { ...location, country };
-                });
-            };
-
-            console.log('_locations: ', _locations)
-            return { _locations: _locations?.length ? _locations : [] }
+            return { _locations: locations?.length ? convertToCountryName(locations) : [] };
 
 
         };

@@ -28,7 +28,6 @@ const WeatherSection = () => {
                     <header>
                         <span>{targetLocationTime}</span>
                         <span>{targetLocationName}</span>
-
                         {/* put the following in this element: */}
                         {/* the location that the user searched for targetlocation.name*/}
                         {/* the time of the search: 'The weather as of targetLocation.time' */}
