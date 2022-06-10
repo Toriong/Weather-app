@@ -4,8 +4,6 @@ import React, { useState, createContext } from 'react'
 export const WeatherInfoContext = createContext();
 
 
-
-// rename this provider to WeatherProvider
 export const WeatherInfoProvider = props => {
     const [isLoadingWeatherDataDone, setIsLoadingWeaetherDateDone] = useState(false)
     const [isWeatherDataReceived, setIsWeatherDataReceived] = useState(false);

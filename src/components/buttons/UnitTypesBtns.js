@@ -10,7 +10,7 @@ import { getTimeOfLocation } from '../../timeFns/getTimeOfLocation';
 const UnitTypesBtns = () => {
     const { _units, _isWeatherDataReceived, _isLoadingScreenOn, _weather, _currentDate, _targetLocation, _longAndLatOfDisplayedWeather } = useContext(WeatherInfoContext)
     const { _isSearchAndUnitTypesModalOn, _isUnitsSelectionModalOn } = useContext(ModalContext);
-    const [isUnitsSelectionModalOn, setIsUnitsSelectionModalOn] = _isUnitsSelectionModalOn;
+    const [, setIsUnitsSelectionModalOn] = _isUnitsSelectionModalOn;
     const [, setIsSearchAndUnitTypesModalOn] = _isSearchAndUnitTypesModalOn;
     const [longAndLatOfDisplayedWeather] = _longAndLatOfDisplayedWeather;
     const [, setWeather] = _weather;
