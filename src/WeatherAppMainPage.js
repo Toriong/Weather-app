@@ -16,13 +16,13 @@ import { updateUrl } from './historyFns/updateUrl';
 
 
 const WeatherApp = () => {
-  const { city, state, country } = useParams();
+  const { city, state, country: countryCode } = useParams();
+  const { _isSelectedWeatherModalOn } = useContext(ModalContext);
   const { _isLoadingScreenOn, _isWeatherDataReceived, _currentDate, _weather, _targetLocation, _units, _longAndLatOfDisplayedWeather, _longAndLat } = useContext(WeatherInfoContext)
   const { _wasSearchBtnClicked, _searchInput, _placeHolderTxt, _selectedLocation } = useContext(SearchContext);
-  const { _isSelectedWeatherModalOn } = useContext(ModalContext);
   const [, setSelectedLocation] = _selectedLocation;
   const [, setPlaceHolderTxt] = _placeHolderTxt;
-  const [weather, setLongAndLat] = _longAndLat;
+  const [, setLongAndLat] = _longAndLat;
   const [, setWeather] = _weather;
   const [, setSearchInput] = _searchInput;
   const [, setTargetLocation] = _targetLocation;
@@ -70,38 +70,38 @@ const WeatherApp = () => {
       console.error('An error has occurred. Error message: ', errorMsg)
       alert('An error has occurred. Refresh the page and try again.')
     } else if (!didError && _locations?.length > 1) {
-      console.log('_location: ', _locations)
       const targetLocation = _locations.find(({ name: _city, country: _country, state: _state }) => {
         if (state) {
-          return ((_city === city) && (_country === country) && (state === _state));
+          return ((_city === city) && (_country === countryCode) && (state === _state));
         };
 
-        return ((_city === city) && (_country === country));
+        return ((_city === city) && (_country === countryCode));
       });
-      // for the first failure, 'location' was using city, state, and country, then send 'city, country' to the api to get the locations again  
+      // for the first failure, if 'location' was using city, state, and countryCode, then send 'city, countryCode' to the api to get the locations again  
       if (isUsingStateLocation && !targetLocation) {
-        getGeoLocation(`${city}, ${country}`).then(data => {
+        getGeoLocation(`${city}, ${countryCode}`).then(data => {
           handleGeoLocationResponse(data, timerGetWeather, isUsingStateLocation);
         })
       } else if (!targetLocation) {
         respondToError();
         return;
       }
-      const { name: targetCity, country: targetCountry, state: targetState, lon: longitude, lat: latitude } = targetLocation ?? {};
+
+      const { name: targetCity, state: targetState, lon: longitude, lat: latitude, countryName } = targetLocation ?? {};
       const timerGetWeather = setTimeout(() => {
         alert('It is taking longer than usually to get weather data. You can refresh the page and try again.')
       }, 10000)
       setTimerGetWeather(timerGetWeather)
       const clearTimerGetWeather = () => clearTimeout(timerGetWeather);
-      targetLocation && _displayWeatherResults(longitude, latitude, targetCity, targetCountry, targetState, clearTimerGetWeather);
+      targetLocation && _displayWeatherResults(longitude, latitude, targetCity, countryName, targetState, clearTimerGetWeather);
     } else if (!didError && (_locations?.length === 1)) {
       const timerGetWeather = setTimeout(() => {
         alert('It is taking longer than usually to get weather data. You can refresh the page and try again.')
-      }, 10000)
-      setTimerGetWeather(timerGetWeather)
+      }, 10000);
+      setTimerGetWeather(timerGetWeather);
       const clearTimerGetWeather = () => clearTimeout(timerGetWeather);
-      const { name: targetCity, country: targetCountry, state: targetState, lon: longitude, lat: latitude } = _locations?.[0];
-      _displayWeatherResults(longitude, latitude, targetCity, targetCountry, targetState, clearTimerGetWeather);
+      const { name: targetCity, countryName, state: targetState, lon: longitude, lat: latitude } = _locations?.[0];
+      _displayWeatherResults(longitude, latitude, targetCity, countryName, targetState, clearTimerGetWeather);
     } else if (_locations?.length <= 0) {
       respondToError();
     }
@@ -109,54 +109,54 @@ const WeatherApp = () => {
 
   const getWeatherData = isLoadingScreenOn => {
     resetWeatherUI(isLoadingScreenOn);
-    const isUsingStateLocation = state && (state !== city)
-    if (isUsingStateLocation) {
-      var location = `${city}, ${state}, ${country}`;
+    const isStateAndCityNotSame = state && (state !== city)
+    if (isStateAndCityNotSame) {
+      var location = `${city}, ${state}, ${countryCode}`;
     } else {
-      location = `${city}, ${country}`
+      location = `${city}, ${countryCode}`
     }
     const timerGetWeather = setTimeout(() => {
       alert('An error has occurred in getting weather data. Refresh the page and try again.')
     }, 10000)
     getGeoLocation(location).then(data => {
-      handleGeoLocationResponse(data, timerGetWeather, isUsingStateLocation);
+      handleGeoLocationResponse(data, timerGetWeather, isStateAndCityNotSame);
     });
   }
-
-
-
-
-
-
 
   useEffect(() => {
     if (!firstRender.current.didOccur) {
       firstRender.current.didOccur = true;
+    } else if (!wasSearchBtnClicked && (history.location.pathname !== '/')) {
+      timerGetWeather && clearTimeout(timerGetWeather);
+      getWeatherData(true);
     } else if (!wasSearchBtnClicked) {
-      console.log('pathname: ', history.location.pathname)
-      if (history.location.pathname !== '/') {
-        timerGetWeather && clearTimeout(timerGetWeather);
-        getWeatherData();
-      } else {
-        resetWeatherUI();
-      }
+      // if user is on default page, then reset the UI 
+      resetWeatherUI();
     }
-  }, [history.location.pathname])
+  }, [history.location.pathname]);
 
   useLayoutEffect(() => {
     const { pathname } = history.location;
     (pathname !== '/') && getWeatherData(true);
+
+    // to keep the connection to the proxy server alive when the app is on idle
+    const intervalTimer = setInterval(() => {
+      getGeoLocation('Davao City, PH').then(data => {
+        data ? console.log('Connection is established') : console.log('Connection failed');
+      });
+    }, 5000)
+
+    window.addEventListener('touchstart', () => {
+      console.log("'Unable to preventDefault inside passive event listener due to target being treated as passive' bug has been stopped.")
+    }, { passive: false });
+
+    return () => { clearInterval(intervalTimer); };
   }, []);
 
 
-
-
-
-
-
-
-
-
+  useEffect(() => {
+    console.log('document.body.style.overflow: ', document.body.style.overflow)
+  })
 
   return (
     <div className="weather-app-main">

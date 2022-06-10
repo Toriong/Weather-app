@@ -1,7 +1,6 @@
 import React from 'react'
 import { useContext } from 'react';
 import { SearchContext } from '../../provider/SearchProvider';
-import { WeatherInfoContext } from '../../provider/WeatherInfoProvider';
 import { ModalContext } from '../../provider/ModalProvider';
 
 const CityName = ({ isOnSmallerScreen }) => {

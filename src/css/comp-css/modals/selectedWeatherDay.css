@@ -111,10 +111,6 @@
     display: flex;;
 }
 
-.averageForTheDay > *:not(:first-child){
-    margin-left: 16px;
-    
-}
 
 .infoTxt{
     font-size: 15px !important;
@@ -196,13 +192,16 @@ margin-right: 30px;
 
 @media (min-width: 768px){
     .weatherDayModal{
-        /* max-height: 710.094px; */
-        max-height: fit-content;
+        max-height: 710.094px;
         max-width: 720px;
     }
 
     .weatherDayModal.notPresentDay {
     max-height: 500px;
+    }
+
+    .averageForTheDay>*:not(:first-child) {
+        margin-left: 16px;
     }
 }
 

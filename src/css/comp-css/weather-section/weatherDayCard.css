@@ -104,15 +104,17 @@ text-transform: capitalize;
   .weatherDayCard > section h1{
     text-align: center;
   }
-  .weatherDayCard.daily>section:first-child h1 {
-    font-size: clamp(12px, 1.5vw, 17px);
-  }
+
+    .weatherDayCard.daily>section:first-child h1 {
+      font-size: clamp(10px, .8vw, 17px);
+    }
 }
 
 @media (min-width: 1024px) and (max-width: 1199px){
   .weatherDescriptionSec.daily > span{
     font-size: clamp(14.5px, 1vw, 20px)
   }
+
 }
 
 @media(max-width: 576px){

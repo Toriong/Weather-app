@@ -1,14 +1,21 @@
 const API_key = 'c0f45851ae0ccb974b0d53c18cdae059';
 
+
+export const convertToCountryName = countryCode => {
+    let regionNames = new Intl.DisplayNames(['en'], { type: 'region' });
+    return regionNames.of(countryCode)
+}
+
+
 const convertCountryCodesToNames = locations => {
     let regionNames = new Intl.DisplayNames(['en'], { type: 'region' });
     return locations.map(location => {
         // the value that is stored in location.country is the country code
         const country = regionNames.of(location.country);
 
-        return { ...location, country };
+        return { ...location, countryName: country };
     });
-}
+};
 
 // this fn will get the name of the city 
 export const getReverseGeoCode = async coordinates => {
@@ -40,7 +47,7 @@ export const getReverseGeoCode = async coordinates => {
 }
 
 export const getGeoLocation = async input => {
-    const openWeatherGeoLocationApi = `http://api.openweathermap.org/geo/1.0/direct?q=${input}&limit=100&appid=${API_key}`;
+    const openWeatherGeoLocationApi = `http://api.openweathermap.org/geo/1.0/direct?q=${input}&limit=10&appid=${API_key}`;
     const proxyServerUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(openWeatherGeoLocationApi)}`
 
     try {

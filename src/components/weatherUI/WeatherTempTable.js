@@ -21,17 +21,17 @@ const WeatherTempTable = ({ data, isPresentDay }) => {
             </tr>
             <tr className='secondRow'>
                 <td>Temp</td>
-                <td>{Math.round(morn)} {tempUnits}</td>
-                <td>{Math.round(day)} {tempUnits}</td>
-                <td>{Math.round(eve)} {tempUnits}</td>
-                <td>{Math.round(night)} {tempUnits}</td>
+                <td>{Math.ceil(morn)} {tempUnits}</td>
+                <td>{Math.ceil(day)} {tempUnits}</td>
+                <td>{Math.ceil(eve)} {tempUnits}</td>
+                <td>{Math.ceil(night)} {tempUnits}</td>
             </tr>
             <tr className='thirdRow'>
                 <td>{isPresentDay ? 'Feels like' : 'Will feel like'}</td>
-                <td>{Math.round(feelsLikeMorn)} {tempUnits}</td>
-                <td>{Math.round(feelsLikeDay)} {tempUnits}</td>
-                <td>{Math.round(feelsLikeEve)} {tempUnits}</td>
-                <td>{Math.round(feelsLikeNight)} {tempUnits}</td>
+                <td>{Math.ceil(feelsLikeMorn)} {tempUnits}</td>
+                <td>{Math.ceil(feelsLikeDay)} {tempUnits}</td>
+                <td>{Math.ceil(feelsLikeEve)} {tempUnits}</td>
+                <td>{Math.ceil(feelsLikeNight)} {tempUnits}</td>
             </tr>
         </table>
     )

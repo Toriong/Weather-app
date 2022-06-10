@@ -5,10 +5,10 @@ import { getTime } from '../../timeFns/getTime';
 import { BsSunrise, BsSunset } from "react-icons/bs";
 import WeatherIcon from '../weatherUI/WeatherIcon';
 import WeatherTempTable from '../weatherUI/WeatherTempTable';
-import { useLayoutEffect } from 'react';
 import useGetViewPortWidth from '../../customHooks/useGetViewPortWidth';
 import { GrClose } from "react-icons/gr";
 import '../../css/comp-css/modals/selectedWeatherDay.css';
+import { useEffect } from 'react';
 
 
 
@@ -44,20 +44,23 @@ const SelectedWeatherDay = ({ closeModal }) => {
         var _moreInfoDescription = moreInfoDescription.charAt(0).toUpperCase() + moreInfoDescription.slice(1)
     }
 
-    useLayoutEffect(() => {
+    useEffect(() => {
         const touchMovePrevented = document.body.addEventListener('touchmove', event => { event.preventDefault() })
-        document.body.style.overflow = 'hidden';
+        document.body.style.maxWidth = '100%';
+        document.body.style.overflow = 'hidden'
 
         return () => {
             document.body.style.overflow = 'visible';
+            document.body.style.maxWidth = 'none';
             document.body.removeEventListener('touchmove', touchMovePrevented);
         }
     }, [widthPixels])
 
-
-
-
-
+    useEffect(() => {
+        window.addEventListener('touchstart', () => {
+            console.log("'Unable to preventDefault inside passive event listener due to target being treated as passive' bug has been stopped.")
+        }, { passive: false });
+    }, [])
 
     return (
         <div className={weatherDayModalClassName} >
@@ -75,11 +78,11 @@ const SelectedWeatherDay = ({ closeModal }) => {
                         {isPresentDay &&
                             <div className='currentWeatherInfo'>
                                 <span>Current:</span>
-                                <span className='infoTxt'>Temp is {Math.round(temp)}{tempUnits}.</span>
-                                <span className='infoTxt'> {_description}. Feel likes {Math.round(feels_like)}{tempUnits}.</span>
+                                <span className='infoTxt'>Temp is {Math.ceil(temp)}{tempUnits}.</span>
+                                <span className='infoTxt'> {_description}. Feel likes {Math.ceil(feels_like)}{tempUnits}.</span>
                                 <span className='infoTxt'>Humidity: {humidityNum}%</span>
-                                <span className='infoTxt'>Dew point: {Math.round(dew_point)}{tempUnits}</span>
-                                <span className='infoTxt'>Wind speed: {Math.round(wind_speed)} {speedUnits}</span>
+                                <span className='infoTxt'>Dew point: {Math.ceil(dew_point)}{tempUnits}</span>
+                                <span className='infoTxt'>Wind speed: {Math.ceil(wind_speed)} {speedUnits}</span>
                             </div>
                         }
                         <div className='averageForTheDay'>
@@ -91,13 +94,13 @@ const SelectedWeatherDay = ({ closeModal }) => {
                                 </div>
                             }
                             <div className='projectedInfoSelectedWeatherDay'>
-                                <span className='infoTxt'>The high {isPresentDay ? 'is ' : 'will be '} {Math.round(isPresentDay ? max : mainMax)}{tempUnits}. The low {isPresentDay ? 'is ' : 'will be '} {Math.round(isPresentDay ? min : mainMin)}{tempUnits}.</span>
+                                <span className='infoTxt'>The high {isPresentDay ? 'is ' : 'will be '} {Math.ceil(isPresentDay ? max : mainMax)}{tempUnits}. The low {isPresentDay ? 'is ' : 'will be '} {Math.ceil(isPresentDay ? min : mainMin)}{tempUnits}.</span>
                                 <span className='infoTxt'>{_description}.</span>
                                 <span className='infoTxt'>Humidity: {isPresentDay ? humidityMoreInfoNum : humidityNum}%</span>
                                 {(rain || rainMain) && <span className='infoTxt'>Rain: {isPresentDay ? rain : rainMain}mm</span>}
                                 {(snow || snowMain) && <span className='infoTxt'>Snow: {isPresentDay ? snow : snowMain}mm</span>}
-                                <span className='infoTxt'>Dew point: {Math.round(isPresentDay ? dewPoint : dew_point)}{tempUnits}</span>
-                                <span className='infoTxt'>Wind speed: {Math.round(isPresentDay ? windSpeedAverage : wind_speed)} {speedUnits}</span>
+                                <span className='infoTxt'>Dew point: {Math.ceil(isPresentDay ? dewPoint : dew_point)}{tempUnits}</span>
+                                <span className='infoTxt'>Wind speed: {Math.ceil(isPresentDay ? windSpeedAverage : wind_speed)} {speedUnits}</span>
                             </div>
                         </div>
                     </div>

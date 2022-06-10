@@ -37,11 +37,11 @@ const WeatherDayCard = ({ day, isPresentDay, index }) => {
                 {isPresentDay &&
                     <>
                         <span>Current temp:</span>
-                        <span>{Math.round(temp)} {tempUnits}</span>
+                        <span>{Math.ceil(temp)} {tempUnits}</span>
                     </>
                 }
                 {isPresentDay ?
-                    <span>Feels like {Math.round(feels_like)} {tempUnits}. <span className='weatherDescription'>{description}.</span></span>
+                    <span>Feels like {Math.ceil(feels_like)} {tempUnits}. <span className='weatherDescription'>{description}.</span></span>
                     :
                     <span>{description}</span>
                 }
@@ -49,11 +49,11 @@ const WeatherDayCard = ({ day, isPresentDay, index }) => {
             <section className='highAndLowTempSection'>
                 <div>
                     <span>High:</span>
-                    <span>{Math.round(max)} {tempUnits}</span>
+                    <span>{Math.ceil(max)} {tempUnits}</span>
                 </div>
                 <div>
                     <span>Low:</span>
-                    <span>{Math.round(min)} {tempUnits}</span>
+                    <span>{Math.ceil(min)} {tempUnits}</span>
                 </div>
             </section>
         </div>

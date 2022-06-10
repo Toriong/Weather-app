@@ -6,8 +6,10 @@ import { getTimeOfLocation } from '../../timeFns/getTimeOfLocation';
 import { BiSearch } from "react-icons/bi";
 import { updateUrl } from '../../historyFns/updateUrl';
 import { useState } from 'react';
-import { getReverseGeoCode } from '../../apiFns/getGeoCode';
+import { convertToCountryName, getReverseGeoCode } from '../../apiFns/getGeoCode';
 import { ModalContext } from '../../provider/ModalProvider';
+
+
 
 const SearchBtn = ({ isOnSmallerScreen }) => {
     const { _isLoadingScreenOn, _isWeatherDataReceived, _currentDate, _weather, _targetLocation, _longAndLat, _isGettingUserLocation, _units, _longAndLatOfDisplayedWeather } = useContext(WeatherInfoContext)
@@ -36,10 +38,8 @@ const SearchBtn = ({ isOnSmallerScreen }) => {
     const isButtonDisabled = ((isOnUserLocationSearch && !navigator?.geolocation) || isGettingUserLocation || ((searchInput.length <= 2) && !isOnUserLocationSearch) || (isOnUserLocationSearch && !doesGoeLocationWork)) ? true : false;
     const isOnImperial = units.temp === '°F';
 
-
-
-
     const _getWeather = (location, isUnableToRetrieveLocal) => {
+        console.log('location: ', location)
         !alertTimerGetWeather && setAlertTimerGetWeather(setTimeout(() => {
             alert('Sorry, but it looks like it is taking longer than usually to get the weather data that you requested. Refresh the page and try again.')
             setAlertTimerGetWeather(null);
@@ -47,16 +47,19 @@ const SearchBtn = ({ isOnSmallerScreen }) => {
         getWeather(longAndLat, isOnImperial)
             .then(response => {
                 setWillClearTimerGetWeather(true);
+
                 if (!response) {
                     alert('Sorry, but something went wrong, refresh the page and try again.')
                     return;
                 }
+
                 const { weather, didError, errorMsg } = response;
                 if (didError) {
                     console.error('An error has occurred in getting weather of target location. Error message: ', errorMsg);
                     alert('An error has occurred in getting weather of target location.')
                     return;
                 };
+
                 if (!weather) {
                     alert('Something went wrong, please refresh the page and try again.')
                     return;
@@ -64,12 +67,17 @@ const SearchBtn = ({ isOnSmallerScreen }) => {
 
                 const { country, state, name } = location ?? selectedLocation;
 
+                if (location) {
+                    var countryName = convertToCountryName(country);
+                }
+
+
                 if (state && (name !== state)) {
-                    var _location = `${name}, ${state}, ${country}`
+                    var _location = `${name}, ${state}, ${countryName ?? country}`;
                 } else if (state && country) {
-                    _location = `${state}, ${country}`;
+                    _location = `${state}, ${countryName ?? country}`;
                 } else if (name && country) {
-                    _location = `${name}, ${country}`
+                    _location = `${name}, ${countryName ?? country}`;
                 }
 
                 const { daily, timezone, current, timezone_offset } = weather;
@@ -90,10 +98,13 @@ const SearchBtn = ({ isOnSmallerScreen }) => {
                 setIsWeatherDataReceived(true);
                 setLongAndLatOfDisplayedWeather(longAndLat);
                 isUnableToRetrieveLocal ? updateUrl(null, true) : updateUrl(location ?? selectedLocation);
+                debugger
             }).finally(() => {
                 setWasSearchBtnClicked(true);
             });
     };
+
+    // GOAL: get the country code and place it into the url
 
 
     if (isOnUserLocationSearch) {
@@ -115,7 +126,6 @@ const SearchBtn = ({ isOnSmallerScreen }) => {
                 .then(data => {
                     setWillClearTimerGetCityName(true);
                     if (data?._locations?.[0]) {
-                        console.log('data: ', data)
                         _getWeather(data?._locations?.[0])
                         return;
                     };

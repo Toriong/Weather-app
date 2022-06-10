@@ -19,9 +19,8 @@ const ResetSearch = ({ resetBtnCss }) => {
     const handleOnClick = () => {
         updateUrl(null, true);
         setWeather(null);
-        // when the reset button is in the hamburger modal in the search bar
-        console.log('resetBtnCss: ', resetBtnCss)
-        !resetBtnCss && setIsSearchAndUnitTypesModalOn(false)
+        // if there is no css className, then the button is in the modal that appears in the searchBar. When btn is pressed, then close the modal
+        !resetBtnCss && setIsSearchAndUnitTypesModalOn(false);
     }
 
     return <button className={resetBtnCss ?? ""} disabled={isBtnDisabled} onClick={handleOnClick}>{resetBtnCss ? 'Reset search' : 'Reset'}</button>

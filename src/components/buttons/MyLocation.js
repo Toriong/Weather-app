@@ -26,7 +26,6 @@ const MyLocation = ({ isOnSmallerScreen }) => {
             navigator.geolocation.getCurrentPosition(position => {
                 clearTimeout(geoLocalFailed);
                 const { longitude, latitude } = position.coords;
-                console.log('position.coords: ', position.coords)
                 setLongAndLat({ longitude, latitude });
                 setIsGettingUserLocation(false);
             })
