@@ -8,12 +8,12 @@
 .searchInputContainer > div:first-child{
     position: relative;
     width: 80%;
-    height: 100%;
     display: flex;
-    justify-content: center;
-    place-items: center;
+    justify-content: space-around;
+    /* place-items: center; */
     flex-direction: column;
     max-width:691.195px;
+    padding-top: 20px;
 
 }
 
@@ -38,6 +38,10 @@
 @media (max-width: 767px){
     .searchInputContainer>div:first-child {
         display: block
+    }
+
+    .searchInputContainer>div:first-child{
+        padding-top: 0px;
     }
 
     .searchInputContainer>div:first-child input{

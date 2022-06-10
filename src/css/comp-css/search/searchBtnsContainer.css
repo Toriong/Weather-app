@@ -1,12 +1,9 @@
 .searchBtnsContainer{
-position: absolute;
-bottom: 0;
-right: 0;
-height: 37.7917px;
 display: flex;
 width: 100%;
 justify-content: space-between;
 max-width: 691.195px;
+margin-top: 8px;
 }
 
 #searchIconOnLaptop{
@@ -81,7 +78,7 @@ max-width: 691.195px;
     }
 
     .searchBtnsContainer{
-        bottom: 3px;
+        margin-top: 4px;
     }
 }
 
