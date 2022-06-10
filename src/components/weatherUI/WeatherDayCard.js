@@ -1,8 +1,8 @@
 import React, { useContext } from 'react'
 import { WeatherInfoContext } from '../../provider/WeatherInfoProvider';
 import { ModalContext } from '../../provider/ModalProvider';
-import WeatherIcon from './WeatherIcon';
 import { getTime } from '../../timeFns/getTime'
+import WeatherIcon from './WeatherIcon';
 import '../../css/comp-css/weather-section/weatherDayCard.css'
 
 const WeatherDayCard = ({ day, isPresentDay, index }) => {
