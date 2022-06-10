@@ -154,10 +154,6 @@ const WeatherApp = () => {
   }, []);
 
 
-  useEffect(() => {
-    console.log('document.body.style.overflow: ', document.body.style.overflow)
-  })
-
   return (
     <div className="weather-app-main">
       <SearchBar />
