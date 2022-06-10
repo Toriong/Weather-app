@@ -5,7 +5,6 @@ import '../../css/comp-css/modals/modalBtns.css'
 
 
 
-// NOTES:
 
 
 
