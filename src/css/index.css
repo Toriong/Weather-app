@@ -38,7 +38,6 @@ table{
 .weather-app-main {
   /* background-color: white; */
   /* background-image: linear-gradient(0deg,#e5dee2,#e5dee2 20%,#aba2b4 60%,#59516e 90%,#59516e);; */
-  touch-action: none;
   min-height: 100vh;
   min-width: 100vw;
   height: fit-content;
