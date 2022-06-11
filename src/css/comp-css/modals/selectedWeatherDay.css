@@ -209,11 +209,11 @@ margin-right: 30px;
 @media(max-width: 767px){
 
     .weatherDescriptionSec1>div:first-of-type img{
-        height: 150px;
+        height: 130px;
     }
 
         .weatherDescriptionContainer.presentDay{
-            padding-top: 20px;;
+            padding-top: 8px;;
         }
 
     .locationInfo{
@@ -242,7 +242,7 @@ margin-right: 30px;
     }
 
     .sunriseAndSetSec{
-    padding-bottom: 20px;
+    padding-bottom: 50px;
     padding-top: 5px;
     }
 

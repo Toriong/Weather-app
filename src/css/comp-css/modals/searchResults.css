@@ -1,5 +1,7 @@
 .searchResultsModal{
-    height: 200px;
+    /* height: 200px; */
+    height: fit-content;
+    min-height: 80px;
     max-height: 600px;
     position: absolute;
     border: var(--borderColor);
@@ -27,7 +29,8 @@
     display: flex;
     width: 97%;
     justify-content: space-between;
-    padding: 0px 8px 0px 8px;;
+    /* padding: 0px 8px 0px 8px;; */
+    padding-left: 4px;
     margin-top: 8px;
     cursor: pointer;
 }
@@ -57,6 +60,13 @@ max-width: 500px;
 @media (max-width: 1199px){
     .searchResult>div:nth-child(2) > span{
         width:  45vw;
+    }
+}
+
+@media (max-width: 767px){
+    .searchResult>div:nth-child(2) > span{
+        font-size: clamp(10px, 2.5vw, 17px);;
+        width: 65vw;
     }
 }
 

@@ -2,10 +2,14 @@
 import React, { useEffect } from 'react';
 import SearchResult from './SearchResult';
 import '../../../css/comp-css/modals/searchResults.css'
-import { useContext } from 'react';
-import { WeatherInfoContext } from '../../../provider/WeatherInfoProvider';
 
 const SearchResults = ({ searchResults, isLoadingResults }) => {
+    useEffect(() => {
+        window.addEventListener('touchstart', () => {
+            console.log("'Unable to preventDefault inside passive event listener due to target being treated as passive' bug has been stopped.")
+        }, { passive: false });
+    }, []);
+
 
     return (
         <div className='searchResultsModal'>
