@@ -4,10 +4,15 @@ import WeatherDayCard from './WeatherDayCard';
 import '../../css/comp-css/weather-section/weatherSection.css'
 import ResetSearch from '../buttons/ResetSearch';
 import useGetViewPortWidth from '../../customHooks/useGetViewPortWidth';
+import { ModalContext } from '../../provider/ModalProvider';
 
+
+// GOAL: if a selected weather day is displayed on a modal, then disp
 
 const WeatherSection = () => {
     const { _isWeatherDataReceived, _isLoadingScreenOn, _weather, _targetLocation } = useContext(WeatherInfoContext);
+    const { _isSelectedWeatherModalOn } = useContext(ModalContext);
+    const [isSelectedWeatherModalOn] = _isSelectedWeatherModalOn
     const [weather,] = _weather;
     const [targetLocation,] = _targetLocation;
     const [isWeatherDataReceived,] = _isWeatherDataReceived;
@@ -18,7 +23,7 @@ const WeatherSection = () => {
     const { widthPixels } = useGetViewPortWidth();
 
     return (
-        <section className={weatherSectionClassName}>
+        <section className={weatherSectionClassName} style={{ touchAction: isSelectedWeatherModalOn ? 'none' : 'auto' }}>
             {isLoadingScreenOn && <span id="loadingWeatherTxt">Loading, please wait...</span>}
             {isWeatherDataReceived &&
                 <>
