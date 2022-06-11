@@ -46,12 +46,16 @@ const SelectedWeatherDay = ({ closeModal }) => {
 
     useEffect(() => {
         const touchMovePrevented = document.body.addEventListener('touchmove', event => { event.preventDefault() })
-        document.body.style.maxWidth = '100%';
-        document.body.style.overflow = 'hidden'
+        document.body.style.position = 'fixed';
+        document.body.style.overflow = 'visible';
+        document.body.style.width = '100%';
+
+
 
         return () => {
+            document.body.style.position = 'static';
+            document.body.style.width = 'auto';
             document.body.style.overflow = 'visible';
-            document.body.style.maxWidth = 'none';
             document.body.removeEventListener('touchmove', touchMovePrevented);
         }
     }, [widthPixels])

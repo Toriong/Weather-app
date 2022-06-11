@@ -154,6 +154,12 @@ const WeatherApp = () => {
   }, []);
 
 
+  useEffect(() => {
+    console.log('position: ', document.body.style.position)
+    console.log('overflow: ', document.body.style.overflow)
+    console.log('width: ', document.body.style.width)
+  })
+
   return (
     <div className="weather-app-main">
       <SearchBar />
