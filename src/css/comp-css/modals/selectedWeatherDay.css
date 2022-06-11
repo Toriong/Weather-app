@@ -18,7 +18,6 @@
     font-size: clamp(15.6px, calc(10px + 2vmin), 31.6px) !important;
 }
 
-
 .weatherDayModal > div > section:first-child{
     display: flex;
     justify-content: center;
@@ -128,6 +127,7 @@
 
 .tableSection{
     padding-top: 10px;
+    min-width: 280px;
 }
 
 .sunriseAndSetSec {
@@ -200,21 +200,34 @@ margin-right: 30px;
     max-height: 500px;
     }
 
-    .averageForTheDay>*:not(:first-child) {
-        margin-left: 16px;
+.averageForTheDay>*:not(:first-child) {
+    margin-left: 16px;
     }
 }
 
 
 @media(max-width: 767px){
+
+    .weatherDescriptionSec1>div:first-of-type img{
+        height: 150px;
+    }
+
+        .weatherDescriptionContainer.presentDay{
+            padding-top: 20px;;
+        }
+
+    .locationInfo{
+        padding-top: 20px;;
+    }
+
     #closeModalBtn {
         position: absolute;
-        top: 35px;
+        top: 56px;
         right: 10px;
     }
 
     .weatherDayModal{
-        padding-top: 30px;
+        padding-top: 35px;
         border-radius: 0%;
             position: fixed;
             width: 100%;
@@ -229,7 +242,8 @@ margin-right: 30px;
     }
 
     .sunriseAndSetSec{
-    padding-bottom: 20px
+    padding-bottom: 20px;
+    padding-top: 5px;
     }
 
 

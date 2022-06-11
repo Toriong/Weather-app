@@ -50,8 +50,6 @@ const SelectedWeatherDay = ({ closeModal }) => {
         document.body.style.overflow = 'visible';
         document.body.style.width = '100%';
 
-
-
         return () => {
             document.body.style.position = 'static';
             document.body.style.width = 'auto';
