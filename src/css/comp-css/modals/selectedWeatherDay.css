@@ -217,12 +217,12 @@ margin-right: 30px;
         }
 
     .locationInfo{
-        padding-top: 20px;;
+        padding-top: 30px;;
     }
 
     #closeModalBtn {
         position: absolute;
-        top: 56px;
+        top: 67px;
         right: 10px;
     }
 
