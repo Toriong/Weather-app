@@ -38,7 +38,6 @@ const WeatherIcon = ({ weatherIcon, isIconSmaller, description, isPresentDay, cu
 
     return <img
         src={iconSrc}
-        alt={"error_"}
         onError={() => {
             setWillHandleError(true);
         }}
