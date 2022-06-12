@@ -11,49 +11,25 @@ import { getIcon } from '../../iconFns/getIcon';
 const WeatherIcon = ({ weatherIcon, isIconSmaller, description, isPresentDay, currentDayTimes, isMidnightSun, isPolarNight }) => {
     const getIconSrc = weatherIcon => `http://openweathermap.org/img/wn/${weatherIcon}@2x.png`;
     const weatherIconUrl = getIconSrc(weatherIcon);
-    const [iconSrc, setIconSrc] = useState(null);
-    const [willHandleError, setWillHandleError] = useState(false)
     const _className = isIconSmaller ? 'weatherIcon small' : 'weatherIcon normal';
 
-    useEffect(() => {
-        if (willHandleError) {
+
+    return <img
+        src={weatherIconUrl}
+        alt={'error_'}
+        onError={event => {
             const iconString = getIcon(description);
             const isDCharAtEndOfString = iconString.slice(-1) === 'd';
             if (isDCharAtEndOfString && !isPresentDay) {
-                alert('ERROR! Not on present day.')
-                const weatherIcon = getIconSrc(iconString)
-                alert(weatherIcon)
-                setIconSrc(weatherIcon)
+                event.target.src = getIconSrc(iconString)
             } else {
-                alert('ERROR! On present day.')
                 const _iconString = getDayOrNightIcon(iconString, currentDayTimes, isMidnightSun, isPolarNight, isPresentDay);
-                const iconSrc = getIconSrc(_iconString)
-                alert(iconSrc)
-                setIconSrc(iconSrc);
+                event.target.src = getIconSrc(_iconString)
             }
-            setWillHandleError(false);
-        }
-    }, [willHandleError])
+        }}
+        className={_className}
+    />
 
-
-    return !iconSrc ?
-        <img
-            src={weatherIconUrl}
-            alt={'error_'}
-            onError={() => {
-                setWillHandleError(true);
-            }}
-            className={_className}
-        />
-        :
-        <img
-            src={iconSrc}
-            alt={'error_'}
-            onError={() => {
-                setWillHandleError(true);
-            }}
-            className={_className}
-        />
 }
 
 export default WeatherIcon
