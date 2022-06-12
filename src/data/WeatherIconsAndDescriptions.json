@@ -1,0 +1,26 @@
+[
+    {
+        "descriptions": ["clear sky"],
+        "src":  "01"
+    },
+    {
+        "descriptions": ["thunderstorm"],
+        "src":  "11d"
+    },
+    {
+        "descriptions": ["drizzle", "rain"],
+        "src":  "09d"
+    },
+    {
+        "descriptions": ["freezing", "snow", "sleet"],
+        "src":  "13d"
+    },
+    {
+        "descriptions": ["mist", "smoke", "haze", "sand", "dust whirls", "fog", "sand", "dust", "volcanic ash", "squalls", "tornado"],
+        "src":  "50d"
+    },
+    {
+        "descriptions": ["clouds"],
+        "src": "02"
+    }
+]

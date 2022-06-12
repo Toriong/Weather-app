@@ -1,4 +1,6 @@
 
+// GOAL: if the time of the day is night, then present the night icon. Do so for vice-versa case.
+
 export const getTimeOfLocation = (timeZone, willGetOnlyDate, willGetOnlyYear) => {
     const options = {
         timeZone: timeZone,
@@ -25,4 +27,3 @@ export const getTimeOfLocation = (timeZone, willGetOnlyDate, willGetOnlyYear) =>
     return formatter.format(new Date())
 }
 
-// BUG: when the target location is on the following day in relation to the current time of the user, the date on first day (the current day) is the previous day 

@@ -7,8 +7,8 @@ import WeatherIcon from '../weatherUI/WeatherIcon';
 import WeatherTempTable from '../weatherUI/WeatherTempTable';
 import useGetViewPortWidth from '../../customHooks/useGetViewPortWidth';
 import { GrClose } from "react-icons/gr";
-import '../../css/comp-css/modals/selectedWeatherDay.css';
 import { useEffect } from 'react';
+import '../../css/comp-css/modals/selectedWeatherDay.css';
 
 
 

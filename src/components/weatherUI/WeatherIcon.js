@@ -3,8 +3,10 @@ import '../../css/comp-css/weather-section/weatherIcon.css'
 
 
 
+
 const WeatherIcon = ({ weatherIcon, isIconSmaller }) => {
-    const weatherIconUrl = `http://openweathermap.org/img/wn/${weatherIcon}@2x.png`;
+    const getIconSrc = weatherIcon => `http://openweathermap.org/img/wn/${weatherIcon}@2x.png`;
+    const weatherIconUrl = getIconSrc(weatherIcon);
     const _className = isIconSmaller ? 'weatherIcon small' : 'weatherIcon normal';
 
     return <img

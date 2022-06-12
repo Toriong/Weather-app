@@ -7,7 +7,7 @@ import useGetViewPortWidth from '../../customHooks/useGetViewPortWidth';
 import { ModalContext } from '../../provider/ModalProvider';
 
 
-// GOAL: if a selected weather day is displayed on a modal, then disp
+
 
 const WeatherSection = () => {
     const { _isWeatherDataReceived, _isLoadingScreenOn, _weather, _targetLocation } = useContext(WeatherInfoContext);
@@ -40,7 +40,6 @@ const WeatherSection = () => {
                     {(widthPixels > 767) && <ResetSearch resetBtnCss={'resetBtn notOnMobile'} />}
                 </>
             }
-
         </section>
     )
 }
