@@ -1,14 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import { useContext } from 'react';
 import { getGeoCode, getGeoLocation } from '../../apiFns/getGeoCode';
-import '../../css/comp-css/search/searchInputSection.css'
 import { SearchContext } from '../../provider/SearchProvider';
-import { WeatherInfoContext } from '../../provider/WeatherInfoProvider';
 import SearchResults from '../modals/searchResults/SearchResults';
 import SearchBtnsContainer from './SearchBtnsContainer';
-
-
-// GOAL: store the 7 day forecast into the state of weatherOfDays
+import '../../css/comp-css/search/searchInputSection.css'
 
 
 const SearchInput = () => {
@@ -19,17 +15,9 @@ const SearchInput = () => {
     const [searchInput, setSearchInput] = _searchInput;
     const [searchResults, setSearchResults] = useState([]);
     const [alertTimer, setAlertTimer] = useState(null);
-
-    // GOAL: have the alert only appear once on the screen. 
-
-
-    // GOAL: start the timer in the handleOnChange function
-
-
     const [willStopTimer, setWillStopTimer] = useState(false);
-    console.log(placeholderTxt)
+
     if (placeholderTxt === 'Search by city name') {
-        var inputType = 'text';
         var handleOnChange = event => {
             setSearchInput(event.target.value);
             if (event.target.value.length >= 3) {
@@ -79,7 +67,7 @@ const SearchInput = () => {
             <div>
                 <input
                     disabled={isUsingLocationOfUser}
-                    type={inputType}
+                    type='text'
                     placeholder={placeholderTxt}
                     onChange={event => { handleOnChange(event) }}
                     value={searchInput}

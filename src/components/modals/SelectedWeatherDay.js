@@ -18,6 +18,7 @@ const SelectedWeatherDay = ({ closeModal }) => {
     const [targetLocation,] = _targetLocation
     const [selectedWeatherDay] = _selectedWeatherDay;
     const { date, weather, feels_like, temp, averageForTheDay, humidity: humidityNum, dew_point, wind_speed, sunrise, sunset, isPresentDay, rain: rainMain, snow: snowMain } = selectedWeatherDay;
+
     const { weather: moreInfoWeather, temp: moreInfoTemp, humidity: humidityMoreInfoNum, wind_speed: windSpeedAverage, rain, snow, dewPoint, feels_like: feelsLikeAverage, temp: tempAverages, sunrise: sunriseProjected, sunset: sunsetProjected } = averageForTheDay ?? {};
     const { name: LocationName, timeZoneOffset } = targetLocation ?? {};
     const { max, min } = moreInfoTemp ?? {}

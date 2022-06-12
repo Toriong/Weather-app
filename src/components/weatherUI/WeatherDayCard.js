@@ -4,6 +4,7 @@ import { ModalContext } from '../../provider/ModalProvider';
 import { getTime } from '../../timeFns/getTime'
 import WeatherIcon from './WeatherIcon';
 import '../../css/comp-css/weather-section/weatherDayCard.css'
+import { useEffect } from 'react';
 
 const WeatherDayCard = ({ day, isPresentDay, index }) => {
     const { _selectedWeatherDay, _units, _targetLocation } = useContext(WeatherInfoContext);
@@ -13,6 +14,12 @@ const WeatherDayCard = ({ day, isPresentDay, index }) => {
     const [, setSelectedWeatherDay] = _selectedWeatherDay;
     const { temp: tempUnits } = _units[0];
     const { weather, feels_like, averageForTheDay, temp, dt } = day ?? {};
+
+    useEffect(() => {
+        console.log('day: ', day)
+    })
+
+
     const date = getTime(dt, targetLocation.timeZoneOffset, 'dddd, MMM Do YYYY')
     const { min, max } = averageForTheDay?.temp ?? temp;
     const { icon: weatherIcon, description } = weather[0] ?? {};

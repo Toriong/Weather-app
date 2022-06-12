@@ -35,11 +35,10 @@ const SearchBtn = ({ isOnSmallerScreen }) => {
     const [willClearTimerGetWeather, setWillClearTimerGetWeather] = useState(false);
     const [willClearTimerGetCityName, setWillClearTimerGetCityName] = useState(false);
     const isOnUserLocationSearch = placeHolderTxt === "Using your location. Press the 'search' icon to get results";
-    const isButtonDisabled = ((isOnUserLocationSearch && !navigator?.geolocation) || isGettingUserLocation || ((searchInput.length <= 2) && !isOnUserLocationSearch) || (isOnUserLocationSearch && !doesGoeLocationWork)) ? true : false;
+    const isButtonDisabled = ((isOnUserLocationSearch && !navigator?.geolocation) || isGettingUserLocation || ((searchInput?.length <= 2) && !isOnUserLocationSearch) || (isOnUserLocationSearch && !doesGoeLocationWork)) ? true : false;
     const isOnImperial = units.temp === '°F';
 
     const _getWeather = (location, isUnableToRetrieveLocal) => {
-        console.log('location: ', location)
         !alertTimerGetWeather && setAlertTimerGetWeather(setTimeout(() => {
             alert('Sorry, but it looks like it is taking longer than usually to get the weather data that you requested. Refresh the page and try again.')
             setAlertTimerGetWeather(null);

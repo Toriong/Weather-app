@@ -112,8 +112,10 @@ const WeatherApp = () => {
     const isStateAndCityNotSame = state && (state !== city)
     if (isStateAndCityNotSame) {
       var location = `${city}, ${state}, ${countryCode}`;
-    } else {
+    } else if (city && countryCode) {
       location = `${city}, ${countryCode}`
+    } else {
+      location = `${city}`
     }
     const timerGetWeather = setTimeout(() => {
       alert('An error has occurred in getting weather data. Refresh the page and try again.')
@@ -154,11 +156,6 @@ const WeatherApp = () => {
   }, []);
 
 
-  useEffect(() => {
-    console.log('position: ', document.body.style.position)
-    console.log('overflow: ', document.body.style.overflow)
-    console.log('width: ', document.body.style.width)
-  })
 
   return (
     <div className="weather-app-main">

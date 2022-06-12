@@ -32,6 +32,8 @@ export const displayWeatherFromApi = (vals, fns) => {
                 _location = `${state}, ${country}`;
             } else if (name && country) {
                 _location = `${name}, ${country}`;
+            } else {
+                _location = name;
             }
 
             const { daily, timezone, current, timezone_offset } = weather;

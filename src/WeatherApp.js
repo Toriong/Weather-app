@@ -15,6 +15,7 @@ const WeatherApp = () => {
                         <Routes>
                             <Route exact path='/:city/:country' element={<WeatherAppMainPage />} />
                             <Route exact path='/:city/:state/:country' element={<WeatherAppMainPage />} />
+                            <Route exact path='/:city' element={<WeatherAppMainPage />} />
                             <Route path='/' element={<WeatherAppMainPage />} />
                             {/* for invalid urls */}
                             <Route path='*' element={<WeatherAppMainPage />} />

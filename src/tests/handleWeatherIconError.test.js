@@ -1,15 +1,5 @@
-const WeatherIconsAndDescriptions = require('../data/WeatherIconsAndDescriptions.json')
 
-
-const getIcon = description => {
-    const targetIcon = WeatherIconsAndDescriptions.find(({ descriptions }) => {
-        const isIconPresent = !!descriptions.find(_description => description.toLowerCase().includes(_description.toLowerCase()))
-        console.log('isIconPresent: ', isIconPresent)
-        return isIconPresent;
-    });
-
-    return targetIcon?.src;
-}
+const { getIcon } = require('../iconFns/getIcon');
 
 test('Get icon', () => {
     const test1 = getIcon('Overcast clouds');
