@@ -5,6 +5,9 @@ import '../../css/comp-css/weather-section/weatherSection.css'
 import ResetSearch from '../buttons/ResetSearch';
 import useGetViewPortWidth from '../../customHooks/useGetViewPortWidth';
 import { ModalContext } from '../../provider/ModalProvider';
+import { useEffect } from 'react';
+import { getTime } from '../../timeFns/getTime';
+import moment from 'moment';
 
 
 
@@ -21,6 +24,10 @@ const WeatherSection = () => {
     const { name: targetLocationName, time: targetLocationTime } = targetLocation ?? {};
     const weatherSectionClassName = isLoadingScreenOn ? 'weatherSection loading' : 'weatherSection';
     const { widthPixels } = useGetViewPortWidth();
+
+    useEffect(() => {
+        console.log('date in milliSeconds: ', moment(targetLocationTime).format('x'))
+    })
 
     return (
         <section className={weatherSectionClassName} style={{ touchAction: isSelectedWeatherModalOn ? 'none' : 'auto' }}>

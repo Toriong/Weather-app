@@ -1,21 +1,44 @@
 
+const { getIcon } = require('../iconFns/getIcon');
 const { getTime } = require('../timeFns/getTime');
 // GOAL: this function will get the day icon or night icon depending on the time of the of the location
 
-// use this function only for current day 
-const getDayOrNightIcon = (iconString, time, getTimeVals) => {
-    const { millis, timeZoneOffset } = getTimeVals;
-    const { sunrise, sunset, currentTime } = time;
-    const _currentTime = getTime(millis, timeZoneOffset, 'x');
-    const isNight = (_currentTime > sunset) && (_currentTime < sunrise);
+// if it is a polar night then use the day icon
+// if midnight sun, then use the sun icon
 
-    return isNight ? `${iconString}n` : `${iconString}d`
+
+// convert the target location time to milliSeconds when the user presses on a weather day card 
+
+// use this function for the following:
+// if it is the current day, then determine if the current time at the location is day or night
+// if it is polar night, then return icon for the night
+// if it is midnight sun, then return icon for the day
+
+const getDayOrNightIcon = (iconString, time, valsForGetTimeFn) => {
+    const { millis: currentTimeInMillis, timeZoneOffset } = valsForGetTimeFn;
+    const { sunrise, sunset } = time;
+    const _currentTime = getTime(currentTimeInMillis, timeZoneOffset, 'x');
+    const isNight = (_currentTime > sunset) || (_currentTime < sunrise);
+
+
+    return isNight ? `${iconString}n` : `${iconString}d`;
 }
 
 
-test('Get icon', () => {
-    const timeTest1 = {}
-    const test1 = getDayOrNightIcon('Overcast clouds');
+test.skip('Get icon day or night string.', () => {
+    const iconStringTest1 = getIcon('Clear sky');
+    // const isDCharAtEndOfString = iconStringTest1.slice(-1) === 'd';
+    const time = { sunrise: 1654999425, sunset: 1655048538 };
+    const valsForGetTimeFn = { millis: 1655083260000, timeZoneOffset: 10800 };
+    const test1 = getDayOrNightIcon(iconStringTest1, time, valsForGetTimeFn);
+    expect(test1).toBe('01n');
+
+    const iconStringTest2 = getIcon('Clear sky');
+    // const isDCharAtEndOfString = iconStringTest2.slice(-1) === 'd';
+    const timeTest2 = { sunrise: 1655033326, sunset: 1655083987 };
+    const valsForGetTimeFnTest2 = { millis: 1655054940000, timeZoneOffset: -18000 };
+    const test2 = getDayOrNightIcon(iconStringTest2, timeTest2, valsForGetTimeFnTest2);
+    expect(test2).toBe('01n');
 
 
 })

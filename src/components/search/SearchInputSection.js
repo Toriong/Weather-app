@@ -50,8 +50,13 @@ const SearchInput = () => {
         var isUsingLocationOfUser = true;
     }
 
-    useEffect(() => () => {
-        alertTimer && clearTimeout(alertTimer)
+    useEffect(() => {
+        return () => {
+            if (alertTimer) {
+                clearTimeout(alertTimer);
+                setAlertTimer(null);
+            }
+        }
     }, []);
 
     useEffect(() => {

@@ -1,9 +1,10 @@
 // comment out when testing
-import WeatherIconsAndDescriptions from '../data/WeatherIconsAndDescriptions.json';
+// import WeatherIconsAndDescriptions from '../data/WeatherIconsAndDescriptions.json';
 // used for testing
-// const WeatherIconsAndDescriptions = require('../data/WeatherIconsAndDescriptions.json');
+const WeatherIconsAndDescriptions = require('../data/WeatherIconsAndDescriptions.json');
 
-export const getIcon = description => {
+// export
+const getIcon = description => {
     const targetIcon = WeatherIconsAndDescriptions.find(({ descriptions }) => {
         const isIconPresent = !!descriptions.find(_description => description.toLowerCase().includes(_description.toLowerCase()))
         console.log('isIconPresent: ', isIconPresent)
@@ -13,10 +14,7 @@ export const getIcon = description => {
     return targetIcon?.src;
 }
 
-module.exports = {
-    getIcon
-}
 
 // used for testing
-// module.exports = { getIcon };
+module.exports = { getIcon };
 

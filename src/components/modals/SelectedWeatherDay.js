@@ -8,6 +8,7 @@ import WeatherTempTable from '../weatherUI/WeatherTempTable';
 import useGetViewPortWidth from '../../customHooks/useGetViewPortWidth';
 import { GrClose } from "react-icons/gr";
 import { useEffect } from 'react';
+import { MdOutlineNightlight, MdWbSunny } from "react-icons/md";
 import '../../css/comp-css/modals/selectedWeatherDay.css';
 
 
@@ -19,7 +20,12 @@ const SelectedWeatherDay = ({ closeModal }) => {
     const [selectedWeatherDay] = _selectedWeatherDay;
     const { date, weather, feels_like, temp, averageForTheDay, humidity: humidityNum, dew_point, wind_speed, sunrise, sunset, isPresentDay, rain: rainMain, snow: snowMain } = selectedWeatherDay;
     const { weather: moreInfoWeather, temp: moreInfoTemp, humidity: humidityMoreInfoNum, wind_speed: windSpeedAverage, rain, snow, dewPoint, feels_like: feelsLikeAverage, temp: tempAverages, sunrise: sunriseProjected, sunset: sunsetProjected } = averageForTheDay ?? {};
-    const { name: LocationName, timeZoneOffset } = targetLocation ?? {};
+    const { name: locationName, timeZoneOffset, timeInMillis } = targetLocation ?? {};
+    useEffect(() => {
+        console.log('timeZoneOffset: ', timeZoneOffset)
+        console.log('timeInMillis: ', timeInMillis)
+    })
+
     const { max, min } = moreInfoTemp ?? {}
     const { description: moreInfoDescription, icon: moreInfoIcon } = moreInfoWeather?.[0] ?? {};
     const { icon: weatherIcon, description } = weather?.[0] ?? {};
@@ -47,6 +53,10 @@ const SelectedWeatherDay = ({ closeModal }) => {
     }
 
     useEffect(() => {
+        console.log('selectedWeatherDay: ', selectedWeatherDay)
+    })
+
+    useEffect(() => {
         const touchMovePrevented = document.body.addEventListener('touchmove', event => { event.preventDefault() })
         document.body.style.position = 'fixed';
         document.body.style.overflow = 'visible';
@@ -72,7 +82,7 @@ const SelectedWeatherDay = ({ closeModal }) => {
             <div>
                 <section className='locationInfo'>
                     <span>{date}</span>
-                    <span>{LocationName}</span>
+                    <span>{locationName}</span>
                 </section>
                 <section className='weatherDescriptionSec1'>
                     <div>
@@ -139,9 +149,24 @@ const SelectedWeatherDay = ({ closeModal }) => {
                             </div>
                         </>
                     }
-                    {!isPolarNight &&
+                    {isPolarNight &&
                         <div className='polarNightOrMidnightSunContainer'>
-
+                            <div>
+                                <MdOutlineNightlight />
+                            </div>
+                            <div>
+                                <span className='infoTxt'>Polar night</span>
+                            </div>
+                        </div>
+                    }
+                    {isMidnightSun &&
+                        <div className='polarNightOrMidnightSunContainer sun'>
+                            <div>
+                                <MdWbSunny />
+                            </div>
+                            <div>
+                                <span className='infoTxt'>Midnight sun</span>
+                            </div>
                         </div>
                     }
                 </section>

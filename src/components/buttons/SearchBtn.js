@@ -8,6 +8,7 @@ import { updateUrl } from '../../historyFns/updateUrl';
 import { useState } from 'react';
 import { convertToCountryName, getReverseGeoCode } from '../../apiFns/getGeoCode';
 import { ModalContext } from '../../provider/ModalProvider';
+import moment from 'moment';
 
 
 
@@ -85,11 +86,15 @@ const SearchBtn = ({ isOnSmallerScreen }) => {
                 daily.pop();
                 setWeather({ daily, current: { ...current, averageForTheDay: { temp, feels_like, weather: weatherMoreInfo, humidity, sunrise, sunset, wind_speed, rain, snow, dewPoint: dew_point } }, timezone })
                 setCurrentDate(getTimeOfLocation(timezone, true))
+                const _time = getTimeOfLocation(timezone);
+                const timeInMillis = moment(_time).format('x')
+
                 setTargetLocation(targetLocation => {
                     return {
                         ...targetLocation,
                         name: isUnableToRetrieveLocal ? "Couldn't get the name of your location" : (_location ?? searchInput),
-                        time: getTimeOfLocation(timezone),
+                        time: _time,
+                        timeInMillis,
                         timeZoneOffset: timezone_offset
                     }
                 });

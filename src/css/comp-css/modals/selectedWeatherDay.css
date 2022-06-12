@@ -33,15 +33,6 @@
     max-width: 450px;
 }
 
-@media(min-width: 768px) {
-    .weatherDayModal>div>section>span:last-child {
-        max-width: 100%;
-        display: block;
-        text-align: center;
-        padding: 0px 16px 0px 16px;
-    }
-}
-
 .weatherDescriptionSec1{
     display: flex;
     justify-content: space-between;
@@ -172,6 +163,45 @@ margin-right: 30px;
     position: absolute;
     top: 6px;
     right: 7px;
+}
+
+.polarNightOrMidnightSunContainer{
+    display: flex;
+    justify-content: space-between;
+    place-items: center;
+    width: 118px;;
+    margin-top: 4px;
+}
+
+.polarNightOrMidnightSunContainer.sun svg{
+    color: orange;
+}
+
+.polarNightOrMidnightSunContainer span{
+    white-space: nowrap;
+}
+
+.polarNightOrMidnightSunContainer.sun>div:first-child{
+margin-right: 5px;
+}
+
+.polarNightOrMidnightSunContainer.sun > div:last-child{
+margin-left: 5px;
+}
+
+.polarNightOrMidnightSunContainer > div{
+    display: flex;
+    justify-content: center;
+    place-items: center;
+}
+
+@media(min-width: 768px) {
+    .weatherDayModal>div>section>span:last-child {
+        max-width: 100%;
+        display: block;
+        text-align: center;
+        padding: 0px 16px 0px 16px;
+    }
 }
 
 @media (min-width: 1024px) and (max-width: 1199px){

@@ -20,7 +20,15 @@
         "src":  "50d"
     },
     {
-        "descriptions": ["clouds"],
+        "descriptions": ["few clouds"],
         "src": "02"
+    },
+    {
+        "descriptions": ["overcast clouds", "broken clouds"],
+        "src": "04d"
+    },
+    {
+        "descriptions": ["scattered clouds"],
+        "src": "03d"
     }
 ]
