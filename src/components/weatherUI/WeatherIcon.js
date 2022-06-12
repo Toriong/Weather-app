@@ -21,11 +21,15 @@ const WeatherIcon = ({ weatherIcon, isIconSmaller, description, isPresentDay, cu
             const isDCharAtEndOfString = iconString.slice(-1) === 'd';
             if (isDCharAtEndOfString && !isPresentDay) {
                 alert('ERROR! Not on present day.')
-                setIconSrc(getIconSrc(iconString))
+                const weatherIcon = getIconSrc(iconString)
+                alert(weatherIcon)
+                setIconSrc(weatherIcon)
             } else {
                 alert('ERROR! On present day.')
                 const _iconString = getDayOrNightIcon(iconString, currentDayTimes, isMidnightSun, isPolarNight, isPresentDay);
-                setIconSrc(getIconSrc(_iconString))
+                const iconSrc = getIconSrc(_iconString)
+                alert(iconSrc)
+                setIconSrc(iconSrc);
             }
             setWillHandleError(false);
         }
