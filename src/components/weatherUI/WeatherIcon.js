@@ -11,7 +11,7 @@ const WeatherIcon = ({ weatherIcon, isIconSmaller }) => {
 
     return <img
         src={weatherIconUrl}
-        alt={"weather_icon"}
+        alt={"error_"}
         className={_className}
     />
 }
