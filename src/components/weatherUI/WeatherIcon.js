@@ -1,6 +1,4 @@
 import React from 'react'
-import { useEffect } from 'react';
-import { useState } from 'react';
 import '../../css/comp-css/weather-section/weatherIcon.css'
 import { getDayOrNightIcon } from '../../iconFns/getDayOrNightIcon';
 import { getIcon } from '../../iconFns/getIcon';
