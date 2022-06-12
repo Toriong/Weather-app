@@ -11,7 +11,7 @@ import { getIcon } from '../../iconFns/getIcon';
 const WeatherIcon = ({ weatherIcon, isIconSmaller, description, isPresentDay, currentDayTimes, isMidnightSun, isPolarNight }) => {
     const getIconSrc = weatherIcon => `http://openweathermap.org/img/wn/${weatherIcon}@2x.png`;
     const weatherIconUrl = getIconSrc(weatherIcon);
-    const [iconSrc, setIconSrc] = useState(weatherIconUrl);
+    const [iconSrc, setIconSrc] = useState(null);
     const [willHandleError, setWillHandleError] = useState(false)
     const _className = isIconSmaller ? 'weatherIcon small' : 'weatherIcon normal';
 
@@ -36,13 +36,24 @@ const WeatherIcon = ({ weatherIcon, isIconSmaller, description, isPresentDay, cu
     }, [willHandleError])
 
 
-    return <img
-        src={iconSrc}
-        onError={() => {
-            setWillHandleError(true);
-        }}
-        className={_className}
-    />
+    return !iconSrc ?
+        <img
+            src={weatherIconUrl}
+            alt={'error_'}
+            onError={() => {
+                setWillHandleError(true);
+            }}
+            className={_className}
+        />
+        :
+        <img
+            src={iconSrc}
+            alt={'error_'}
+            onError={() => {
+                setWillHandleError(true);
+            }}
+            className={_className}
+        />
 }
 
 export default WeatherIcon
