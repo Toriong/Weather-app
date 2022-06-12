@@ -38,6 +38,7 @@ export const displayWeatherFromApi = (vals, fns) => {
 
             const { daily, timezone, current, timezone_offset } = weather;
             const { temp, feels_like, weather: weatherMoreInfo, humidity, sunrise, sunset, wind_speed, rain, snow, dew_point } = daily[0];
+            const timeHHMM = getTimeOfLocation(timezone, false, false, true);
             daily.shift();
             daily.pop();
             setWeather({ daily, current: { ...current, averageForTheDay: { temp, feels_like, weather: weatherMoreInfo, humidity, sunrise, sunset, wind_speed, rain, snow, dewPoint: dew_point } }, timezone })
@@ -47,6 +48,7 @@ export const displayWeatherFromApi = (vals, fns) => {
                     ...targetLocation,
                     name: _location ?? searchInput,
                     time: getTimeOfLocation(timezone),
+                    timeHHMM,
                     timeZoneOffset: timezone_offset
                 }
             });

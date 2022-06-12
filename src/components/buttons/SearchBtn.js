@@ -86,15 +86,15 @@ const SearchBtn = ({ isOnSmallerScreen }) => {
                 daily.pop();
                 setWeather({ daily, current: { ...current, averageForTheDay: { temp, feels_like, weather: weatherMoreInfo, humidity, sunrise, sunset, wind_speed, rain, snow, dewPoint: dew_point } }, timezone })
                 setCurrentDate(getTimeOfLocation(timezone, true))
-                const _time = getTimeOfLocation(timezone);
-                const timeInMillis = moment(_time).format('x')
+                const dateAndTime = getTimeOfLocation(timezone);
+                const timeHHMM = getTimeOfLocation(timezone, false, false, true);
 
                 setTargetLocation(targetLocation => {
                     return {
                         ...targetLocation,
                         name: isUnableToRetrieveLocal ? "Couldn't get the name of your location" : (_location ?? searchInput),
-                        time: _time,
-                        timeInMillis,
+                        time: dateAndTime,
+                        timeHHMM,
                         timeZoneOffset: timezone_offset
                     }
                 });

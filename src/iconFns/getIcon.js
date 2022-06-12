@@ -6,8 +6,7 @@ const WeatherIconsAndDescriptions = require('../data/WeatherIconsAndDescriptions
 // export
 const getIcon = description => {
     const targetIcon = WeatherIconsAndDescriptions.find(({ descriptions }) => {
-        const isIconPresent = !!descriptions.find(_description => description.toLowerCase().includes(_description.toLowerCase()))
-        console.log('isIconPresent: ', isIconPresent)
+        const isIconPresent = !!descriptions.find(_description => description.toLowerCase() === _description.toLowerCase())
         return isIconPresent;
     });
 

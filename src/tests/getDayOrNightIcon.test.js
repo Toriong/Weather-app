@@ -1,59 +1,71 @@
 
 const { getIcon } = require('../iconFns/getIcon');
-const { getTime } = require('../timeFns/getTime');
-// GOAL: this function will get the day icon or night icon depending on the time of the of the location
-
-// if it is a polar night then use the day icon
-// if midnight sun, then use the sun icon
+const { getTotalMilliSecsOfDay } = require('../timeFns/getMilliSecondsOfDay');
 
 
-// convert the target location time to milliSeconds when the user presses on a weather day card 
+const getDayOrNightIcon = (iconString, time, isMidnightSun, isPolarNight) => {
+    if (!isMidnightSun && !isPolarNight) {
+        const { sunrise, sunset, currentTime } = time;
+        const sunriseMilliSeconds = getTotalMilliSecsOfDay(sunrise);
+        const sunsetMilliSeconds = getTotalMilliSecsOfDay(sunset);
+        const currentTimeMilliSeconds = getTotalMilliSecsOfDay(currentTime);
 
-// use this function for the following:
-// if it is the current day, then determine if the current time at the location is day or night
-// if it is polar night, then return icon for the night
-// if it is midnight sun, then return icon for the day
+        const isNight = currentTimeMilliSeconds > sunsetMilliSeconds;
+        const isSunNotRisen = currentTimeMilliSeconds < sunriseMilliSeconds;
 
-const getDayOrNightIcon = (iconString, time, valsForGetTimeFn) => {
-    const { millis: currentTimeInMillis, timeZoneOffset } = valsForGetTimeFn;
-    const { sunrise, sunset } = time;
-    const _currentTime = getTime(currentTimeInMillis, timeZoneOffset, 'x');
-    const isNight = (_currentTime > sunset) || (_currentTime < sunrise);
+        if (isNight || isSunNotRisen) {
+            return `${iconString}n`
+        }
+    }
+
+    if (isPolarNight) {
+        var iconStringNight = `${iconString}n`
+    }
 
 
-    return isNight ? `${iconString}n` : `${iconString}d`;
+    return iconStringNight ?? `${iconString}d`
 }
 
 
-test.skip('Get icon day or night string.', () => {
+test('Get icon day or night string,  test1', () => {
     const iconStringTest1 = getIcon('Clear sky');
-    // const isDCharAtEndOfString = iconStringTest1.slice(-1) === 'd';
-    const time = { sunrise: 1654999425, sunset: 1655048538 };
-    const valsForGetTimeFn = { millis: 1655083260000, timeZoneOffset: 10800 };
-    const test1 = getDayOrNightIcon(iconStringTest1, time, valsForGetTimeFn);
+    const timeTest1 = { sunrise: '5:26 AM', sunset: '6:25 PM', currentTime: '3:17 AM' };
+    const test1 = getDayOrNightIcon(iconStringTest1, timeTest1)
     expect(test1).toBe('01n');
 
     const iconStringTest2 = getIcon('Clear sky');
-    // const isDCharAtEndOfString = iconStringTest2.slice(-1) === 'd';
-    const timeTest2 = { sunrise: 1655033326, sunset: 1655083987 };
-    const valsForGetTimeFnTest2 = { millis: 1655054940000, timeZoneOffset: -18000 };
-    const test2 = getDayOrNightIcon(iconStringTest2, timeTest2, valsForGetTimeFnTest2);
-    expect(test2).toBe('01n');
+    const timeTest2 = { sunrise: '6:28 AM', sunset: '8:33 PM', currentTime: '2:33 PM' };
+    const test2 = getDayOrNightIcon(iconStringTest2, timeTest2)
+    expect(test2).toBe('01d');
 
+    const iconStringTest3 = getIcon('Clear sky');
+    const timeTest3 = { sunrise: '5:03 AM', sunset: '6:42 PM', currentTime: '10:42 PM' };
+    const test3 = getDayOrNightIcon(iconStringTest3, timeTest3)
+    expect(test3).toBe('01n');
 
+    const iconStringTest4 = getIcon('Few clouds');
+    const timeTest4 = { sunrise: '5:26 AM', sunset: '6:25 PM', currentTime: '3:17 AM' };
+    const test4 = getDayOrNightIcon(iconStringTest4, timeTest4)
+    expect(test4).toBe('02n');
+
+    const iconStringTest5 = getIcon('Few clouds');
+    const timeTest5 = { sunrise: '6:28 AM', sunset: '8:33 PM', currentTime: '2:33 PM' };
+    const test5 = getDayOrNightIcon(iconStringTest5, timeTest5)
+    expect(test5).toBe('02d');
+
+    const iconStringTest6 = getIcon('Few clouds');
+    const timeTest6 = { sunrise: '5:03 AM', sunset: '6:42 PM', currentTime: '10:42 PM' };
+    const test6 = getDayOrNightIcon(iconStringTest6, timeTest6)
+    expect(test6).toBe('02n');
+
+    const iconStringTest7 = getIcon('Clear sky');
+    const test7 = getDayOrNightIcon(iconStringTest7, null, false, true)
+    expect(test7).toBe('01n');
+
+    const iconStringTest8 = getIcon('Few clouds');
+    const test8 = getDayOrNightIcon(iconStringTest8, null, true, false)
+    expect(test8).toBe('02d');
 })
 
-// BRAIN DUMP NOTES:
-// get the sunrise time and the sunset time of the current day
-// get the current time of the location that was selected by the current user
-
-// CASE 1: it passed the sunset time,  
-// GOAL: get the night icon 
-// 'n' is added to the icon string
-// the current time for the target location is passed the sunset time
-// if the current time is passed the sunset time, then add an n to the icon 
-// the sun rise time and the sunset time is received for the getDayOrNightIcon fn 
-// the current time received (under the field name of dt) for the getDayOrNightIcon fn 
-// the icon string is passed to the function
 
 

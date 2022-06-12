@@ -10,6 +10,8 @@ import { GrClose } from "react-icons/gr";
 import { useEffect } from 'react';
 import { MdOutlineNightlight, MdWbSunny } from "react-icons/md";
 import '../../css/comp-css/modals/selectedWeatherDay.css';
+import { getTimeOfLocation } from '../../timeFns/getTimeOfLocation';
+import moment from 'moment';
 
 
 
@@ -20,11 +22,15 @@ const SelectedWeatherDay = ({ closeModal }) => {
     const [selectedWeatherDay] = _selectedWeatherDay;
     const { date, weather, feels_like, temp, averageForTheDay, humidity: humidityNum, dew_point, wind_speed, sunrise, sunset, isPresentDay, rain: rainMain, snow: snowMain } = selectedWeatherDay;
     const { weather: moreInfoWeather, temp: moreInfoTemp, humidity: humidityMoreInfoNum, wind_speed: windSpeedAverage, rain, snow, dewPoint, feels_like: feelsLikeAverage, temp: tempAverages, sunrise: sunriseProjected, sunset: sunsetProjected } = averageForTheDay ?? {};
-    const { name: locationName, timeZoneOffset, timeInMillis } = targetLocation ?? {};
+    const { name: locationName, timeZoneOffset, timeHHMM } = targetLocation ?? {};
+
     useEffect(() => {
-        console.log('timeZoneOffset: ', timeZoneOffset)
-        console.log('timeInMillis: ', timeInMillis)
+        console.log('_sunrise: ', _sunrise)
+        console.log('_sunset: ', _sunset)
+        console.log('timeHHMM: ', timeHHMM)
     })
+
+
 
     const { max, min } = moreInfoTemp ?? {}
     const { description: moreInfoDescription, icon: moreInfoIcon } = moreInfoWeather?.[0] ?? {};
