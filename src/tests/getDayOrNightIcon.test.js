@@ -1,6 +1,24 @@
 
+const { getTime } = require('../timeFns/getTime');
 // GOAL: this function will get the day icon or night icon depending on the time of the of the location
 
+// use this function only for current day 
+const getDayOrNightIcon = (iconString, time, getTimeVals) => {
+    const { millis, timeZoneOffset } = getTimeVals;
+    const { sunrise, sunset, currentTime } = time;
+    const _currentTime = getTime(millis, timeZoneOffset, 'x');
+    const isNight = (_currentTime > sunset) && (_currentTime < sunrise);
+
+    return isNight ? `${iconString}n` : `${iconString}d`
+}
+
+
+test('Get icon', () => {
+    const timeTest1 = {}
+    const test1 = getDayOrNightIcon('Overcast clouds');
+
+
+})
 
 // BRAIN DUMP NOTES:
 // get the sunrise time and the sunset time of the current day
@@ -14,3 +32,5 @@
 // the sun rise time and the sunset time is received for the getDayOrNightIcon fn 
 // the current time received (under the field name of dt) for the getDayOrNightIcon fn 
 // the icon string is passed to the function
+
+

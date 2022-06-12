@@ -18,7 +18,6 @@ const SelectedWeatherDay = ({ closeModal }) => {
     const [targetLocation,] = _targetLocation
     const [selectedWeatherDay] = _selectedWeatherDay;
     const { date, weather, feels_like, temp, averageForTheDay, humidity: humidityNum, dew_point, wind_speed, sunrise, sunset, isPresentDay, rain: rainMain, snow: snowMain } = selectedWeatherDay;
-
     const { weather: moreInfoWeather, temp: moreInfoTemp, humidity: humidityMoreInfoNum, wind_speed: windSpeedAverage, rain, snow, dewPoint, feels_like: feelsLikeAverage, temp: tempAverages, sunrise: sunriseProjected, sunset: sunsetProjected } = averageForTheDay ?? {};
     const { name: LocationName, timeZoneOffset } = targetLocation ?? {};
     const { max, min } = moreInfoTemp ?? {}
@@ -39,6 +38,8 @@ const SelectedWeatherDay = ({ closeModal }) => {
     const tableData = { temp: isPresentDay ? tempAverages : _tempAverages, feelsLike: isPresentDay ? feelsLikeAverage : feels_like };
     const _sunrise = getTime(sunrise ?? sunriseProjected, timeZoneOffset, 'LT');
     const _sunset = getTime(sunset ?? sunsetProjected, timeZoneOffset, 'LT');
+    const isPolarNight = (_sunrise === '12:00 PM') && (_sunset === '12:00 PM');
+    const isMidnightSun = (_sunrise === '4:00 PM') && (_sunset === '4:00 PM');
 
 
     if (moreInfoDescription) {
@@ -112,28 +113,37 @@ const SelectedWeatherDay = ({ closeModal }) => {
                     <WeatherTempTable data={tableData} isPresentDay={isPresentDay} />
                 </section>
                 <section className='sunriseAndSetSec'>
-                    <div className='sunriseAndSetInfoContainer'>
-                        <span className='infoTxt'>Sunrise</span>
-                        <div className='sunriseAndSetTimeContainer'>
-                            <div>
-                                <BsSunrise id='sunriseIcon' />
+                    {(!isPolarNight && !isMidnightSun) &&
+                        <>
+                            <div className='sunriseAndSetInfoContainer'>
+                                <span className='infoTxt'>Sunrise</span>
+                                <div className='sunriseAndSetTimeContainer'>
+                                    <div>
+                                        <BsSunrise id='sunriseIcon' />
+                                    </div>
+                                    <div>
+                                        <span className='infoTxt'>{_sunrise}</span>
+                                    </div>
+                                </div>
                             </div>
-                            <div>
-                                <span className='infoTxt'>{_sunrise}</span>
+                            <div className='sunriseAndSetInfoContainer'>
+                                <span className='infoTxt'>Sunset</span>
+                                <div className='sunriseAndSetTimeContainer'>
+                                    <div>
+                                        <BsSunset id='sunsetIcon' />
+                                    </div>
+                                    <div>
+                                        <span className='infoTxt'>{_sunset}</span>
+                                    </div>
+                                </div>
                             </div>
+                        </>
+                    }
+                    {!isPolarNight &&
+                        <div className='polarNightOrMidnightSunContainer'>
+
                         </div>
-                    </div>
-                    <div className='sunriseAndSetInfoContainer'>
-                        <span className='infoTxt'>Sunset</span>
-                        <div className='sunriseAndSetTimeContainer'>
-                            <div>
-                                <BsSunset id='sunsetIcon' />
-                            </div>
-                            <div>
-                                <span className='infoTxt'>{_sunset}</span>
-                            </div>
-                        </div>
-                    </div>
+                    }
                 </section>
             </div>
         </div>
