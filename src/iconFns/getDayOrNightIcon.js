@@ -5,8 +5,8 @@ import getTotalMilliSecsOfDay from '../timeFns/getMilliSecondsOfDay'
 
 
 
-export const getDayOrNightIcon = (iconString, time, isMidnightSun, isPolarNight) => {
-    if (!isMidnightSun && !isPolarNight) {
+export const getDayOrNightIcon = (iconString, time, isMidnightSun, isPolarNight, isPresentDay) => {
+    if (!isMidnightSun && !isPolarNight && isPresentDay) {
         const { sunrise, sunset, currentTime } = time;
         const sunriseMilliSeconds = getTotalMilliSecsOfDay(sunrise);
         const sunsetMilliSeconds = getTotalMilliSecsOfDay(sunset);
@@ -20,12 +20,11 @@ export const getDayOrNightIcon = (iconString, time, isMidnightSun, isPolarNight)
         }
     }
 
-    if (isPolarNight) {
-        var iconStringNight = `${iconString}n`
+    if (isPolarNight && isPresentDay) {
+        var _iconString = `${iconString}n`
     }
 
-
-    return iconStringNight ?? `${iconString}d`
+    return _iconString ?? `${iconString}d`
 }
 
 

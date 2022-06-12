@@ -10,8 +10,6 @@ import { GrClose } from "react-icons/gr";
 import { useEffect } from 'react';
 import { MdOutlineNightlight, MdWbSunny } from "react-icons/md";
 import '../../css/comp-css/modals/selectedWeatherDay.css';
-import { getTimeOfLocation } from '../../timeFns/getTimeOfLocation';
-import moment from 'moment';
 
 
 
@@ -20,26 +18,16 @@ const SelectedWeatherDay = ({ closeModal }) => {
     const [units] = _units
     const [targetLocation,] = _targetLocation
     const [selectedWeatherDay] = _selectedWeatherDay;
+    const { widthPixels } = useGetViewPortWidth();
     const { date, weather, feels_like, temp, averageForTheDay, humidity: humidityNum, dew_point, wind_speed, sunrise, sunset, isPresentDay, rain: rainMain, snow: snowMain } = selectedWeatherDay;
     const { weather: moreInfoWeather, temp: moreInfoTemp, humidity: humidityMoreInfoNum, wind_speed: windSpeedAverage, rain, snow, dewPoint, feels_like: feelsLikeAverage, temp: tempAverages, sunrise: sunriseProjected, sunset: sunsetProjected } = averageForTheDay ?? {};
     const { name: locationName, timeZoneOffset, timeHHMM } = targetLocation ?? {};
-
-    useEffect(() => {
-        console.log('_sunrise: ', _sunrise)
-        console.log('_sunset: ', _sunset)
-        console.log('timeHHMM: ', timeHHMM)
-    })
-
-
-
     const { max, min } = moreInfoTemp ?? {}
     const { description: moreInfoDescription, icon: moreInfoIcon } = moreInfoWeather?.[0] ?? {};
     const { icon: weatherIcon, description } = weather?.[0] ?? {};
     const { speed: speedUnits, temp: tempUnits } = units;
     let _description = description.charAt(0).toUpperCase() + description.slice(1);
-    const { widthPixels } = useGetViewPortWidth()
     const weatherDayModalClassName = isPresentDay ? 'weatherDayModal presentDay' : 'weatherDayModal notPresentDay'
-
     const weatherDescriptionContainerCss = isPresentDay ? 'weatherDescriptionContainer presentDay' : 'weatherDescriptionContainer notPresentDay'
 
     if (!isPresentDay) {
@@ -52,15 +40,11 @@ const SelectedWeatherDay = ({ closeModal }) => {
     const _sunset = getTime(sunset ?? sunsetProjected, timeZoneOffset, 'LT');
     const isPolarNight = (_sunrise === '12:00 PM') && (_sunset === '12:00 PM');
     const isMidnightSun = (_sunrise === '4:00 PM') && (_sunset === '4:00 PM');
-
+    const currentDayTimes = isPresentDay && { sunrise: _sunrise, sunset: sunset, timeHHMM };
 
     if (moreInfoDescription) {
         var _moreInfoDescription = moreInfoDescription.charAt(0).toUpperCase() + moreInfoDescription.slice(1)
     }
-
-    useEffect(() => {
-        console.log('selectedWeatherDay: ', selectedWeatherDay)
-    })
 
     useEffect(() => {
         const touchMovePrevented = document.body.addEventListener('touchmove', event => { event.preventDefault() })
@@ -92,7 +76,13 @@ const SelectedWeatherDay = ({ closeModal }) => {
                 </section>
                 <section className='weatherDescriptionSec1'>
                     <div>
-                        <WeatherIcon weatherIcon={weatherIcon} />
+                        <WeatherIcon
+                            weatherIcon={weatherIcon}
+                            description={description}
+                            currentDayTimes={currentDayTimes}
+                            isMidnightSun={isMidnightSun}
+                            isPolarNight={isPolarNight}
+                        />
                     </div>
                     <div className={weatherDescriptionContainerCss}>
                         {isPresentDay &&
@@ -109,7 +99,14 @@ const SelectedWeatherDay = ({ closeModal }) => {
                             <span>{isPresentDay ? 'Projections for the day:' : 'Projected forecast:'} </span>
                             {isPresentDay &&
                                 <div className='presentDayDescription'>
-                                    <WeatherIcon weatherIcon={moreInfoIcon} isIconSmaller />
+                                    <WeatherIcon
+                                        weatherIcon={moreInfoIcon}
+                                        isIconSmaller
+                                        description={description}
+                                        currentDayTimes={currentDayTimes}
+                                        isMidnightSun={isMidnightSun}
+                                        isPolarNight={isPolarNight}
+                                    />
                                     <span className='infoTxt'>{_moreInfoDescription}.</span>
                                 </div>
                             }

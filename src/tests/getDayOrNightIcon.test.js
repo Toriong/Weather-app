@@ -1,30 +1,6 @@
 
+const { getDayOrNightIcon } = require('../iconFns/getDayOrNightIcon');
 const { getIcon } = require('../iconFns/getIcon');
-const { getTotalMilliSecsOfDay } = require('../timeFns/getMilliSecondsOfDay');
-
-
-const getDayOrNightIcon = (iconString, time, isMidnightSun, isPolarNight) => {
-    if (!isMidnightSun && !isPolarNight) {
-        const { sunrise, sunset, currentTime } = time;
-        const sunriseMilliSeconds = getTotalMilliSecsOfDay(sunrise);
-        const sunsetMilliSeconds = getTotalMilliSecsOfDay(sunset);
-        const currentTimeMilliSeconds = getTotalMilliSecsOfDay(currentTime);
-
-        const isNight = currentTimeMilliSeconds > sunsetMilliSeconds;
-        const isSunNotRisen = currentTimeMilliSeconds < sunriseMilliSeconds;
-
-        if (isNight || isSunNotRisen) {
-            return `${iconString}n`
-        }
-    }
-
-    if (isPolarNight) {
-        var iconStringNight = `${iconString}n`
-    }
-
-
-    return iconStringNight ?? `${iconString}d`
-}
 
 
 test('Get icon day or night string,  test1', () => {
